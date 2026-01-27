@@ -1,8 +1,6 @@
 # Python
---pycache--/
-*.ph[cod]
-*.pyo
-*.pyd
+__pycache__/
+*.py[cod]
 
 # Django
 db.sqlite3
