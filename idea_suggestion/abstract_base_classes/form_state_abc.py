@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 '''
 Defines the contract for managing the idea submission Form State (Logic)
-including validating, sanitizing, and preparing user input for idea submission.
+including validating and preparing user input for idea submission.
 '''
 class IdeaFormState(ABC):
 
@@ -25,16 +25,6 @@ class IdeaFormState(ABC):
     '''
     @abstractmethod
     def update_user_input_helper(self, input_id: str, input_value: str):
-        pass
-
-
-    '''
-    Sanitizes user input data
-    Args: input_value (str): the value to be sanitized
-    Returns: str: the sanitized value
-    '''
-    @abstractmethod
-    def sanitize_input(self, input_value: str) -> str:
         pass
 
 
@@ -68,7 +58,7 @@ class IdeaFormState(ABC):
 
     '''
     Generates final payload to be sent to the backend
-    Returns: dict: validated and sanitized user input if no errors are present
+    Returns: dict: validated user input if no errors are present
                    or an error log mapping error messages with input controls if errors are present
     '''
     @abstractmethod

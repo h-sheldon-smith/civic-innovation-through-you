@@ -1,0 +1,1 @@
+# rate_result: can a user permorm an action based on rate limit
