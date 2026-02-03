@@ -1,4 +1,7 @@
 <nav class="navbar">
+    <div class="navbar-title">Civic Innovation Through You - Bellevue</div>
+
+    <div class="navbar-links">
     {% url 'index' as index_url %}    
     <span>{% if request.path == index_url %}Home{% else %}<a href="{% url 'index' %}">Home</a>{% endif %}</span>
     <button type="button" class="nav-btn" id="open-modal">
@@ -8,6 +11,7 @@
     <span>{% if request.path == about_url %}About{% else %}<a href="{% url 'about' %}">About</a>{% endif %}</span>
     {% url 'contact' as contact_url %}    
     <span>{% if request.path == contact_url %}Contact{% else %}<a href="{% url 'contact' %}">Contact</a>{% endif %}</span>
+    </div>
 </nav>
 
 <!-- Idea Submission Popup -->
