@@ -17,3 +17,6 @@
 .navbar a:hover {
   text-decoration: underline;
 }
+
+/* .venv\Scripts\activate
+python manage.py runserver */
