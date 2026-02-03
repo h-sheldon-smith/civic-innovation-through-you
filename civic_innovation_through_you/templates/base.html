@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <meta charset="utf-8">
     <title>{% block title %}CivicInnovation Through You{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'civic_innovation_through_you/css/styles.css' %}">
@@ -13,5 +16,6 @@
         {% block content %}
         {% endblock %}
     </main>
+    <script src="{% static 'civic_innovation_through_you/js/SubmitIdeasPopup.js' %}"></script>
 </body>
 </html>

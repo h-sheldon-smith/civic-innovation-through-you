@@ -1,8 +1,29 @@
 <nav class="navbar">
     {% url 'index' as index_url %}    
     <span>{% if request.path == index_url %}Home{% else %}<a href="{% url 'index' %}">Home</a>{% endif %}</span>
+    <button type="button" class="nav-btn" id="open-modal">
+        Submit Idea
+    </button>
     {% url 'about' as about_url %}    
     <span>{% if request.path == about_url %}About{% else %}<a href="{% url 'about' %}">About</a>{% endif %}</span>
     {% url 'contact' as contact_url %}    
     <span>{% if request.path == contact_url %}Contact{% else %}<a href="{% url 'contact' %}">Contact</a>{% endif %}</span>
 </nav>
+
+<!-- Idea Submission Popup -->
+<div class="modal-backdrop" id="modal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-header">
+      <h2 id="modal-title">Submit Idea</h2>
+      <button type="button" class="modal-close" id="close-modal" aria-label="Close">×</button>
+    </div>
+
+    <div class="modal-body">
+      <p>TODO add form</p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="nav-btn" id="close-modal-2">Close</button>
+    </div>
+  </div>
+</div>

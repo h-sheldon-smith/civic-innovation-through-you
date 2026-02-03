@@ -1,8 +1,24 @@
+/*
+CSS Styling File:
+Determines styling for select aspects on the webpage
+(ex. Color, Size, and Position of defined HTML objects)
+*/
+
+/* Remove Default Browser Margins */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .navbar {
   border: 2px solid #ccc;
-  background: #ff0000;
-  padding: 12px 20px;
+  background: #9B9A9A;
+  padding: 22px 20px;
+  width: 100%;
+  box-sizing: border-box;  /* keeps padding inside the width */
   margin: 0;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
 }
 
 .navbar span {
@@ -18,5 +34,67 @@
   text-decoration: underline;
 }
 
-/* .venv\Scripts\activate
-python manage.py runserver */
+/* button styling (optional) */
+.nav-btn {
+  font: inherit;
+  padding: 8px 12px;
+  border: 1px solid #999;
+  border-radius: 25px;
+  background: #D9D9D9;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  background: #eee;
+}
+
+/* modal backdrop hidden by default */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* when open */
+.modal-backdrop.is-open {
+  display: flex;
+  align-items: flex-start; /* top-ish */
+  justify-content: center;
+}
+
+/* modal box */
+.modal {
+  margin-top: 40px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: min(600px, 100%);
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-close {
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* 
+python -m venv .venv
+.venv\Scripts\activate
+pip install Django
+python manage.py runserver
+*/
