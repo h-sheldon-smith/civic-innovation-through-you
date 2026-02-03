@@ -1,0 +1,19 @@
+.navbar {
+  border: 2px solid #ccc;
+  background: #ff0000;
+  padding: 12px 20px;
+  margin: 0;
+}
+
+.navbar span {
+  margin-right: 15px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}

@@ -1,9 +1,11 @@
 <!-- templates/base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>{% block title %}CivicInnovation Through You{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'civic_innovation_through_you/css/styles.css' %}">
 </head>
 <body>
     {% include 'navbar.html' %}
