@@ -12,10 +12,12 @@
 </head>
 <body>
     {% include 'navbar.html' %}
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+    <div class="page-layout">
+    {% include "sidebar.html" %}
+        <main class="main-content">
+          {% block content %}{% endblock %}
+        </main>
+    </div>
     <script src="{% static 'civic_innovation_through_you/js/SubmitIdeasPopup.js' %}"></script>
 </body>
 </html>

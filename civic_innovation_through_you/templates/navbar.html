@@ -1,6 +1,5 @@
 <nav class="navbar">
     <div class="navbar-title">Civic Innovation Through You - Bellevue</div>
-
     <div class="navbar-links">
     {% url 'index' as index_url %}    
     <span>{% if request.path == index_url %}Home{% else %}<a href="{% url 'index' %}">Home</a>{% endif %}</span>

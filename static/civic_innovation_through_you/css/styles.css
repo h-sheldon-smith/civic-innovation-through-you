@@ -92,6 +92,61 @@ html, body {
   cursor: pointer;
 }
 
+.navbar-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.navbar-links span {
+  margin-right: 15px;
+}
+
+/* Layout: sidebar + main content */
+.page-layout {
+  display: flex;
+  min-height: calc(100vh - 60px); /* adjust if your navbar height differs */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;           /* sidebar width */
+  border-right: 1px solid #ccc;
+  background: #f7f7f7;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.sidebar-title {
+  margin: 0 0 12px 0;
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 10px;
+}
+
+.sidebar-nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.sidebar-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;               /* take remaining space */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 /* 
 python -m venv .venv
 .venv\Scripts\activate
