@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'common',
 
-    'idea_suggestion'
+     # Add application names for apps you make here:
+    'idea_suggestion.apps.IdeaSuggestionConfig'
+    
 ]
 
 MIDDLEWARE = [
