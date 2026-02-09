@@ -1,3 +1,5 @@
+{% load static %}
+
 <nav class="navbar">
   <div class="navbar-title">Civic Innovation Through You - Bellevue</div>
 
@@ -5,23 +7,27 @@
     {% url 'index' as index_url %}    
     <a href="{% url 'index' %}"
       class="nav-btn {% if request.path == index_url %}active{% endif %}">
+      <img class="nav-icon-img" src="{% static 'civic_innovation_through_you/icons/homeIcon.svg' %}" alt="" aria-hidden="true">
       Home
     </a>
 
     <button type="button" class="nav-btn" id="open-modal">
-        Submit Idea
+      <img class="nav-icon-img" src="{% static 'civic_innovation_through_you/icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
+      Submit Idea
     </button>
 
     {% url 'about' as about_url %}    
     <a href="{% url 'about' %}"
       class="nav-btn {% if request.path == about_url %}active{% endif %}">
-      About
+      <img class="nav-icon-img" src="{% static 'civic_innovation_through_you/icons/discussionIcon.svg' %}" alt="" aria-hidden="true">
+      Discussions
     </a>
 
     {% url 'contact' as contact_url %}    
     <a href="{% url 'contact' %}"
       class="nav-btn {% if request.path == contact_url %}active{% endif %}">
-      Contact
+      <img class="nav-icon-img" src="{% static 'civic_innovation_through_you/icons/logoutIcon.svg' %}" alt="" aria-hidden="true">
+      Logout
     </a>
   </div>
 </nav>
