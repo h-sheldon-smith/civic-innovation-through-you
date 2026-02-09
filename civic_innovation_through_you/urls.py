@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls), #path for admin dashboard
-    path('', include('idea_suggestion.urls')) #path for idea_suggestions app
+    path('idea/', include('idea_suggestion.urls')) #path for idea_suggestions app
 ]
