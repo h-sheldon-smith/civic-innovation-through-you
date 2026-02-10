@@ -23,7 +23,7 @@ class User(models.Model):
                                        unique = True,
                                        validators=[phone_number_validator])
     
-    email = models.CharField(max_length = 50, unque = True)
+    email = models.CharField(max_length = 50, unique = True)
     
     user_type = models.CharField(max_length = USER_TYPE_MAX_LENGTH, 
                                  choices = User_Type.choices,
@@ -31,6 +31,8 @@ class User(models.Model):
     
     account_creation = models.DateTimeField(auto_now_add = True)
 
-    account_status = models.CharField(max_length = ACCT_STATUS_MAX_LENGTH,
-                                      choices = Account_Status)
-
+    account_status = models.CharField(
+    max_length=ACCT_STATUS_MAX_LENGTH,
+    choices=Account_Status.choices,
+    default=Account_Status.ACTIVE,
+    )
