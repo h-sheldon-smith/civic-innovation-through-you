@@ -16,6 +16,7 @@ class Topic_Options(models.TextChoices):
     TRANSPORT = 'Transport', 'Transportation & Infrastructure'
     VOLUNTEER = "Volunteer", "Volunteering Opportunities"
 
+<<<<<<< HEAD
 TOPIC_MAX_LENGTH = max(len(Topic_Options.value) for choice in Topic_Options)
 
 IDEA_FOLDERS = [('Inbox', 'Inbox')] + Topic_Options
@@ -35,3 +36,7 @@ class Account_Status(models.TextChoices):
     BANNED = 'Banned', 'Banned'
 
 ACCT_STATUS_MAX_LENGTH = max(len(Account_Status.value) for choice in Account_Status)
+=======
+TOPIC_MAX_LENGTH = max(len(choice.value) for choice in Topic_Options)
+   
+>>>>>>> main

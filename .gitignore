@@ -1,6 +1,7 @@
 # Python
---pycache--/
-*.ph[cod]
+__pycache__/
+*.py[cod]
+*.pyc
 *.pyo
 *.pyd
 
@@ -12,6 +13,7 @@ media/
 
 # Environment
 .Environment
+.env
 venv/
 env/
 
