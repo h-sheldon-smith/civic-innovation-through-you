@@ -15,15 +15,19 @@ class User(models.Model):
                                  unique = True,
                                  editable = False)
     
-    first_name = models.CharField(max_length = 50, blank = False)
-    last_name = models.CharField(max_length = 50, blank = False)
+    first_name = models.CharField(max_length = 50, 
+                                  blank = False)
+    
+    last_name = models.CharField(max_length = 50, 
+                                 blank = False)
     
     phone_number = models.IntegerField(max_length = 10, 
                                        blank = False,
                                        unique = True,
                                        validators=[phone_number_validator])
     
-    email = models.CharField(max_length = 50, unque = True)
+    email = models.CharField(max_length = 50, 
+                             unique = True)
     
     user_type = models.CharField(max_length = USER_TYPE_MAX_LENGTH, 
                                  choices = User_Type.choices,

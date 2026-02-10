@@ -1,5 +1,6 @@
 <!-- templates/base.html -->
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <meta charset="utf-8">
     <title>{% block title %}CivicInnovation Through You{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'civic_innovation_through_you/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     {% include 'navbar.html' %}
@@ -18,6 +19,6 @@
           {% block content %}{% endblock %}
         </main>
     </div>
-    <script src="{% static 'civic_innovation_through_you/js/SubmitIdeasPopup.js' %}"></script>
+    <script src="{% static 'js/SubmitIdeasPopup.js' %}"></script>
 </body>
 </html>

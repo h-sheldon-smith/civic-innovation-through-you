@@ -19,7 +19,7 @@ class Topic_Options(models.TextChoices):
 <<<<<<< HEAD
 TOPIC_MAX_LENGTH = max(len(Topic_Options.value) for choice in Topic_Options)
 
-IDEA_FOLDERS = [('Inbox', 'Inbox')] + Topic_Options
+IDEA_FOLDERS = [('Inbox', 'Inbox')] + list(Topic_Options.choices)
 
 IDEA_FOLDERS_MAX_LENGTH = max(len(value) for value, _ in IDEA_FOLDERS)
 

@@ -1,0 +1,12 @@
+{# SECURITY NOTES: csrf_token will protect against forged POST requests,
+    Django automatically escapes HTML, prevents XSS, sanitizes output, blocks SQL injection #}
+
+{% block content %}
+    <section>
+    <form action="{% url 'resident_idea_submission' %}" method="post">
+        {% csrf_token %}
+        {{idea_form.as_table}}
+
+    </form>
+    </section>
+{% endblock %}
