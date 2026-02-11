@@ -16,8 +16,7 @@ class Topic_Options(models.TextChoices):
     TRANSPORT = 'Transport', 'Transportation & Infrastructure'
     VOLUNTEER = "Volunteer", "Volunteering Opportunities"
 
-<<<<<<< HEAD
-TOPIC_MAX_LENGTH = max(len(Topic_Options.value) for choice in Topic_Options)
+TOPIC_MAX_LENGTH = max(len(choice.value) for choice in Topic_Options)
 
 IDEA_FOLDERS = [('Inbox', 'Inbox')] + list(Topic_Options.choices)
 
@@ -27,7 +26,7 @@ class User_Type(models.TextChoices):
     RESIDENT = 'Resident', 'Resident'
     CITYADMIN = 'City Admin', 'City Admin'
 
-USER_TYPE_MAX_LENGTH = max(len(User_Type.value) for choice in User_Type)
+USER_TYPE_MAX_LENGTH = max(len(choice.value) for choice in User_Type)
 
 class Account_Status(models.TextChoices):
     ACTIVE = 'Active', 'Active'
@@ -35,8 +34,6 @@ class Account_Status(models.TextChoices):
     SUSPENDED = 'Suspended', 'Suspended'
     BANNED = 'Banned', 'Banned'
 
-ACCT_STATUS_MAX_LENGTH = max(len(Account_Status.value) for choice in Account_Status)
-=======
-TOPIC_MAX_LENGTH = max(len(choice.value) for choice in Topic_Options)
-   
->>>>>>> main
+ACCT_STATUS_MAX_LENGTH = max(len(choice.value) for choice in Account_Status)
+
+
