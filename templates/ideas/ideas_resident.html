@@ -1,12 +1,23 @@
-{# SECURITY NOTES: csrf_token will protect against forged POST requests,
-    Django automatically escapes HTML, prevents XSS, sanitizes output, blocks SQL injection #}
-
+{% load static %}
 {% block content %}
-    <section>
-    <form action="{% url 'resident_idea_submission' %}" method="post">
+    <div class="modal-header">
+        <h2 id="not-submitted-title">Submit Your Idea</h2>
+        <h2 id="submitted-title" style="display:none">Thank you!</h2>
+        <button type="button" class="modal-close" id="close-modal" aria-label="Close">×</button>
+    </div>
+    <form id='idea_form' action="{% url 'resident_idea_submission' %}" method="post">
         {% csrf_token %}
-        {{idea_form.as_table}}
-
+        {% for field in idea_form %}
+            {{ field.label_tag }}
+            {{ field }}<br>
+        {% endfor %}
+        <input type="submit" class="nav-btn" id="submit-idea" value = "Submit Idea">
     </form>
-    </section>
+    <div id="thanks-message" style="display:none">Thank you for submitting your idea!</div>
+    <button type="button" class="nav-btn" id="close-modal-2" style="display:none">Close</button>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/SubmitIdeaButton.js' %}"></script>
 {% endblock %}

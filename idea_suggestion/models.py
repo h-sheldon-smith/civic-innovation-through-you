@@ -9,12 +9,12 @@ from common.choices import Topic_Options, TOPIC_MAX_LENGTH, IDEA_FOLDERS, IDEA_F
 # class Name(models.Model):
 class Idea(models.Model):
     # using another model (User) as an attribute in this model (Idea)
-    resident = models.ForeignKey(
-        User,
-        on_delete = models.SET_NULL, # keep the idea even if the user is deleted
-        null = True,
-        related_name = 'ideas' # lets you look up all ideas by the given resident
-    )
+    # resident = models.ForeignKey(
+    #    User,
+    #    on_delete = models.SET_NULL, # keep the idea even if the user is deleted
+    #    null = True,
+    #    related_name = 'ideas' # lets you look up all ideas by the given resident
+    #)
 
      # field_name = models.TypeOfField(optional_constraints = some_value)
     subject_line = models.CharField(max_length = 50, 
@@ -38,4 +38,5 @@ class Idea(models.Model):
     
     # Method to print idea objects as a formatted string
     def __str__(self):
-        return (f"Topic: {self.topic}, From: {self.resident.user_name}, Subject: {self.subject_line}, Time: {self.time_stamp}")
+        return (f"Topic: {self.topic}, Subject: {self.subject_line}, Time: {self.time_stamp}")
+        #return (f"Topic: {self.topic}, From: {self.resident.user_name}, Subject: {self.subject_line}, Time: {self.time_stamp}")
