@@ -14,4 +14,7 @@ City administrators gain a streamlined workspace where they can review resident 
 [View Resident Prototype](https://www.figma.com/proto/LkzrtvZrIwfO2ecyJb1mtp/Civic-Innovation-Through-You-CITY-Prototype1?node-id=0-1&p=f&t=4lFlc111sYeXWpu7-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=21%3A462&show-proto-sidebar=1)
 
 
-
+## Tech Stack
+Famework: Django
+Languages: Python, JavaScript, HTML
+Database: sqlite3

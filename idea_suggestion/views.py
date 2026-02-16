@@ -1,6 +1,7 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from . import forms
+from .models import Idea
 
 # Create your views here (http request/response handling)
 # Don't forget to update urls.py
@@ -29,9 +30,15 @@ def Resident_Idea_Submission_View(request):
 
 
 
-
-
-
 # City Admin Inbox for viewing suggestions sent in by residents
 def CityAdmin_Idea_Inbox_View(request):
-    return HttpResponse("Idea Suggestion Placeholder")
+    ideas = Idea.objects.all() #grab all entries from the Idea table
+    return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas})
+
+# City Admin idea detail page
+# Updates an idea status to read and navigates to a detail page to display contents
+def CityAdmin_Idea_Detail(request, pk):
+    idea = Idea.objects.get(pk=pk)
+    idea.read_status = True
+    idea.save()
+    return render(request, 'ideas/ideas_admin_detail.html', {'idea': idea})

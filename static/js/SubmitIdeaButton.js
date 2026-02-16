@@ -1,3 +1,4 @@
+//idea form listener
 document.addEventListener("DOMContentLoaded", function(){
     const idea_form = document.getElementById("idea_form");
     const message = document.getElementById("thanks-message");
@@ -11,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function(){
         return;
     }
 
+    //submit button listener
     idea_form.addEventListener("submit", async function (event){
         event.preventDefault(); //stop automatic submit behavior which will cause the page to reload
         const formData = new FormData(idea_form); //gather user input, csrf token

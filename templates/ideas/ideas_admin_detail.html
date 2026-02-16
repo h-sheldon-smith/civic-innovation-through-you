@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}City Admin Inbox{% endblock %}
+
+{% block content %}
+<div class="modal-header">
+        <h2 id="not-submitted-title">Resident Idea</h2>
+</div>
+
+<table class="idea-detail-table">
+    <tr>
+        <td><span style="font-weight:bold">Topic: </span>{{ idea.topic }}</td>
+    </tr>
+    <tr>
+        <td><span style="font-weight:bold">Subject: </span>{{ idea.subject_line }}</td>
+    </tr>
+    <tr>
+        <td><span style="font-weight:bold">Sent: </span>{{ idea.time_stamp }}</td>
+    </tr>
+    <tr>
+        <td style="font-weight:bold">Message:</td>
+    </tr>
+    <tr> 
+        <td>{{ idea.message }}</td>
+    </tr> 
+</table>
+{% endblock %}
