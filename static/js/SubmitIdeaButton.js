@@ -12,6 +12,10 @@ document.addEventListener("DOMContentLoaded", function(){
         return;
     }
 
+    xclosebttn.addEventListener("click", () =>{
+        idea_form.reset();
+    })
+
     //submit button listener
     idea_form.addEventListener("submit", async function (event){
         event.preventDefault(); //stop automatic submit behavior which will cause the page to reload
@@ -39,5 +43,15 @@ document.addEventListener("DOMContentLoaded", function(){
             alert("We did not receive your ideas. Please check all fields or retry later");
         }
 
+    })
+
+    closebttn.addEventListener("click", () => {
+        submitted_header.style.display = "none";
+        not_submitted_header.style.display = "inline";
+        idea_form.style.display = "inline";
+        idea_form.reset();
+        message.style.display = "none";
+        xclosebttn.style.display = "inline";
+        closebttn.style.display = "none";
     })
 })
