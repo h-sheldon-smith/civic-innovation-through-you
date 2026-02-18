@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'common',
+    'forum',
 
      # Add application names for apps you make here:
     'idea_suggestion.apps.IdeaSuggestionConfig'

@@ -25,9 +25,9 @@
       View Ideas
     </a>
 
-    {% url 'about' as about_url %}    
-    <a href="{% url 'about' %}"
-      class="nav-btn {% if request.path == about_url %}active{% endif %}">
+    <!-- {% url 'forum_placeholder' as forum_placeholder_url %}     -->
+    <a href="{% url 'forum_placeholder' %}"
+      class="nav-btn {% if request.path == forum_placeholder_url %}active{% endif %}">
       <img class="nav-icon-img" src="{% static 'icons/discussionIcon.svg' %}" alt="" aria-hidden="true">
       Discussions
     </a>
