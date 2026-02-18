@@ -46,6 +46,24 @@ INSTALLED_APPS = [
 
      # Add application names for apps you make here:
     'idea_suggestion.apps.IdeaSuggestionConfig'
+
+    # Machina dependencies:
+    'mptt',
+    'haystack',
+    'widget_tweaks',
+
+    # Machina apps:
+    'machina',
+    'machina.apps.forum',
+    'machina.apps.forum_conversation',
+    'machina.apps.forum_conversation.forum_attachments',
+    'machina.apps.forum_conversation.forum_polls',
+    'machina.apps.forum_feeds',
+    'machina.apps.forum_moderation',
+    'machina.apps.forum_search',
+    'machina.apps.forum_tracking',
+    'machina.apps.forum_member',
+    'machina.apps.forum_permission',
     
 ]
 
@@ -89,6 +107,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # Password validation
