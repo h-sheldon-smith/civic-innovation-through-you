@@ -21,17 +21,14 @@ class User(models.Model):
     last_name = models.CharField(max_length = 50, 
                                  blank = False)
     
-<<<<<<< HEAD
-    email = models.CharField(max_length = 50, unique = True)
-=======
-    #phone_number = models.IntegerField(max_length = 10, 
-    #                                   blank = False,
-    #                                   unique = True,
-    #                                   validators=[phone_number_validator])
+    # phone_number = models.IntegerField(max_length = 10, 
+    #                                    blank = False,
+    #                                    unique = True,
+    #                                    validators=[phone_number_validator])
     
     email = models.CharField(max_length = 50, 
                              unique = True)
->>>>>>> feature/idea_suggestion
+
     
     user_type = models.CharField(max_length = USER_TYPE_MAX_LENGTH, 
                                  choices = User_Type.choices,
@@ -39,14 +36,10 @@ class User(models.Model):
     
     account_creation = models.DateTimeField(auto_now_add = True)
 
-<<<<<<< HEAD
+
     account_status = models.CharField(
     max_length=ACCT_STATUS_MAX_LENGTH,
     choices=Account_Status.choices,
     default=Account_Status.ACTIVE,
     )
-=======
-    #account_status = models.CharField(max_length = ACCT_STATUS_MAX_LENGTH,
-    #                                  choices = Account_Status)
-
->>>>>>> feature/idea_suggestion
+    
