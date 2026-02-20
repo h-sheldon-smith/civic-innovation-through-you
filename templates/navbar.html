@@ -37,7 +37,7 @@
     {% url 'users:login' as login_url %}    
     <a href="{% url 'users:login' %}"
       class="nav-btn {% if request.path == login_url %}active{% endif %}">
-      <img class="nav-icon-img" src="{% static 'civic_innovation_through_you/icons/loginIcon.svg' %}" alt="" aria-hidden="true">
+      <img class="nav-icon-img" src="{% static 'icons/loginIcon.svg' %}" alt="" aria-hidden="true">
       Login
     </a>
     {% endif %}
@@ -47,7 +47,7 @@
     <form class = "logout" action="{% url 'users:logout' %}" method="post">
       {% csrf_token %}
       <button type="submit" class="nav-btn">
-        <img class="nav-icon-img" src="{% static 'civic_innovation_through_you/icons/logoutIcon.svg' %}" alt="" aria-hidden="true">
+        <img class="nav-icon-img" src="{% static 'icons/logoutIcon.svg' %}" alt="" aria-hidden="true">
         Logout
       </button>
     </form>

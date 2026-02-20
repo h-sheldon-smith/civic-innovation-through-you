@@ -17,6 +17,7 @@
     {% include "sidebar.html" %}
         <main class="main-content">
           {% block content %}{% endblock %}
+          {% block scripts %}{% endblock %}
         </main>
     </div>
     <script src="{% static 'js/SubmitIdeasPopup.js' %}"></script>
