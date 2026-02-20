@@ -32,7 +32,7 @@ def Resident_Idea_Submission_View(request):
 
 # City Admin Inbox for viewing suggestions sent in by residents
 def CityAdmin_Idea_Inbox_View(request):
-    ideas = Idea.objects.all() #grab all entries from the Idea table
+    ideas = Idea.objects.all().order_by('-time_stamp') #grab all entries from the Idea table
     return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas})
 
 # City Admin idea detail page
