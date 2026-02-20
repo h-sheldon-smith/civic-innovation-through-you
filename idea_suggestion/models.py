@@ -1,6 +1,8 @@
 from django.db import models
-from common.models import User
+from django.contrib.auth.models import User
 from common.choices import Topic_Options, TOPIC_MAX_LENGTH, IDEA_FOLDERS, IDEA_FOLDERS_MAX_LENGTH
+
+
 
 # Create your models here (db)
 # Classes/models represent tables in a DB
@@ -8,13 +10,14 @@ from common.choices import Topic_Options, TOPIC_MAX_LENGTH, IDEA_FOLDERS, IDEA_F
 
 # class Name(models.Model):
 class Idea(models.Model):
-    # using another model (User) as an attribute in this model (Idea)
-    # resident = models.ForeignKey(
-    #    User,
-    #    on_delete = models.SET_NULL, # keep the idea even if the user is deleted
-    #    null = True,
-    #    related_name = 'ideas' # lets you look up all ideas by the given resident
-    #)
+    #using another model (User) as an attribute in this model (Idea)
+    resident = models.ForeignKey(
+       User,
+       default = None,
+       on_delete = models.SET_NULL, # keep the idea even if the user is deleted
+       null = True,
+       related_name = 'ideas' # lets you look up all ideas by the given resident
+    )
 
      # field_name = models.TypeOfField(optional_constraints = some_value)
     subject_line = models.CharField(max_length = 50, 

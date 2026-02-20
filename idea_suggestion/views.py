@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from . import forms
 from .models import Idea
 
@@ -15,9 +16,12 @@ def Resident_Idea_Submission_View(request):
 
         # django checks that required fields are present, data type is correct, check against constraints specified in the model
         if idea_form.is_valid():
-            idea_form.save() # django makes an instance and writes to the database
-
+            idea_instance = idea_form.save(commit = False) # django makes an instance of the form
+            idea_instance.resident = request.user # add the logged in user
+            idea_instance.save()
+           
             return JsonResponse({"success": True})
+        
         else:
             return JsonResponse({"success": False})
 
