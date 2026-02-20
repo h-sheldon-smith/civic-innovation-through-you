@@ -24,5 +24,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),
-    path('ideas/', include('idea_suggestion.urls')) #path for idea_suggestions app
+    path('ideas/', include('idea_suggestion.urls')), #path for idea_suggestions app
+    path('users/', include('users.urls')) #path for users app
 ]

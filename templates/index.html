@@ -5,6 +5,9 @@
 {% block content %}
 <h1>
     Template Homepage
+    {% if user.is_authenticated %}
+    <span>Welcome, {{ user.username }}</span>
+    {% endif %}
 </h1>
 Template Homepage
 {% endblock %}

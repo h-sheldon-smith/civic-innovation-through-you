@@ -32,12 +32,27 @@
       Discussions
     </a>
 
-    {% url 'contact' as contact_url %}    
-    <a href="{% url 'contact' %}"
-      class="nav-btn {% if request.path == contact_url %}active{% endif %}">
-      <img class="nav-icon-img" src="{% static 'icons/logoutIcon.svg' %}" alt="" aria-hidden="true">
-      Logout
+    <!-- Login Button: Only Rendered If User Is Not Authenticated (Logged Out) -->
+    {% if not user.is_authenticated %}
+    {% url 'users:login' as login_url %}    
+    <a href="{% url 'users:login' %}"
+      class="nav-btn {% if request.path == login_url %}active{% endif %}">
+      <img class="nav-icon-img" src="{% static 'icons/loginIcon.svg' %}" alt="" aria-hidden="true">
+      Login
     </a>
+    {% endif %}
+
+    <!-- Logout Button: Only Rendered If User Is Authenticated (Logged In) -->
+    {% if user.is_authenticated %} 
+    <form class = "logout" action="{% url 'users:logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="nav-btn">
+        <img class="nav-icon-img" src="{% static 'icons/logoutIcon.svg' %}" alt="" aria-hidden="true">
+        Logout
+      </button>
+    </form>
+    {% endif %}
+
   </div>
 </nav>
 

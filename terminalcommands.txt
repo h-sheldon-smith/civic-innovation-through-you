@@ -1,0 +1,10 @@
+Commands on new computer to run the server:
+
+python -m venv .venv
+.venv\Scripts\activate
+pip install Django
+pip install python-dotenv
+python manage.py runserver
+
+Create Super User (Administrator Account):
+python manage.py createsuperuser
