@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import permission_required
 from . import forms
 from .models import Idea
 
@@ -31,12 +32,14 @@ def Resident_Idea_Submission_View(request):
 
 
 # City Admin Inbox for viewing suggestions sent in by residents
+@permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Inbox_View(request):
     ideas = Idea.objects.all() #grab all entries from the Idea table
     return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas})
 
 # City Admin idea detail page
 # Updates an idea status to read and navigates to a detail page to display contents
+@permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Detail(request, pk):
     idea = Idea.objects.get(pk=pk)
     idea.read_status = True

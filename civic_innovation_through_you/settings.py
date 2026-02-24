@@ -43,11 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites', # additional machina requirement
+
+    # apps
     'common',
-
-     # Add application names for apps you make here:
+    'users',
     'idea_suggestion.apps.IdeaSuggestionConfig',
-
 
     # Machina dependencies:
     'mptt',
