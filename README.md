@@ -15,6 +15,6 @@ City administrators gain a streamlined workspace where they can review resident 
 
 
 ## Tech Stack
-Famework: Django
-Languages: Python, JavaScript, HTML
-Database: sqlite3
+- Fameworks: Django, Django-Machina
+- Languages: Python, JavaScript, HTML, CSS
+- Database: sqlite3
