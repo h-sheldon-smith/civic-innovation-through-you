@@ -46,8 +46,8 @@ INSTALLED_APPS = [
 
     # apps
     'common',
-    'users',
     'idea_suggestion.apps.IdeaSuggestionConfig',
+    'users',
 
     # Machina dependencies:
     'mptt',
