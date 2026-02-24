@@ -10,7 +10,6 @@ python -m venv .venv
 source .venv/bin/activate
 
 # Install python packages
-pip install Django django-machina python-dotenv
 pip install -r requirements.txt
 
 # Run server
