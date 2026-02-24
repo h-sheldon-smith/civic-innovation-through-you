@@ -1,13 +1,17 @@
 Commands on new computer to run the server:
 
+# Create virtual environment
 python -m venv .venv
-.venv\Scripts\activate
-pip install Django
-pip install python-dotenv
+.venv/Scripts/activate
+
+# Install python packages
+pip install Django django-machina python-dotenv
+
+# Run server
 python manage.py runserver
 
-Create Super User (SuperUser Account):
+# Create Super User (SuperUser Account):
 python manage.py createsuperuser
 
-Promote Existing Account to Site Admin (City Administrator Account):
+# Promote Existing Account to Site Admin (City Administrator Account):
 python manage.py promote_to_site_admin username
