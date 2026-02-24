@@ -6,6 +6,7 @@ python -m venv .venv
 
 # Install python packages
 pip install Django django-machina python-dotenv
+pip install -r requirements.txt
 
 # Run server
 python manage.py runserver
