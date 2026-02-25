@@ -29,4 +29,5 @@ urlpatterns = [
     path('ideas/', include('idea_suggestion.urls')), #path for idea_suggestions app
     path('users/', include('users.urls')), #path for users app
     path('forum/', include(machina_urls)),
+    path('ideas_forum/', include('idea_forum.urls'))
 ]

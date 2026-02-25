@@ -10,14 +10,16 @@
     <meta charset="utf-8">
     <title>{% block title %}CivicInnovation Through You{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_head %}
+    {% endblock %}
 </head>
 <body>
     {% include 'navbar.html' %}
     <div class="page-layout">
     {% include "sidebar.html" %}
         <main class="main-content">
-          {% block content %}{% endblock %}
-          {% block scripts %}{% endblock %}
+          {% block city_content %}{% endblock %}
+          {% block city_scripts %}{% endblock %}
         </main>
     </div>
     <script src="{% static 'js/SubmitIdeasPopup.js' %}"></script>

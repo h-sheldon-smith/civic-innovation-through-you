@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'common',
     'idea_suggestion.apps.IdeaSuggestionConfig',
     'users',
+    'idea_forum',
 
     # Machina dependencies:
     'mptt',
@@ -100,6 +101,8 @@ TEMPLATES = [
         },
     },
 ]
+
+MACHINA_BASE_TEMPLATE_NAME = "forum.html"
 
 WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
 
@@ -177,4 +180,5 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-MACHINA_FORUM_NAME = "Civic Innovation Through You"
+# MACHINA_FORUM_NAME = "Civic Innovation Through You"
+MACHINA_FORUM_NAME = " "
