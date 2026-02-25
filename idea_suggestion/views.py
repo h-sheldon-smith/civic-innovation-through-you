@@ -8,7 +8,6 @@ from .models import Idea
 # Don't forget to update urls.py
 
 # Popup form for residents to fill out
-# TODO: Make sure the resident sending is attached to this
 def Resident_Idea_Submission_View(request):
     #processing goes here: can look things up in DB, render HTML template
     if request.method == 'POST':
@@ -35,12 +34,14 @@ def Resident_Idea_Submission_View(request):
 
 
 # City Admin Inbox for viewing suggestions sent in by residents
+# @permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Inbox_View(request):
     ideas = Idea.objects.all().order_by('-time_stamp') #grab all entries from the Idea table
     return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas})
 
 # City Admin idea detail page
 # Updates an idea status to read and navigates to a detail page to display contents
+# @permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Detail(request, pk):
     idea = Idea.objects.get(pk=pk)
     idea.read_status = True

@@ -26,8 +26,7 @@ class Idea(models.Model):
 
     #for our defined options, put in common.options and import it to the model
     topic = models.CharField(max_length = TOPIC_MAX_LENGTH, 
-                             choices = Topic_Options.choices,
-                             default = 'general')
+                             choices = Topic_Options.choices)
 
     message = models.TextField(blank = False)
     
@@ -41,5 +40,13 @@ class Idea(models.Model):
     
     # Method to print idea objects as a formatted string
     def __str__(self):
-        return (f"Topic: {self.topic}, Subject: {self.subject_line}, Time: {self.time_stamp}")
-        #return (f"Topic: {self.topic}, From: {self.resident.user_name}, Subject: {self.subject_line}, Time: {self.time_stamp}")
+        display_resident = self.resident.username if self.resident is not None else self.resident
+        formatted_time = self.time_stamp.strftime("%Y-%m-%d %H:%M:%S")
+        return (f"Topic: {self.topic}, "
+                f"From: {display_resident}, "
+                f"Subject: {self.subject_line}, "
+                f"Time: {formatted_time}")
+    
+    # Method to get the resident who submitted the idea
+    def get_resident(self):
+        return self.resident.username if self.resident is not None else self.resident
