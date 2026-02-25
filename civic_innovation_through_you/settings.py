@@ -102,7 +102,7 @@ TEMPLATES = [
     },
 ]
 
-MACHINA_BASE_TEMPLATE_NAME = "forum.html"
+MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
 
 WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
 
