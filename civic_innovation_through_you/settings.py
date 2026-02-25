@@ -170,9 +170,11 @@ CACHES = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Note: can change to a more powerful forum search option (see machina docs)
+# Note: can change to a more powerful forum search option (see machina documentation https://django-machina.readthedocs.io/en/stable/getting_started.html)
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
     },
 }
+
+MACHINA_FORUM_NAME = "Civic Innovation Through You"
