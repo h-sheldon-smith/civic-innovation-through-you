@@ -12,6 +12,9 @@ source .venv/bin/activate
 # Install python packages
 pip install -r requirements.txt
 
+# Install Machina models
+python manage.py migrate
+
 # Run server
 python manage.py runserver
 
