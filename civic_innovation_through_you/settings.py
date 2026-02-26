@@ -104,8 +104,11 @@ TEMPLATES = [
 
 MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
 
-WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
+# MACHINA_FORUM_NAME = "Civic Innovation Through You"
+MACHINA_FORUM_NAME = " "
 
+
+WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -179,6 +182,3 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
     },
 }
-
-# MACHINA_FORUM_NAME = "Civic Innovation Through You"
-MACHINA_FORUM_NAME = " "

@@ -28,8 +28,6 @@
     {% endif %}
 
     <a href="{% url 'forum:index' %}"
-    {% comment %} <a href="{% url 'my_forum_template' %}" {% endcomment %}
-    {% comment %} <a href="{% url 'idea_forum_board_base' %}" {% endcomment %}
       class="nav-btn {% if request.path == about_url %}active{% endif %}">
       <img class="nav-icon-img" src="{% static 'icons/discussionIcon.svg' %}" alt="" aria-hidden="true">
       Discussions
