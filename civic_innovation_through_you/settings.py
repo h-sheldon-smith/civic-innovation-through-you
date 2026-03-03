@@ -185,7 +185,7 @@ HAYSTACK_CONNECTIONS = {
 
 # resident account permissions
 MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
-    "can_see_forum",
+    'can_see_forum',
     'can_read_forum',
     'can_start_new_topics',
     'can_reply_to_topics',
