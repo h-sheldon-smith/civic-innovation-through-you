@@ -182,3 +182,18 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
     },
 }
+
+# resident account permissions
+MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
+    "can_see_forum",
+    'can_read_forum',
+    'can_start_new_topics',
+    'can_reply_to_topics',
+    'can_delete_own_posts',
+    'can_edit_own_posts',
+    'can_post_without_approval', # if off, requires manual moderator permission before each post is displayed
+    'can_vote_in_polls',
+    # for attachments (user can attach an image when posting):
+    'can_attach_file',
+    'can_download_file',
+]
