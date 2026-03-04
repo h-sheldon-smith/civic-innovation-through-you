@@ -4,3 +4,9 @@
 |-------|--------|-------------|-----------------|---------------|-----------|------|
 
 |T-00   | Sever Startup - idea_suggestion | Run python manage.py runserver | Server starts without errors | Server started and displayed placeholder value from views.py | Pass| - |
+|T-01   | idea_suggestion - urls | Run python test idea_suggestion | URL tests resolve to correct views| All tests in idea_suggestion.test_urls.py passed | Pass| Tested routes:<br>- admin/inbox/<br>- admin/idea_detail/<int:pk>/<br>- resident/submission/  |
+|T-02   | idea_suggestion - models, fields | Run python test idea_suggestion.tests.test_models | Field values in Idea model follow defaults and constraints | All TestField tests passed | Pass| Tested: <br>- test_delete_user <br>- test_topic_valid <br>- test_time_stamp_default_value <br>- test_read_status_default_value <br>- test_file_location_default_value |
+|T-03   | idea_suggestion - models, methods | Run python test idea_suggestion.tests.test_models | Methods in Idea model return expected values | All TestMethods tests passed | Pass| Tested: <br>- test__str__no_resident <br>- test__str__with_resident <br>- test__get_resident__no_resident <br>- test__get_resident__with_resident
+|T-04   | idea_suggestion - views | Run python test idea_suggestion.tests.test_views | Views return 200 code status and load correct template | All TestView tests passed | Pass| Tested: <br>- test_resident_submission <br>- test_admin_inbox <br>- test_admin_idea_detail
+
+|T-05   | idea_suggestion - forms (Submit Idea Form) | Run python test idea_suggestion.tests.test_forms | Forms are valid when fields are filled with legal inputs and not valid when empty or filled with illegal contents | All TestForms tests passed | Pass| Tested: <br>- test_idea_form_is_valid <br>- test_idea_form_empty <br>- test_idea_form_illegal_topic
