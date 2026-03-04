@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from . import forms
-from .models import Idea
+from idea_suggestion.models import Idea
 
 # Create your views here (http request/response handling)
 # Don't forget to update urls.py
@@ -32,12 +32,14 @@ def Resident_Idea_Submission_View(request):
     return render(request, 'ideas/ideas_resident.html', {'idea_form': idea_form})
 
 
-
 # City Admin Inbox for viewing suggestions sent in by residents
 # @permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Inbox_View(request):
-    ideas = Idea.objects.all().order_by('-time_stamp') #grab all entries from the Idea table
-    return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas})
+    sort = request.GET.get("sort", "-time_stamp") #default sorting by newest timestamp
+    ideas = Idea.objects.all().order_by(sort)
+
+    return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas, 'sort': sort})
+
 
 # City Admin idea detail page
 # Updates an idea status to read and navigates to a detail page to display contents
