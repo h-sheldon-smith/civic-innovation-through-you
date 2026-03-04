@@ -1,5 +1,5 @@
 from django.db import models
-from common.choices import User_Type, USER_TYPE_MAX_LENGTH, Account_Status, ACCT_STATUS_MAX_LENGTH
+from common.choices import Account_Status, ACCT_STATUS_MAX_LENGTH
 from common.validators import phone_number_validator
 
 # SHARED MODELS ACROSS ALL FEATURE GO HERE (E.G. Residents, CityAdmin)
@@ -30,9 +30,9 @@ class User(models.Model):
                              unique = True)
 
     
-    user_type = models.CharField(max_length = USER_TYPE_MAX_LENGTH, 
-                                 choices = User_Type.choices,
-                                 blank = False)
+    # user_type = models.CharField(max_length = USER_TYPE_MAX_LENGTH, 
+    #                              choices = User_Type.choices,
+    #                              blank = False)
     
     account_creation = models.DateTimeField(auto_now_add = True)
 
