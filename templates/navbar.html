@@ -27,8 +27,7 @@
     </a>
     {% endif %}
 
-    {% url 'about' as about_url %}    
-    <a href="{% url 'about' %}"
+    <a href="{% url 'forum:index' %}"
       class="nav-btn {% if request.path == about_url %}active{% endif %}">
       <img class="nav-icon-img" src="{% static 'icons/discussionIcon.svg' %}" alt="" aria-hidden="true">
       Discussions

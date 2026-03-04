@@ -4,6 +4,8 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.venv/
+.venv/pyvenv.cfg
 
 # Django
 db.sqlite3

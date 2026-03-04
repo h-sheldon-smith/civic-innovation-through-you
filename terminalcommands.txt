@@ -1,7 +1,21 @@
 Commands on new computer to run the server:
 
+# Create virtual environment
 python -m venv .venv
+
+# Windows:
 .venv\Scripts\activate
+
+# WSL/Linux:
+source .venv/bin/activate
+
+# Install python packages
+pip install -r requirements.txt
+
+# Install Machina models
+python manage.py migrate
+
+# Run server
 pip install -r requirements.txt
 (or)
 pip install Django
@@ -10,8 +24,12 @@ pip install freezegun
 
 python manage.py runserver
 
-Create Super User (SuperUser Account):
+# Create Super User (SuperUser Account):
 python manage.py createsuperuser
 
-Promote Existing Account to Site Admin (City Administrator Account):
+# Promote Existing Account to Site Admin (City Administrator Account):
 python manage.py promote_to_site_admin username
+
+# Create user
+python manage.py shell
+from django.contrib.auth import get_user_model; get_user_model().objects.create_user(username='admin1',password='letmein!1!',email='foo@b.com')

@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 
+from machina import MACHINA_MAIN_TEMPLATE_DIR, MACHINA_MAIN_STATIC_DIR
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,12 +42,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'common',
+    'django.contrib.sites', # additional machina requirement
 
-     # Add application names for apps you make here:
+    # apps
+    'common',
     'idea_suggestion.apps.IdeaSuggestionConfig',
-    'users'
-    
+    'users',
+    'idea_forum',
+
+    # Machina dependencies:
+    'mptt',
+    'haystack',
+    'widget_tweaks',
+
+    # Machina apps:
+    'machina',
+    'machina.apps.forum',
+    'machina.apps.forum_conversation',
+    'machina.apps.forum_conversation.forum_attachments',
+    'machina.apps.forum_conversation.forum_polls',
+    'machina.apps.forum_feeds',
+    'machina.apps.forum_moderation',
+    'machina.apps.forum_search',
+    'machina.apps.forum_tracking',
+    'machina.apps.forum_member',
+    'machina.apps.forum_permission',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'machina.apps.forum_permission.middleware.ForumPermissionMiddleware',
 ]
 
 ROOT_URLCONF = 'civic_innovation_through_you.urls'
@@ -64,21 +85,30 @@ ROOT_URLCONF = 'civic_innovation_through_you.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            MACHINA_MAIN_TEMPLATE_DIR,
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'idea_suggestion.context_processor.idea_form_processor'
+                'idea_suggestion.context_processor.idea_form_processor',
+                'machina.core.context_processors.metadata',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
+MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
 
+# MACHINA_FORUM_NAME = "Civic Innovation Through You"
+MACHINA_FORUM_NAME = " "
+
+
+WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -126,9 +156,43 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    MACHINA_MAIN_STATIC_DIR,
+]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'machina_attachments': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/tmp',
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Note: can change to a more powerful forum search option (see machina documentation https://django-machina.readthedocs.io/en/stable/getting_started.html)
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
+
+# resident account permissions
+MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
+    'can_see_forum',
+    'can_read_forum',
+    'can_reply_to_topics',
+    'can_delete_own_posts',
+    'can_edit_own_posts',
+    'can_post_without_approval', # if off, requires manual moderator permission before each post is displayed
+    'can_vote_in_polls',
+    # for attachments (user can attach an image when posting):
+    'can_attach_file',
+    'can_download_file',
+]

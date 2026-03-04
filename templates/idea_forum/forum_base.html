@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% comment %} replaces Machina's _base.html; is the base that's extended by Machina's board_base.html {% endcomment %}
+
+{% block extra_head %}
+    {% block css %}
+    {% endblock css %}
+
+    {% block extra_css %}
+    {% endblock extra_css %}
+{% endblock %}
+
+{% block title %}CITY Forum{% endblock %}
+
+{% block city_content %}
+    {% block js %}
+    {% endblock js %}
+
+    {% block body %}
+    {% endblock body %}
+
+    {% comment %} {% block content %}
+    {% endblock %} {% endcomment %}
+
+    {% block extra_js %}
+    {% endblock extra_js %}
+{% endblock %}
+
+{% block city_scripts %}
+
+{% endblock %}

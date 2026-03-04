@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from machina import urls as machina_urls
+
 from . import views
 
 urlpatterns = [
@@ -25,5 +27,7 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),
     path('ideas/', include('idea_suggestion.urls')), #path for idea_suggestions app
-    path('users/', include('users.urls')) #path for users app
+    path('users/', include('users.urls')), #path for users app
+    path('forum/', include(machina_urls)),
+    # path('ideas_forum/', include('idea_forum.urls')),
 ]
