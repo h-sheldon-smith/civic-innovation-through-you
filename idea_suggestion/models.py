@@ -1,5 +1,5 @@
 from django.db import models
-from common.models import User
+from django.contrib.auth.models import User
 from common.choices import Topic_Options, TOPIC_MAX_LENGTH, IDEA_FOLDERS, IDEA_FOLDERS_MAX_LENGTH
 
 # Create your models here (db)
@@ -8,13 +8,14 @@ from common.choices import Topic_Options, TOPIC_MAX_LENGTH, IDEA_FOLDERS, IDEA_F
 
 # class Name(models.Model):
 class Idea(models.Model):
-    # using another model (User) as an attribute in this model (Idea)
-    # resident = models.ForeignKey(
-    #    User,
-    #    on_delete = models.SET_NULL, # keep the idea even if the user is deleted
-    #    null = True,
-    #    related_name = 'ideas' # lets you look up all ideas by the given resident
-    #)
+    #using another model (User) as an attribute in this model (Idea)
+    resident = models.ForeignKey(
+       User,
+       default = None,
+       on_delete = models.SET_NULL, # keep the idea even if the user is deleted
+       null = True,
+       related_name = 'ideas' # lets you look up all ideas by the given resident
+    )
 
      # field_name = models.TypeOfField(optional_constraints = some_value)
     subject_line = models.CharField(max_length = 50, 
@@ -23,8 +24,7 @@ class Idea(models.Model):
 
     #for our defined options, put in common.options and import it to the model
     topic = models.CharField(max_length = TOPIC_MAX_LENGTH, 
-                             choices = Topic_Options.choices,
-                             default = 'general')
+                             choices = Topic_Options.choices)
 
     message = models.TextField(blank = False)
     
@@ -38,5 +38,13 @@ class Idea(models.Model):
     
     # Method to print idea objects as a formatted string
     def __str__(self):
-        return (f"Topic: {self.topic}, Subject: {self.subject_line}, Time: {self.time_stamp}")
-        #return (f"Topic: {self.topic}, From: {self.resident.user_name}, Subject: {self.subject_line}, Time: {self.time_stamp}")
+        display_resident = self.resident.username if self.resident is not None else self.resident
+        formatted_time = self.time_stamp.strftime("%Y-%m-%d %H:%M:%S")
+        return (f"Topic: {self.topic}, "
+                f"From: {display_resident}, "
+                f"Subject: {self.subject_line}, "
+                f"Time: {formatted_time}")
+    
+    # Method to get the resident who submitted the idea
+    def get_resident(self):
+        return self.resident.username if self.resident is not None else self.resident

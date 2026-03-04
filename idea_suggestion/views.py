@@ -1,14 +1,14 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from . import forms
-from .models import Idea
+from idea_suggestion.models import Idea
 
 # Create your views here (http request/response handling)
 # Don't forget to update urls.py
 
 # Popup form for residents to fill out
-# TODO: Make sure the resident sending is attached to this
 def Resident_Idea_Submission_View(request):
     #processing goes here: can look things up in DB, render HTML template
     if request.method == 'POST':
@@ -16,9 +16,12 @@ def Resident_Idea_Submission_View(request):
 
         # django checks that required fields are present, data type is correct, check against constraints specified in the model
         if idea_form.is_valid():
-            idea_form.save() # django makes an instance and writes to the database
-
+            idea_instance = idea_form.save(commit = False) # django makes an instance of the form
+            idea_instance.resident = request.user # add the logged in user
+            idea_instance.save()
+           
             return JsonResponse({"success": True})
+        
         else:
             return JsonResponse({"success": False})
 
@@ -30,16 +33,18 @@ def Resident_Idea_Submission_View(request):
     return render(request, 'ideas/ideas_resident.html', {'idea_form': idea_form})
 
 
-
 # City Admin Inbox for viewing suggestions sent in by residents
-@permission_required("users.can_admin_site", raise_exception=True)
+# @permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Inbox_View(request):
-    ideas = Idea.objects.all() #grab all entries from the Idea table
-    return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas})
+    sort = request.GET.get("sort", "-time_stamp") #default sorting by newest timestamp
+    ideas = Idea.objects.all().order_by(sort)
+
+    return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas, 'sort': sort})
+
 
 # City Admin idea detail page
 # Updates an idea status to read and navigates to a detail page to display contents
-@permission_required("users.can_admin_site", raise_exception=True)
+# @permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Detail(request, pk):
     idea = Idea.objects.get(pk=pk)
     idea.read_status = True
