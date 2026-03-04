@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'common',
 
      # Add application names for apps you make here:
-    'idea_suggestion.apps.IdeaSuggestionConfig'
+    'idea_suggestion.apps.IdeaSuggestionConfig',
+    'users'
     
 ]
 

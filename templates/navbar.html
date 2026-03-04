@@ -18,12 +18,14 @@
 
     <!-- City Admin Idea Inbox-->
     <!-- TODO: Put this on another navbar OR show/hide based on permissions-->
+    {% if perms.users.can_admin_site %}
     {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
     <a href="{{ admin_idea_inbox_url }}"
       class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
       <img class="nav-icon-img" src="{% static 'icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
       View Ideas
     </a>
+    {% endif %}
 
     {% url 'about' as about_url %}    
     <a href="{% url 'about' %}"
