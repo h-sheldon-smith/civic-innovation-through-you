@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from common.choices import Topic_Options, TOPIC_MAX_LENGTH, IDEA_FOLDERS, IDEA_FOLDERS_MAX_LENGTH
 
-
-
 # Create your models here (db)
 # Classes/models represent tables in a DB
 # Attributes = fields
