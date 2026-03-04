@@ -16,6 +16,8 @@ media/
 # Environment
 .Environment
 .env
+.venv
+.venv/
 venv/
 env/
 
@@ -28,3 +30,4 @@ Thumbs.db
 
 # Local Files
 UI-Prototype/
+.venv/
