@@ -119,15 +119,18 @@ html, body {
 
 /* Sidebar */
 .sidebar {
-  width: 240px;           /* sidebar width */
+  width: 300px;           /* sidebar width */
   border-right: 1px solid #ccc;
-  background: #f7f7f7;
-  padding: 16px;
+  background: #d4d4d4;
+  padding: 24px;
   box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
 .sidebar-title {
   margin: 0 0 12px 0;
+  font-size: 2rem; 
+  font-weight: bold;
 }
 
 .sidebar-nav {
@@ -184,3 +187,25 @@ html, body {
 .logout-button:hover {
   opacity: .85;
 }
+
+.sidebar-user {
+  font: inherit;
+  padding: 8px 0px;
+  align-items: center;
+  justify-content: center;
+  display:inline-flex;
+  gap: 16px;
+}
+
+.user-sidebar-icon-img {
+    width: 48px; 
+    height: 48px;
+    background: #8f8f8f;
+    border-radius: 25px;
+}
+
+.username {
+    margin: 0;            
+    font-size: 2rem; 
+}
+
