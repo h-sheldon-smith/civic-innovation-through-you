@@ -22,12 +22,6 @@ IDEA_FOLDERS = [('Inbox', 'Inbox')] + list(Topic_Options.choices)
 
 IDEA_FOLDERS_MAX_LENGTH = max(len(value) for value, _ in IDEA_FOLDERS)
 
-class User_Type(models.TextChoices):
-    RESIDENT = 'Resident', 'Resident'
-    CITYADMIN = 'City Admin', 'City Admin'
-
-USER_TYPE_MAX_LENGTH = max(len(choice.value) for choice in User_Type)
-
 class Account_Status(models.TextChoices):
     ACTIVE = 'Active', 'Active'
     INACTIVE = 'Inactive', 'Inactive'
@@ -35,9 +29,3 @@ class Account_Status(models.TextChoices):
     BANNED = 'Banned', 'Banned'
 
 ACCT_STATUS_MAX_LENGTH = max(len(choice.value) for choice in Account_Status)
-
-
-
-
-
-
