@@ -187,6 +187,7 @@ HAYSTACK_CONNECTIONS = {
 MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     'can_see_forum',
     'can_read_forum',
+    # 'can_start_new_topics',
     'can_reply_to_topics',
     'can_delete_own_posts',
     'can_edit_own_posts',
