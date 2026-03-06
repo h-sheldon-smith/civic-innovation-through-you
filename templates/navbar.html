@@ -11,13 +11,15 @@
       Home
     </a>
 
+    <!-- Submit Idea Button -->
+    {% if user.is_authenticated %}
     <button type="button" class="nav-btn" id="open-modal">
       <img class="nav-icon-img" src="{% static 'icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
       Submit Idea
     </button>
+    {% endif %}
 
     <!-- City Admin Idea Inbox-->
-    <!-- TODO: Put this on another navbar OR show/hide based on permissions-->
     {% if perms.users.can_admin_site %}
     {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
     <a href="{{ admin_idea_inbox_url }}"
@@ -27,6 +29,7 @@
     </a>
     {% endif %}
 
+    <!-- Forums -->
     <a href="{% url 'forum:index' %}"
       class="nav-btn {% if request.path == about_url %}active{% endif %}">
       <img class="nav-icon-img" src="{% static 'icons/discussionIcon.svg' %}" alt="" aria-hidden="true">
