@@ -4,10 +4,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.venv/
-.venv/*
-*.venv/
-*.venv/*
 
 # Django
 db.sqlite3
@@ -20,6 +16,9 @@ media/
 .env
 .venv
 .venv/
+.venv/*
+*.venv/
+*.venv/*
 venv/
 env/
 
@@ -32,4 +31,3 @@ Thumbs.db
 
 # Local Files
 UI-Prototype/
-.venv/
