@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% comment %} replaces Machina's _base.html; is the base that's extended by Machina's board_base.html {% endcomment %}
 
@@ -9,6 +10,8 @@
 
     {% block extra_css %}
     {% endblock extra_css %}
+
+    <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}"> -->
 {% endblock %}
 
 {% block title %}CITY Forum{% endblock %}
