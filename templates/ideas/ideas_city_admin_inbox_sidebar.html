@@ -1,0 +1,46 @@
+{% extends 'sidebar.html' %}
+{% load static %}
+
+{% block city_sidebar_content %}  
+    <form id='filter' action="{% url 'admin_idea_inbox' %}">
+        <!-- SEARCH -->
+         <div>
+            <h3 class="sidebar-title">Search</h3>
+            {% for field in search %}
+                {{ field.label_tag }}
+                {{ field }}<br>
+            {% endfor %}
+         </div>
+         <br><br>
+
+        <!-- FILTER -->
+        <div>
+            <h3 class="sidebar-title">Filters</h3>
+            <details class ="filter-dropdown">
+                <summary>Topics</summary>
+                {{ filter.topic_filter }}
+            </details> 
+            <br>
+            <detail class = "filter-dropdown">
+                <summary>Read Status</summary>
+                {{ filter.read_filter }}
+            </detail>
+        </div>
+        <br><br>
+
+        <!--SORT -->
+        <div>
+            <h3 class="sidebar-title">Sort</h3>
+            <details class ="filter-dropdown">
+                <summary>Sort Options</summary> {{ sort.sort_options }}
+            </detail>
+        </div>
+        <br><br>
+        <div>
+            <input type="submit" class="nav-btn" id="submit-options" value = "Apply Options">
+            <br>
+            <button class="nav-btn" id="clear" name="clear-options">Clear Options</button>
+        </div>
+    </form> 
+    <br><br>
+{% endblock %}

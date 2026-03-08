@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block city_sidebar %}
+    {% include 'ideas/ideas_city_admin_inbox_sidebar.html' %}
+{% endblock %}
+
 {% block title %}City Admin Inbox{% endblock %}
 
 {% block city_content %}
@@ -9,81 +13,10 @@
 </div>
 <table class="idea-table">
     <tr>
-        <!-- Topic Sort -->
-        <th style="text-align: left">
-            {% if sort == "topic" %}
-                {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-                <a href="?sort=-topic"
-                    class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-                    <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">    
-                </a>
-                Topic
-            {% else %}
-                {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-                <a href="?sort=topic"
-                    class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-                    <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
-                </a>
-                Topic
-            {% endif %}
-        </th>
-
-        <!-- Subject Line Sort -->
-        <th style="text-align: left">
-            {% if sort == "subject_line" %}
-                {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-                <a href="?sort=-subject_line"
-                    class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-                    <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">    
-                </a>
-                Subject Line
-            {% else %}
-                {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-                <a href="?sort=subject_line"
-                    class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-                    <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
-                </a>
-                Subject Line
-            {% endif %}
-        </th>
-
-        <!-- Date / Time Stamp Sort -->
-        <th style="text-align: left">
-            {% if sort == "time_stamp" %}
-                {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-                <a href="?sort=-time_stamp"
-                    class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-                    <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">    
-                </a>
-                Date
-            {% else %}
-                {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-                <a href="?sort=time_stamp"
-                    class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-                    <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
-                </a>
-                Date
-            {% endif %}    
-        </th>
-
-        <!-- Read Status Sort -->
-        <th style="text-align: left">
-            {% if sort == "read_status" %}
-                {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-                <a href="?sort=-read_status"
-                    class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-                    <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">    
-                </a>
-                Read Status
-            {% else %}
-                {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-                <a href="?sort=read_status"
-                    class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-                    <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
-                </a>
-                Read Status
-            {% endif %}    
-        </th>
+        <th style="text-align: left">Topic</th>
+        <th style="text-align: left">Subject Line</th>
+        <th style="text-align: left">Date</th>
+        <th style="text-align: left">Read Status</th>
     </tr>
 
     {% for suggestion in ideas %}

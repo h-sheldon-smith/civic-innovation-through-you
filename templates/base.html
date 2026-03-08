@@ -16,7 +16,8 @@
 <body>
     {% include 'navbar.html' %}
     <div class="page-layout">
-        {% include 'homeSidebar.html' %}
+        <!-- {% include 'homeSidebar.html' %} -->
+        {% block city_sidebar %}{% endblock %}
         <main class="main-content">
           {% block city_content %}{% endblock %}
           {% block city_scripts %}{% endblock %}
