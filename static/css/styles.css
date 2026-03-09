@@ -11,6 +11,7 @@ html, body {
 }
 
 .navbar {
+  display: block;
   border: 2px solid #ccc;
   background: #9B9A9A;
   padding: 22px 20px;
@@ -19,6 +20,8 @@ html, body {
   margin: 0;
   font-family: "Inter", sans-serif;
   font-weight: bold;
+  line-height: 1.2;
+  color: #000;
 }
 
 .navbar span {
