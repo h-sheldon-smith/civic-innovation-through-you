@@ -11,6 +11,7 @@ html, body {
 }
 
 .navbar {
+  display: block;
   border: 2px solid #ccc;
   background: #9B9A9A;
   padding: 22px 20px;
@@ -19,6 +20,8 @@ html, body {
   margin: 0;
   font-family: "Inter", sans-serif;
   font-weight: bold;
+  line-height: 1.2;
+  color: #000;
 }
 
 .navbar span {
@@ -71,6 +74,7 @@ html, body {
 
 /* modal box */
 .modal {
+  display: block;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -79,6 +83,7 @@ html, body {
   background: white;
   border: 1px solid #ccc;
   border-radius: 10px;
+  height: min(600px, 100%);
   width: min(600px, 100%);
   padding: 16px;
   box-sizing: border-box;
@@ -125,6 +130,7 @@ html, body {
   padding: 24px;
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
+  user-select: none;
 }
 
 .sidebar-title {
@@ -208,4 +214,44 @@ html, body {
     margin: 0;            
     font-size: 2rem; 
 }
+
+.idea-pic {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+}
+
+.idea-detail-table {
+  width: 95%;
+  font-size: 25px;
+}
+
+.idea-table {
+  width: 95%;
+  font-size: 25px;
+  text-align: left;
+  border-spacing: 0;
+}
+
+.idea-table thead tr{
+    font-weight: bold;
+    font-size: 30px;
+    position: sticky;
+    top: 0;
+    background: thistle;
+}
+
+.idea-table tbody tr:nth-child(odd){
+    background: honeydew;
+    cursor: pointer;
+    user-select: none;
+}
+
+.idea-table tbody tr:nth-child(even){
+    background: powderblue;
+    cursor: pointer;
+    user-select: none;
+}
+
+
 

@@ -9,24 +9,27 @@
 
 {% block city_content %}
 <div class="modal-header">
-        <h2 id="not-submitted-title">City Admin Inbox</h2>
+        <h1 id="not-submitted-title">City Admin Inbox</h2>
 </div>
 <table class="idea-table">
-    <tr>
-        <th style="text-align: left">Topic</th>
-        <th style="text-align: left">Subject Line</th>
-        <th style="text-align: left">Date</th>
-        <th style="text-align: left">Read Status</th>
-    </tr>
-
-    {% for suggestion in ideas %}
-    <tr data-href="{% url 'admin_idea_detail' suggestion.id %}">
-        <td style="padding-right: 25px">{{ suggestion.topic }}</td>
-        <td style="padding-right: 25px">{{ suggestion.subject_line }}</td>
-        <td style="padding-right: 25px">{{ suggestion.time_stamp }}</td>
-        <td style="padding-right: 25px">{{ suggestion.read_status }}</td>
-    </tr> 
-    {% endfor %}
+    <thead>
+        <tr>
+            <th>Topic</th>
+            <th>Subject Line</th>
+            <th>Date</th>
+            <th>Read Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for suggestion in ideas %}
+            <tr data-href="{% url 'admin_idea_detail' suggestion.id %}">
+                <td>{{ suggestion.topic }}</td>
+                <td>{{ suggestion.subject_line }}</td>
+                <td>{{ suggestion.time_stamp }}</td>
+                <td>{{ suggestion.read_status }}</td>
+            </tr> 
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}
 

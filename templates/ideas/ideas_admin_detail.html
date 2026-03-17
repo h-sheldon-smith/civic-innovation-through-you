@@ -5,7 +5,7 @@
 
 {% block city_content %}
 <div class="modal-header">
-        <h2 id="not-submitted-title">Resident Idea</h2>
+        <h1 id="not-submitted-title">Resident Idea</h2>
 </div>
 
 <table class="idea-detail-table">
@@ -19,6 +19,9 @@
         <td><span style="font-weight:bold">Subject: </span>{{ idea.subject_line }}</td>
     </tr>
     <tr>
+        <td><span style="font-weight:bold">Location: </span>{{ idea.location }}</td>
+    </tr>
+    <tr>
         <td><span style="font-weight:bold">Sent: </span>{{ idea.time_stamp }}</td>
     </tr>
     <tr>
@@ -26,6 +29,9 @@
     </tr>
     <tr> 
         <td>{{ idea.message }}</td>
-    </tr> 
+    </tr>
 </table>
+{% if idea.picture %}
+    <img src="{{ idea.picture.url }}" alt="{{ idea.picture }}" class="idea-pic"/>
+{% endif %}
 {% endblock %}

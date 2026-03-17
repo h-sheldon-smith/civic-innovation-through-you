@@ -12,7 +12,7 @@ from idea_suggestion.models import Idea
 def Resident_Idea_Submission_View(request):
     #processing goes here: can look things up in DB, render HTML template
     if request.method == 'POST':
-        idea_form = forms.SubmitIdeaForm(request.POST) # make an idea submission using the request.POST contents
+        idea_form = forms.SubmitIdeaForm(request.POST, request.FILES) # make an idea submission using the request.POST contents
 
         # django checks that required fields are present, data type is correct, check against constraints specified in the model
         if idea_form.is_valid():
