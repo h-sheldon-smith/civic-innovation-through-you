@@ -34,6 +34,7 @@
     {% url 'users:account_list' as account_list_url %}
     <a href="{{ account_list_url }}"
       class="nav-btn {% if request.path == account_list_url %}active{% endif %}">
+      <img class="nav-icon-img" src="{% static 'icons/userIcon.svg' %}" alt="" aria-hidden="true">
       Manage Accounts
     </a>
     {% endif %}
