@@ -28,6 +28,8 @@ class Command(BaseCommand):
         perm_names = []
         # topic creation
         perm_names = perm_names + ["can_start_new_topics", "can_post_announcements", "can_post_stickies", "can_post_without_approval"]
+        # poll creation
+        perm_names = perm_names + ["can_create_polls"]
         # forum moderation
         perm_names = perm_names + ["can_lock_topics", "can_move_topics", "can_edit_posts", "can_delete_posts", "can_approve_posts", "can_reply_to_locked_topics"]
         
