@@ -27,6 +27,13 @@ class Idea(models.Model):
                              choices = Topic_Options.choices)
 
     message = models.TextField(blank = False)
+
+    picture = models.ImageField(
+        upload_to='ideas/',
+        blank = True,
+        null = True,
+        default = None
+        )
     
     # these fields will auto populate values to follow default or current time once an instance is created
     time_stamp = models.DateTimeField(auto_now_add = True, 

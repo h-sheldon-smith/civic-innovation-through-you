@@ -8,7 +8,7 @@
         <h2 id="submitted-title" style="display:none">Thank you!</h2>
         <button type="button" class="modal-close" id="close-modal" aria-label="Close">×</button>
     </div>
-    <form id='idea_form' action="{% url 'resident_idea_submission' %}" method="post">
+    <form id='idea_form' action="{% url 'resident_idea_submission' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in idea_form %}
             {{ field.label_tag }}

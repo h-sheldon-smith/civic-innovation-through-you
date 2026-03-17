@@ -1,8 +1,9 @@
+{% extends 'sidebar.html' %}
 {% load static %}
 
-<aside class="sidebar">
+{% block city_sidebar_content %}
   <h3 class="sidebar-title">About Me</h3>
-  <ul class="sidebar-nav">
+
 
     {% if user.is_authenticated %}
 
@@ -14,5 +15,4 @@
 
     {% endif %}
 
-  </ul>
-</aside>
+{% endblock %}

@@ -1,8 +1,5 @@
 <aside class="sidebar">
-  <h3 class="sidebar-title">Menu</h3>
   <ul class="sidebar-nav">
-    <li><a href="{% url 'index' %}">Home</a></li>
-    <li><a href="{% url 'about' %}">About</a></li>
-    <li><a href="{% url 'contact' %}">Contact</a></li>
+    {% block city_sidebar_content %}{% endblock %}
   </ul>
 </aside>
