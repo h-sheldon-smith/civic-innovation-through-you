@@ -11,9 +11,6 @@ from machina.apps import forum_permission
 class Command(BaseCommand):
     help = "Add a user to the site_admin group"
 
-    # We need to load these manually (since machina permissions use an Abstract Model)
-    ForumPermission = get_model('forum_permission', 'ForumPermission')
-
     def add_arguments(self, parser):
         parser.add_argument("username", type=str, help="The user's username")
 
@@ -23,43 +20,31 @@ class Command(BaseCommand):
 
         self.add_forum_permissions(group)
 
+    # Important note: Machina's permissions are in a Machina-specific internal permission table, ForumPermission
     def add_forum_permissions(self, group):
+        ForumPermission = get_model('forum_permission', 'ForumPermission')
+        GroupForumPermission = get_model('forum_permission', 'GroupForumPermission')
+
         perm_names = []
         # topic creation
         perm_names = perm_names + ["can_start_new_topics", "can_post_announcements", "can_post_stickies", "can_post_without_approval"]
         # forum moderation
         perm_names = perm_names + ["can_lock_topics", "can_move_topics", "can_edit_posts", "can_delete_posts", "can_approve_posts", "can_reply_to_locked_topics"]
         
-        # Ensure the Machina model is loaded into the registry
-        # This prevents 'AppRegistryNotReady' or missing ContentType errors
-        ForumPermission = get_model('forum_permission', 'ForumPermission')
-
         for perm_codename in perm_names:
-            self.add_a_forum_permission(group, perm_codename)
+            # add Machina permission to Machina's internal ForumPermission table (instead of the general Django Group.permissions table)
+            try:
+                forum_perm = ForumPermission.objects.get(codename=perm_codename)
+            except ForumPermission.DoesNotExist:
+                self.stdout.write(f"Machina permission {perm_codename} not found; make sure Django-Machina is installed, run manage.py migrate and try again")
+                return
 
-    def add_a_forum_permission(self, group, perm_codename):
-        # Ensure the ContentType exists for the Machina permission app
-        # Machina permissions are logically tied to the 'forum_permission' app label
-        content_type, _ = ContentType.objects.get_or_create(
-            app_label='forum_permission', 
-            model='forumpermission'
-        )
-
-        # Get or create the specific permission
-        # We use get_or_create here to bypass the DoesNotExist error entirely
-        perm, created = Permission.objects.get_or_create(
-            codename=perm_codename,
-            content_type=content_type,
-            # defaults={'name': 'Can lock topics'}
-        )
-
-        if created:
-            self.stdout.write(self.style.SUCCESS(f"Created missing permission: {perm.codename}"))
-
-        # Assign the permission to the group
-        if not group.permissions.filter(id=perm.id).exists():
-            group.permissions.add(perm)
-            self.stdout.write(self.style.SUCCESS(f"Successfully added {perm.codename} to {group.name} group"))
+            obj, created = GroupForumPermission.objects.get_or_create(
+                group=group,
+                permission=forum_perm,
+                forum=None, # global, apply to all forums
+                has_perm=True
+            )
 
     def handle(self, *args, **options):
         User = get_user_model()
@@ -85,5 +70,5 @@ class Command(BaseCommand):
         user.groups.add(group)
 
         self.stdout.write(self.style.SUCCESS(
-            f'User "{user.username}" added to group "site_admin".'
+            f'User "{user.username}" added to group "{group_name}".'
         ))
