@@ -12,6 +12,12 @@ from idea_suggestion.models import Idea
 def Resident_Idea_Submission_View(request):
     #processing goes here: can look things up in DB, render HTML template
     if request.method == 'POST':
+        try:
+            if request.user.is_authenticated and request.user.moderation.is_restricted():
+                return JsonResponse({"success": False, "error": "muted"})
+        except Exception:
+            pass
+
         idea_form = forms.SubmitIdeaForm(request.POST, request.FILES) # make an idea submission using the request.POST contents
 
         # django checks that required fields are present, data type is correct, check against constraints specified in the model

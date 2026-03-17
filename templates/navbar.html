@@ -29,6 +29,15 @@
     </a>
     {% endif %}
 
+    <!-- City Admin Account Management -->
+    {% if perms.users.can_admin_site %}
+    {% url 'users:account_list' as account_list_url %}
+    <a href="{{ account_list_url }}"
+      class="nav-btn {% if request.path == account_list_url %}active{% endif %}">
+      Manage Accounts
+    </a>
+    {% endif %}
+
     <!-- Forums -->
     <a href="{% url 'forum:index' %}"
       class="nav-btn {% if request.path == about_url %}active{% endif %}">
