@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Account: {{ target_user.username }}{% endblock %}
+
+{% block city_content %}
+<div class="modal-header">
+    <h2>{{ target_user.username }}</h2>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div style="padding: 10px; margin-bottom: 12px; border-radius: 4px;
+            background: {% if message.tags == 'success' %}#d4edda{% elif message.tags == 'error' %}#f8d7da{% else %}#d1ecf1{% endif %};
+            color: {% if message.tags == 'success' %}#155724{% elif message.tags == 'error' %}#721c24{% else %}#0c5460{% endif %};">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<section style="margin-bottom: 24px;">
+    <h3 style="margin-bottom: 8px;">Account Info</h3>
+    <table style="border-collapse: collapse; width: 100%; max-width: 500px;">
+        <tr><td style="padding: 6px 16px 6px 0; color: #666;">Email</td><td>{{ target_user.email|default:"—" }}</td></tr>
+        <tr><td style="padding: 6px 16px 6px 0; color: #666;">Joined</td><td>{{ target_user.date_joined|date:"F d, Y" }}</td></tr>
+        <tr><td style="padding: 6px 16px 6px 0; color: #666;">Last Login</td><td>{{ target_user.last_login|date:"F d, Y g:i A"|default:"Never" }}</td></tr>
+        <tr>
+            <td style="padding: 6px 16px 6px 0; color: #666;">Status</td>
+            <td>
+                {% if mod.status == 'active' %}
+                    <span style="color: #155724; background: #d4edda; padding: 2px 8px; border-radius: 10px; font-size: 13px;">Active</span>
+                {% elif mod.status == 'muted' %}
+                    <span style="color: #856404; background: #fff3cd; padding: 2px 8px; border-radius: 10px; font-size: 13px;">Muted</span>
+                    {% if mod.mute_until %}<span style="font-size: 13px; color: #666;"> until {{ mod.mute_until|date:"F d, Y g:i A" }}</span>{% endif %}
+                {% elif mod.status == 'suspended' %}
+                    <span style="color: #721c24; background: #f8d7da; padding: 2px 8px; border-radius: 10px; font-size: 13px;">Suspended</span>
+                    {% if mod.suspended_until %}<span style="font-size: 13px; color: #666;"> until {{ mod.suspended_until|date:"F d, Y g:i A" }}</span>{% endif %}
+                {% elif mod.status == 'banned' %}
+                    <span style="color: #fff; background: #343a40; padding: 2px 8px; border-radius: 10px; font-size: 13px;">Banned</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% if mod.reason %}
+        <tr><td style="padding: 6px 16px 6px 0; color: #666;">Reason</td><td>{{ mod.reason }}</td></tr>
+        {% endif %}
+        {% if mod.actioned_by %}
+        <tr><td style="padding: 6px 16px 6px 0; color: #666;">Last Action By</td><td>{{ mod.actioned_by.username }} on {{ mod.actioned_at|date:"F d, Y" }}</td></tr>
+        {% endif %}
+    </table>
+</section>
+
+<section>
+    <h3 style="margin-bottom: 12px;">Moderation Actions</h3>
+    <form method="post" action="{% url 'users:moderate_user' target_user.pk %}">
+        {% csrf_token %}
+
+        <div style="display: flex; flex-direction: column; gap: 12px; max-width: 420px;">
+
+            <div>
+                <label for="action" style="display: block; margin-bottom: 4px; font-weight: 600;">Action</label>
+                <select name="action" id="action" onchange="toggleDuration(this.value)"
+                    style="width: 100%; padding: 7px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+                    <option value="">— Select an action —</option>
+                    <option value="mute">Mute (timed)</option>
+                    <option value="suspend">Suspend (timed)</option>
+                    <option value="ban">Ban (permanent)</option>
+                    {% if mod.status != 'active' %}
+                    <option value="restore">Restore to Active</option>
+                    {% endif %}
+                </select>
+            </div>
+
+            <div id="duration-field" style="display: none;">
+                <label for="duration" style="display: block; margin-bottom: 4px; font-weight: 600;">Duration</label>
+                <select name="duration" id="duration"
+                    style="width: 100%; padding: 7px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+                    <option value="1 hour">1 hour</option>
+                    <option value="6 hours">6 hours</option>
+                    <option value="12 hours">12 hours</option>
+                    <option value="1 day" selected>1 day</option>
+                    <option value="3 days">3 days</option>
+                    <option value="7 days">7 days</option>
+                    <option value="2 weeks">2 weeks</option>
+                    <option value="4 weeks">4 weeks</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="reason" style="display: block; margin-bottom: 4px; font-weight: 600;">Reason <span style="color: #666; font-weight: 400;">(optional)</span></label>
+                <textarea name="reason" id="reason" rows="3"
+                    style="width: 100%; padding: 7px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; resize: vertical;"
+                    placeholder="Explain the reason for this action..."></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="nav-btn" style="padding: 8px 20px;">Apply</button>
+                <a href="{% url 'users:account_list' %}" class="nav-btn" style="padding: 8px 20px;">Back</a>
+            </div>
+        </div>
+    </form>
+</section>
+{% endblock %}
+
+{% block city_scripts %}
+<script>
+    function toggleDuration(action) {
+        const field = document.getElementById('duration-field');
+        field.style.display = (action === 'mute' || action === 'suspend') ? 'block' : 'none';
+    }
+</script>
+{% endblock %}

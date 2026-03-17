@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Account Management{% endblock %}
+
+{% block city_content %}
+<div class="modal-header">
+    <h2>Account Management</h2>
+</div>
+
+<form method="get" style="margin-bottom: 16px; display: flex; gap: 8px;">
+    <input type="text" name="search" value="{{ search }}" placeholder="Search by username..."
+        style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+    <button type="submit" class="nav-btn">Search</button>
+    {% if search %}
+        <a href="{% url 'users:account_list' %}" class="nav-btn">Clear</a>
+    {% endif %}
+</form>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" style="padding: 10px; margin-bottom: 12px; border-radius: 4px;
+            background: {% if message.tags == 'success' %}#d4edda{% elif message.tags == 'error' %}#f8d7da{% else %}#d1ecf1{% endif %};
+            color: {% if message.tags == 'success' %}#155724{% elif message.tags == 'error' %}#721c24{% else %}#0c5460{% endif %};">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<table class="idea-table">
+    <tr>
+        <th style="text-align: left">
+            <a href="?sort={% if sort == 'username' %}-username{% else %}username{% endif %}{% if search %}&search={{ search }}{% endif %}" class="nav-btn">
+                <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
+            </a>
+            Username
+        </th>
+        <th style="text-align: left">Email</th>
+        <th style="text-align: left">
+            <a href="?sort={% if sort == 'date_joined' %}-date_joined{% else %}date_joined{% endif %}{% if search %}&search={{ search }}{% endif %}" class="nav-btn">
+                <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
+            </a>
+            Joined
+        </th>
+        <th style="text-align: left">Status</th>
+    </tr>
+
+    {% for u in users %}
+    <tr data-href="{% url 'users:account_detail' u.pk %}" style="cursor: pointer;">
+        <td style="padding-right: 25px">{{ u.username }}</td>
+        <td style="padding-right: 25px">{{ u.email|default:"—" }}</td>
+        <td style="padding-right: 25px">{{ u.date_joined|date:"M d, Y" }}</td>
+        <td style="padding-right: 25px">
+            {% with status=u.moderation.status %}
+                {% if status == 'active' or not status %}
+                    <span style="color: #155724; background: #d4edda; padding: 2px 8px; border-radius: 10px; font-size: 13px;">Active</span>
+                {% elif status == 'muted' %}
+                    <span style="color: #856404; background: #fff3cd; padding: 2px 8px; border-radius: 10px; font-size: 13px;">Muted</span>
+                {% elif status == 'suspended' %}
+                    <span style="color: #721c24; background: #f8d7da; padding: 2px 8px; border-radius: 10px; font-size: 13px;">Suspended</span>
+                {% elif status == 'banned' %}
+                    <span style="color: #fff; background: #343a40; padding: 2px 8px; border-radius: 10px; font-size: 13px;">Banned</span>
+                {% endif %}
+            {% endwith %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4" style="padding: 16px 0; color: #666;">No accounts found.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+{% block city_scripts %}
+    <script src="{% static 'js/IdeaInBoxLinks.js' %}"></script>
+{% endblock %}
