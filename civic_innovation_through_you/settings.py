@@ -193,6 +193,6 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     'can_post_without_approval', # if off, requires manual moderator permission before each post is displayed
     'can_vote_in_polls',
     # for attachments (user can attach an image when posting):
-    'can_attach_file',
-    'can_download_file',
+    # 'can_attach_file',
+    # 'can_download_file',
 ]
