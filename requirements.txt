@@ -27,6 +27,7 @@ responses==0.25.8
 Jinja2==3.1.6
 MarkupSafe==3.0.3
 django-machina
+django-service-objects
 python-dotenv
 freezegun
 Pillow

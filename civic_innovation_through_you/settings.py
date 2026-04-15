@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'idea_forum',
     'auto_mod',
 
+    # 3rd-party apps
+    'service_objects',
+
     # Machina dependencies:
     'mptt',
     'haystack',
