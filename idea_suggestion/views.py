@@ -12,11 +12,11 @@ from idea_suggestion.models import Idea
 def Resident_Idea_Submission_View(request):
     #processing goes here: can look things up in DB, render HTML template
     if request.method == 'POST':
-        try:
-            if request.user.is_authenticated and request.user.moderation.is_restricted():
-                return JsonResponse({"success": False, "error": "muted"})
-        except Exception:
-            pass
+        #try:
+            #if request.user.is_authenticated and request.user.moderation.is_restricted():
+                #return JsonResponse({"success": False, "error": "muted"})
+        #except Exception:
+            #pass
 
         idea_form = forms.SubmitIdeaForm(request.POST, request.FILES) # make an idea submission using the request.POST contents
 
@@ -60,7 +60,7 @@ def CityAdmin_Idea_Inbox_View(request):
                 ideas = ideas.filter(topic__in=topics)
 
             if read:
-                ideas = ideas.filter(read_status=read)
+                ideas = ideas.filter(read_status=read) 
 
         sort = forms.IdeaSortForm(request.GET)
         if sort.is_valid():

@@ -13,7 +13,7 @@
 
     <!-- Submit Idea Button -->
     {% if user.is_authenticated %}
-    <button type="button" class="nav-btn" id="open-modal">
+    <button data-modal-target="#submit-idea-modal" class="nav-btn">
       <img class="nav-icon-img" src="{% static 'icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
       Submit Idea
     </button>
@@ -70,12 +70,10 @@
 </nav>
 
 <!-- Idea Submission Popup -->
-<div class="modal-backdrop" id="modal" aria-hidden="true">
+<div class="modal-backdrop" id="submit-idea-modal" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-body">
-        {% include "ideas/ideas_resident.html" %}
-    </div>
-    <div class="modal-footer">
+      {% include "ideas/ideas_resident.html" %}
     </div>
   </div>
 </div>

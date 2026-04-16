@@ -1,7 +1,22 @@
 {% extends 'sidebar.html' %}
 {% load static %}
 
-{% block city_sidebar_content %}  
+{% block city_sidebar_content %}
+
+    <!-- Smart Summary Modal Button -->
+    <button data-modal-target="#summary-modal" type="button" class="nav-btn">
+      Smart Summary
+    </button>
+
+    <!-- Smart Summary Popup -->
+    <div class="modal-backdrop" id="summary-modal" aria-hidden="true">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                {% include "ideas/smart_summary.html" %}
+        </div>
+    </div>
+
+    <br><br><br>
+
     <form id='filter' action="{% url 'admin_idea_inbox' %}">
         <!-- SEARCH -->
          <div>
@@ -43,4 +58,5 @@
         </div>
     </form> 
     <br><br>
+
 {% endblock %}
