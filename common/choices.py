@@ -29,3 +29,5 @@ class Account_Status(models.TextChoices):
     BANNED = 'Banned', 'Banned'
 
 ACCT_STATUS_MAX_LENGTH = max(len(choice.value) for choice in Account_Status)
+
+MOD_GROUP_NAME = 'moderators'
