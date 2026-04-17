@@ -22,4 +22,4 @@ class Command(BaseCommand):
         if created:
             self.stdout.write(f'New resident user created: {user.username}')
         else:
-            self.stdout.write(f'User already exists: {user.username}')
+            self.stderr.write(f'User already exists: {user.username}')

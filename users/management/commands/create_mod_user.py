@@ -24,4 +24,4 @@ class Command(BaseCommand):
         elif promoted:
             self.stdout.write(f'Existing user promoted to mod: {user.username}')
         else:
-            self.stdout.write(f'User already exists and is a mod: {user.username}')
+            self.stderr.write(f'User already exists and is a mod: {user.username}')
