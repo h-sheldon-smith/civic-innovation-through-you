@@ -1,7 +1,6 @@
 from service_objects.services import Service
 from django.db import models
 from machina.core.db.models import get_model
-# from mptt.models import MPTTModel
 
 from common.choices import Topic_Options
 
@@ -9,9 +8,10 @@ from common.choices import Topic_Options
 class CreateForumContainers(Service):
     def process(self):
         Forum = get_model('forum', 'Forum')
-        created_forums = []
 
-        for forum_name in Topic_Options.labels:
+        forum_names = Topic_Options.labels
+        created_forums = []
+        for forum_name in forum_names:
             forum, created = Forum.objects.get_or_create(
                 name=forum_name,
                 parent=None,
@@ -20,7 +20,7 @@ class CreateForumContainers(Service):
 
             if created:
                 created_forums.append(forum_name)
-
-        Forum.objects.rebuild()
+        
+        # Forum.objects.rebuild()
 
         return created_forums
