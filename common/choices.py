@@ -30,4 +30,5 @@ class Account_Status(models.TextChoices):
 
 ACCT_STATUS_MAX_LENGTH = max(len(choice.value) for choice in Account_Status)
 
+RES_GROUP_NAME = 'residents'
 MOD_GROUP_NAME = 'moderators'
