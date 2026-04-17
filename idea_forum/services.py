@@ -21,6 +21,7 @@ class CreateForumContainers(Service):
             if created:
                 created_forums.append(forum_name)
         
+        # expensive and looks like it's unneccesary
         # Forum.objects.rebuild()
 
         return created_forums
