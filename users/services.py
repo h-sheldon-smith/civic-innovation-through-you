@@ -87,7 +87,7 @@ class PromoteUserToMod(Service):
 
         if not user.groups.filter(name=MOD_GROUP_NAME).exists():
             if not Group.objects.filter(name=MOD_GROUP_NAME).exists():
-                CreateModGroupWithPermissions.execute()
+                CreateModGroupWithPermissions.execute({})
 
             group = Group.objects.get(name=MOD_GROUP_NAME)
             user.groups.add(group)
@@ -103,7 +103,7 @@ class CreateModGroupWithPermissions(Service):
         group, created = Group.objects.get_or_create(name=MOD_GROUP_NAME)
 
         if created:
-            self.add_group_permissions(self, group)
+            self.add_group_permissions(group)
 
         return group
     
@@ -131,7 +131,7 @@ class CreateModGroupWithPermissions(Service):
                 return
 
             perm, created = GroupForumPermission.objects.get_or_create(
-                group=MOD_GROUP_NAME,
+                group=group,
                 permission=forum_perm,
                 forum=None, # global, apply to all forums
                 has_perm=True
