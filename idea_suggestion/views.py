@@ -34,20 +34,14 @@ def Resident_Idea_Submission_View(request):
 
     idea_form = forms.SubmitIdeaForm()
 
-    # parameters: request, the template that will use this, the data for the template
-    # optional: content_type (type for resulting doc, default is text/html), 
-    # optional: status (default code 200), using (template engine name)
     return render(request, 'ideas/ideas_resident.html', {'idea_form': idea_form})
 
 
 # City Admin Inbox for viewing suggestions sent in by residents
 @permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Inbox_View(request):
-
-    ideas, filter, sort, search = Admin_Inbox_Data_Controls(request)
-            
+    ideas, filter, sort, search = Admin_Inbox_Data_Controls(request)    
     return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas, 'sort': sort, 'filter': filter, 'search': search})
-
 
 
 # City Admin idea detail page
