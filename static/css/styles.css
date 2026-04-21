@@ -253,5 +253,62 @@ html, body {
     user-select: none;
 }
 
+/* Forum engagement analytics */
+.analytics-section {
+    margin-top: 32px;
+}
 
+.analytics-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
 
+.analytics-subtitle {
+    color: #555;
+    margin: 0 0 16px 0;
+    font-size: 0.95rem;
+}
+
+.analytics-table {
+    width: 95%;
+    font-size: 1rem;
+    text-align: left;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.analytics-table thead tr {
+    font-weight: bold;
+    font-size: 1.1rem;
+    position: sticky;
+    top: 0;
+    background: #b0c4de;
+}
+
+.analytics-table th,
+.analytics-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #ccc;
+}
+
+.analytics-table tbody tr:nth-child(odd) {
+    background: #f0f8ff;
+}
+
+.analytics-table tbody tr:nth-child(even) {
+    background: #e6f0fa;
+}
+
+.analytics-table tbody tr:hover {
+    background: #d0e8f5;
+}
+
+.analytics-table a {
+    color: #1a5276;
+    text-decoration: none;
+}
+
+.analytics-table a:hover {
+    text-decoration: underline;
+}
