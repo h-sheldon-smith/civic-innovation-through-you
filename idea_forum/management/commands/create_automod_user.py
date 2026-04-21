@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from auto_mod.services import CreateAutoModUser
+from idea_forum.services import CreateAutoModUser
 
 class Command(BaseCommand):
     held = "Create the AutoMod user"
