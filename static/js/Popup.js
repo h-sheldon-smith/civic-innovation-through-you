@@ -14,7 +14,7 @@
         openButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const modal = document.querySelector(button.dataset.modalTarget); //uses modal id
-                openModal(modal);
+                openModal(modal, button);
             })
         })
 
@@ -33,13 +33,19 @@
         })
 
         //Open and Close functions for the modals
-        function openModal(modal) {
+        function openModal(modal, button) {
             modal.classList.add("is-open");
             modal.setAttribute("aria-hidden", "false");
 
+            if(modal.id === "summary-modal"){
+                getSummary(button);
+            }
+
+            //handles submit idea form
             if(modal.id === "submit-idea-modal"){
                 listenForSubmitForm(modal);
             }
+            
 
             // Click outside the modal closes it
             modal.addEventListener("click", (e) => {
@@ -63,9 +69,7 @@
             }
         }
 
-
-
-
+        //Function to manage form submission - Prevents relaoding and switches messaging to confirm success
         function listenForSubmitForm(modal){
             const idea_form = modal.querySelector('#idea_form');
             const not_submitted_header = modal.querySelector("#not-submitted-title");
@@ -102,5 +106,20 @@
 
             })
         }
+
+        //Function to retrieve a smart summary from the backend
+        async function getSummary(button){
+            const url = button.dataset.url;
+            
+            fetch(url)
+                .then(response => response.json()) //turns response into plain text
+                .then(data => { //injects into the model
+                    document.getElementById("output").innerHTML = data.summary;
+                })
+                .catch(() => {
+                    modalBody.innerHTML = "Unable to load summary at this time."
+                });
+        }
+
   });
 })();

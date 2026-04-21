@@ -1,4 +1,4 @@
-from . import Convert_Data
+from .converters import Convert_Data
 
 '''
 Method to create batches of data for AI processing

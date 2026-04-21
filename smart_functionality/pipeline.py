@@ -1,4 +1,7 @@
-from . import Convert_Data, Batch_Data, Send_Message, BATCH_SIZE, CONSOLIDATE_TASK
+from .converters import Convert_Data
+from .batching import Batch_Data
+from .client import Send_Message
+from .constants import BATCH_SIZE, CONSOLIDATE_TASK
 
 '''
 Method to orchestrate processing raw data and receive AI insights
@@ -16,7 +19,7 @@ def Ask_AI(task, format, data):
     responses = [] #summary for each batch
 
     for index, batch in enumerate(batched_data):
-        prompt = f"[METADATA] count: {data_count[index]} [CONTENT] " + batch
+        prompt = f"[METADATA] count: {data_count[index]} [CONTENT] " .join(batch)
         responses.append(Send_Message(prompt))
 
     #Now we need to combine the responses...
@@ -24,7 +27,7 @@ def Ask_AI(task, format, data):
         batches, counts = Batch_Data(BATCH_SIZE, responses, CONSOLIDATE_TASK)
         responses = []
         for index, batch in enumerate(batches):
-            prompt = f"[METADATA] count: {counts[index]} [CONTENT] " + batch
+            prompt = f"[METADATA] count: {counts[index]} [CONTENT] " .join(batch)
             responses.append(Send_Message(prompt))
     
     return responses[0]

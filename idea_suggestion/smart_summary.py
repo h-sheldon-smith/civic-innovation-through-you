@@ -17,13 +17,14 @@ If successful, marks the ideas as read
 Returns: a smart summary of inbox contents if successful
          otherwise, a failure message
 '''
-def Get_Smart_Inbox_Summary():
-    ideas = Idea.objects.all().filter(read_status='unread')
+def Get_Smart_Inbox_Summary(ideas):
+    
+    if not ideas:
+        return False, "There are no new messages to review"
+    
     summary = Ask_AI(INBOX_SUMMARY_TASK, INBOX_SUMMARY_FORMAT, ideas)
 
-    #if we get a summary back, we should mark the ideas as read
     if summary:
-        Admin_Mark_Read(ideas)
-        return summary
-    else:
-        return "smart summary is not available at this time"
+        return True, summary
+    
+    return False, "Smart summary is not available at this time"
