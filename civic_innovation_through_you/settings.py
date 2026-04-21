@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'idea_suggestion.apps.IdeaSuggestionConfig',
     'users',
     'idea_forum',
-    'auto_mod',
 
     # 3rd-party apps
     'service_objects',
