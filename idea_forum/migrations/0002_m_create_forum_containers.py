@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('idea_forum', '0001_initial'),
         # make sure django has applied the last migration in machina's forum app before running this one
-        ('forum', '0012_alter_forum_id'),
+        ('forum', '0011_auto_20190627_2132'),
     ]
 
     operations = [
