@@ -114,7 +114,7 @@ class CreateModGroupWithPermissions(Service):
 
         perm_names = []
         # topic creation
-        perm_names += ["can_start_new_topics", "can_post_announcements", "can_post_stickies", "can_post_without_approval"]
+        perm_names += ["can_start_new_topics", "can_post_announcements", "can_post_stickies"]
         # poll creation
         perm_names += ["can_create_polls"]
         # forum moderation
