@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     'users',
     'idea_forum',
 
+    # 3rd-party apps
+    'service_objects',
+
     # Machina dependencies:
     'mptt',
     'haystack',
@@ -194,7 +197,7 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     'can_reply_to_topics',
     'can_delete_own_posts',
     'can_edit_own_posts',
-    'can_post_without_approval', # if off, requires manual moderator permission before each post is displayed
+    # 'can_post_without_approval', # if off, requires manual moderator permission before each post is displayed
     'can_vote_in_polls',
     # for attachments (user can attach an image when posting):
     # 'can_attach_file',

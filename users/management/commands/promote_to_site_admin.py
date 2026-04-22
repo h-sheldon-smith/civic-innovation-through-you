@@ -1,12 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group, Permission
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Group
 from machina.core.db.models import get_model
-
-
-from machina.apps import forum_permission
-# from machina.apps.forum_permission import ForumPermission
 
 class Command(BaseCommand):
     help = "Add a user to the site_admin group"
@@ -14,14 +9,31 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("username", type=str, help="The user's username")
 
+    def handle(self, *args, **options):
+        User = get_user_model()
+        username = options["username"]
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise CommandError(f'No user found with username="{username}"')
+
+        group_name = "site_admin"
+        
+        group, created = Group.objects.get_or_create(name=group_name)
+
+        if created:
+            self.stdout.write(f"The group {group_name} doesn't exist; creating it and adding machina permissions to it")
+            self.add_group_permissions(group)
+
+        user.groups.add(group)
+
+        self.stdout.write(self.style.SUCCESS(
+            f'User "{user.username}" added to group "{group_name}"'
+        ))
+
     def add_group_permissions(self, group):
-        # perm = Permission.objects.get_or_create(codename="can_admin_site")
-        # group.permissions.add(perm)
-
-        self.add_forum_permissions(group)
-
-    # Important note: Machina's permissions are in a Machina-specific internal permission table, ForumPermission
-    def add_forum_permissions(self, group):
+        # Note: Machina's permissions are in a Machina-specific internal permission table, ForumPermission
         ForumPermission = get_model('forum_permission', 'ForumPermission')
         GroupForumPermission = get_model('forum_permission', 'GroupForumPermission')
 
@@ -47,30 +59,3 @@ class Command(BaseCommand):
                 forum=None, # global, apply to all forums
                 has_perm=True
             )
-
-    def handle(self, *args, **options):
-        User = get_user_model()
-        username = options["username"]
-
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            raise CommandError(f'No user found with username="{username}"')
-
-        group_name = "site_admin"
-
-        # try:
-        #     group_get = Group.objects.get()
-        #     print(f"Group '{group_name}' already exists")
-        # except Group.DoesNotExist:
-        #     print(f"Group '{group_name}' does not exist; creating it and adding permissions")
-
-        group, _ = Group.objects.get_or_create(name=group_name)
-
-        self.add_group_permissions(group)
-
-        user.groups.add(group)
-
-        self.stdout.write(self.style.SUCCESS(
-            f'User "{user.username}" added to group "{group_name}".'
-        ))
