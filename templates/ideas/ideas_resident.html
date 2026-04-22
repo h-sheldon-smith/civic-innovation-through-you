@@ -1,26 +1,27 @@
-
 {% load static %}
 
 
-{% block city_content %}
+    <!-- Modal Header -->
     <div class="modal-header">
         <h2 id="not-submitted-title">Submit Your Idea</h2>
         <h2 id="submitted-title" style="display:none">Thank you!</h2>
-        <button type="button" class="modal-close" id="close-modal" aria-label="Close">×</button>
+        <button data-close-x-button class="close-x-button" id="close-x-idea-modal" aria-label="Close">&times;</button>
     </div>
-    <form id='idea_form' action="{% url 'resident_idea_submission' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for field in idea_form %}
-            {{ field.label_tag }}
-            {{ field }}<br>
-        {% endfor %}
-        <input type="submit" class="nav-btn" id="submit-idea" value = "Submit Idea">
-    </form>
-    <div id="thanks-message" style="display:none">Thank you for submitting your idea!</div>
-    <button type="button" class="nav-btn" id="close-modal-2" style="display:none">Close</button>
 
-{% endblock %}
+    <!-- Modal Body -->
+    <div class="modal-body">
+        <form id='idea_form' action="{% url 'resident_idea_submission' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in idea_form %}
+                {{ field.label_tag }}
+                {{ field }}<br>
+            {% endfor %}
+            <input type="submit" class="nav-btn" id="submit-idea" value ="Submit Idea">
+        </form>
+        <div id="thanks-message" style="display:none">Thank you for submitting your idea!</div>
+    </div>
 
-{% block scripts %}
-    <script src="{% static 'js/SubmitIdeaButton.js' %}"></script>
-{% endblock %}
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+        <button data-close-button class="nav-btn" id="close-idea-modal" style="display:none" aria-label="Close">Close</button>
+    </div>

@@ -10,6 +10,7 @@ html, body {
   padding: 0;
 }
 
+/* Top navigation bar */
 .navbar {
   display: block;
   border: 2px solid #ccc;
@@ -54,6 +55,17 @@ html, body {
   background: #eee;
 }
 
+.navbar-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.navbar-links span {
+  margin-right: 15px;
+}
+
+/* Modal (Pop Up) */
 /* modal backdrop hidden by default */
 .modal-backdrop {
   display: none;
@@ -79,12 +91,14 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin-top: 40px;
+  /*margin-top: 40px;*/
   background: white;
-  border: 1px solid #ccc;
+  border: 1px solid, black;
   border-radius: 10px;
-  height: min(600px, 100%);
-  width: min(600px, 100%);
+  /*height: min(600px, 100%);
+  width: min(600px, 100%);*/
+  width: 600px;
+  max-width: 80%;
   padding: 16px;
   box-sizing: border-box;
   z-index: 9999;
@@ -93,8 +107,29 @@ html, body {
 .modal-header {
   display: flex;
   align-items: center;
+  padding: 10px 10px;
   justify-content: space-between;
+  border-bottom: 1px solid black;
   gap: 12px;
+}
+
+.modal-header .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+
+}
+
+.modal-header .close-x-button {
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.modal-body {
+  padding: 10px 10px
 }
 
 .modal-close {
@@ -104,16 +139,6 @@ html, body {
   border: none;
   background: transparent;
   cursor: pointer;
-}
-
-.navbar-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.navbar-links span {
-  margin-right: 15px;
 }
 
 /* Layout: sidebar + main content */

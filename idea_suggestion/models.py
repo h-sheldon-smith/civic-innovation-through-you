@@ -26,7 +26,8 @@ class Idea(models.Model):
     topic = models.CharField(max_length = TOPIC_MAX_LENGTH, 
                              choices = Topic_Options.choices)
 
-    message = models.TextField(blank = False)
+    message = models.TextField(blank = False, 
+                               max_length=2000)
 
     picture = models.ImageField(
         upload_to='ideas/',
