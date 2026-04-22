@@ -16,3 +16,4 @@ City administrators gain a streamlined workspace where they can review resident 
 - Fameworks: Django, Django-Machina
 - Languages: Python, JavaScript, HTML, CSS
 - Database: SQLite3
+- AI Services: Anthropic Claude API
