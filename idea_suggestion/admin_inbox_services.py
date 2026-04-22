@@ -1,3 +1,4 @@
+from django.db.models import QuerySet
 from . import forms
 from idea_suggestion.models import Idea
 
@@ -78,6 +79,13 @@ def Admin_Inbox_Search(search, ideas):
 
 # Method to update an item to read once viewed
 def Admin_Mark_Read(idea):
-    idea.read_status = True
-    idea.save()
-    return idea
+    # more than one idea
+    if isinstance(idea, QuerySet):
+        idea.update(read_status = True)
+        return idea
+    
+    # one idea
+    else:
+        idea.read_status = True
+        idea.save()
+        return idea

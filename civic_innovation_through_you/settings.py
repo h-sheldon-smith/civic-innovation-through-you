@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'idea_suggestion.apps.IdeaSuggestionConfig',
     'users',
     'idea_forum',
+    'smart_functionality',
 
     # 3rd-party apps
     'service_objects',
