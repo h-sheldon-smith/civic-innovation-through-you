@@ -28,7 +28,7 @@ class CreateForumContainers(Service):
         return created_forums
 
 
-class CreateAutoModUser(Service):
+class GetOrCreateAutoModUser(Service):
     def process(self):
         username = 'AutoMod'
         email = 'civicinnovationthroughyou@gmail.com'
