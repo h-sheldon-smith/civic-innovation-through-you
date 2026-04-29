@@ -3,7 +3,7 @@
 from django.db import migrations
 
 def call_service(apps, schema_editor):
-    from idea_forum.services import CreateForumContainers
+    from idea_forum.services.service_objs import CreateForumContainers
 
     CreateForumContainers.execute({})
 
