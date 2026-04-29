@@ -31,3 +31,4 @@ django-service-objects
 python-dotenv
 freezegun
 Pillow
+anthropic
