@@ -1,7 +1,7 @@
 # placeholder prompts
-POST_SCREEN = {}
+SCREEN_POST = {}
 
-POST_SCREEN['task'] = "The following text is from a forum post awaiting moderation \
+SCREEN_POST['task'] = "The following text is from a forum post awaiting moderation \
     Is this post ok for a forum? \
     - no swear words \
     - no threats \
@@ -10,6 +10,6 @@ POST_SCREEN['task'] = "The following text is from a forum post awaiting moderati
     - no ads \
     - no NSFW content"
 
-POST_SCREEN['format'] = "Answer with exactly the text 'Accept' or 'Reject' only (no leading or trailing spaces, periods. etc). Don't include the quote marks."
-POST_SCREEN['true'] = "Accept"
-POST_SCREEN['false'] = "Reject"
+SCREEN_POST['format'] = "Answer with exactly the text 'Accept' or 'Reject' only (no leading or trailing spaces, periods. etc). Don't include the quote marks."
+SCREEN_POST['true'] = "Accept"
+SCREEN_POST['false'] = "Reject"

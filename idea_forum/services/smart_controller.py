@@ -3,7 +3,7 @@ from idea_forum.services.screening_tools import ScreeningService
 
 # TODO: change this to a celery task later on, so it's an async task
 class SmartController:
-    def run_smart_post_moderation(post_id):
+    def run_smart_post_moderation(self, post_id):
         forum_tools = ForumInteractionService()
         screening_tools = ScreeningService()
 
@@ -12,5 +12,7 @@ class SmartController:
 
         if result:
             forum_tools.approve_post(post_id)
+            return True
         else:
             forum_tools.disapprove_post(post_id)
+            return False
