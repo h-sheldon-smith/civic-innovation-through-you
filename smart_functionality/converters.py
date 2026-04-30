@@ -5,21 +5,32 @@ Returns: data as string
 '''
 def Convert_Data(data):
 
-    # There's no data
-    if not data:
-        return ""
-    
-    # The data doesn't need processing
-    elif type(data) is str:
+    # Handles primitives
+    if type(data) is str:
         return data
     
+    elif isinstance(data, (bool, float, int)):
+        return str(data)
+    
+    # Handles empty content
+        # There's no data
+    elif not data:
+        return ""
+    
     # The data does need to be processed
-    else:
+    elif hasattr(data, "_meta"):
         string = ""
         for field in data._meta.get_fields():
-            value = getattr(data, field.name, None)
-            value = str(value) if value is not None else ""
 
-            string += f"{field.name}: {value}. "
+            if field.name not in ["id", "read_status", "file_location"]:
+                value = getattr(data, field.name, None)
+
+                if value:
+                    value = str(value) if value is not None else ""
+                    string += f"{field.name}: {value}. "
 
         return string
+    
+    else:
+        return "Data conversion error has occured for type " + str(type(data))
+    

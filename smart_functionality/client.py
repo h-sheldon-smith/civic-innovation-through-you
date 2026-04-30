@@ -18,6 +18,6 @@ def Send_Message(prompt):
     #     model = "claude-sonnet-4-6" # check this
     # )
 
-    response = ""
+    response = "TEST RESPONSE: Full implementation and anthropic call pending."
 
     return response
