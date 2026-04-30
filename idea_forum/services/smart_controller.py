@@ -1,20 +1,16 @@
-from smart_functionality.pipeline import Ask_AI
-
-from idea_forum.services.moderation import ModerationService
-from idea_forum.services.prompts import MOD_SCREEN_TASK, MOD_SCREEN_FORMAT
+from idea_forum.services.forum_tools import ForumInteractionService
+from idea_forum.services.screening_tools import ScreeningService
 
 # TODO: change this to a celery task later on, so it's an async task
 class SmartController:
     def run_smart_post_moderation(post_id):
-        modservice = ModerationService()
+        forum_tools = ForumInteractionService()
+        screening_tools = ScreeningService()
 
-        post_text = modservice.get_post_text(post_id)
+        post_text = forum_tools.get_post_text(post_id)
+        result = screening_tools.screen_post_text(post_text)
 
-        response = Ask_AI(MOD_SCREEN_TASK, MOD_SCREEN_FORMAT, post_text)
-
-        if response == "Accept":
-            modservice.approve_post(post_id)
-        elif response == "Reject":
-            modservice.disapprove_post(post_id)
+        if result:
+            forum_tools.approve_post(post_id)
         else:
-            return False
+            forum_tools.disapprove_post(post_id)

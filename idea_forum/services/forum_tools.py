@@ -1,9 +1,12 @@
 from django.db import transaction
 from machina.core.db.models import get_model
 
+from smart_functionality import converters
+
 Post = get_model('forum_conversation', 'Post')
 
-class ModerationService:
+class ForumInteractionService:
+    # returns the raw text
     def get_post_text(self, post_id):
         post = Post.objects.get(pk=post_id)
         
@@ -12,7 +15,8 @@ class ModerationService:
         else:
             text = str(post.content)
 
-        return text
+        raw_text = converters.Convert_Data(text)
+        return raw_text
     
     def approve_post(self, post_id):
         # within an atomic transaction to prevent race condition
