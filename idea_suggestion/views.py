@@ -57,11 +57,11 @@ def CityAdmin_Idea_Detail(request, pk):
 
 # Popup for smart summary
 def CityAdmin_Inbox_Smart_Summary_View(request):
-    ideas = Idea.objects.filter(read_status=False)
+    ideas, filter, sort, search = Admin_Inbox_Data_Controls(request) 
     status, summary = Get_Smart_Inbox_Summary(ideas)
 
     #TODO: Delete this later
-    summary = "Temp summary while we test stuff"
+    #summary = "Temp summary while we test stuff"
 
     data = {
         "status": status,
@@ -71,5 +71,4 @@ def CityAdmin_Inbox_Smart_Summary_View(request):
     if status:
         Admin_Mark_Read(ideas)
 
-    #return render(request, 'ideas/smart_summary.html', {'summary': summary})
     return JsonResponse(data)

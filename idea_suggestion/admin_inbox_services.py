@@ -17,6 +17,7 @@ def Admin_Inbox_Data_Controls(request):
         filter = forms.IdeaFilterForm()
         sort = forms.IdeaSortForm()
         search = forms.IdeaSearchForm()
+        ideas = ideas.order_by("-time_stamp")
 
     #applies all options as specified by admin-user
     else:
@@ -46,12 +47,15 @@ def Admin_Inbox_Filter(filter, ideas):
 # Returns ideas in admin-user's specified order or defaults to time_stamp if other options not selected
 #         sort requirements specified by admin-user
 def Admin_Inbox_Sort(sort, ideas):
+
     if sort.is_valid():
         sorting = sort.cleaned_data.get('sort_options')
         if sorting:
             ideas = ideas.order_by(sorting)
         else:
             ideas = ideas.order_by("-time_stamp")
+    else:
+        ideas = ideas.order_by("-time_stamp")
 
     return sort, ideas
 
