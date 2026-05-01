@@ -23,14 +23,12 @@ class ForumInteractionService:
             post.approved = True
             post.save(update_fields=['approved'])
             
-            # using save() breaks the post UI view's URl redirect, but
-            # bypassing the save method and directly doing a SQL-level update
-            # also breaks the UI's URL redirect
+            # using save() breaks the post UI view's URl redirect
+            # bypassing the save method and directly doing a SQL update also breaks it
             # Post.objects.filter(pk=post.id).update(approved=True)
             # post.refresh_from_db()
-
-            post.topic.update_trackers()
-            post.topic.forum.update_trackers()
+            # post.topic.update_trackers()
+            # post.topic.forum.update_trackers()
 
             print(f"post.approved = {post.approved}")
             return True
@@ -39,8 +37,6 @@ class ForumInteractionService:
 
     def disapprove_post(self, post):
         print("disapproving post")
+        # post.delete() updates the topic/forum trackers internally
         post.delete()
-
-        post.topic.update_trackers()
-        post.topic.forum.update_trackers()
         return True
