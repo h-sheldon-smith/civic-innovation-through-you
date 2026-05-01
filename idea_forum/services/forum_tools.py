@@ -23,25 +23,17 @@ class ForumInteractionService:
             post.approved = True
             # post.save() updates the topic/forum trackers internally
             post.save()
-            # post.refresh_from_db()
-
-            posts_count = Post.objects.filter(topic=post.topic, approved=True).count()
-            total_posts_in_db = Post.objects.all().count()
-            posts_this_topic_any_status = Post.objects.filter(topic=post.topic).count()
-
-            print(f"Total Posts in DB: {total_posts_in_db}")
-            print(f"Total Posts in this Topic (any status): {posts_this_topic_any_status}")
-            print(f"Approved Posts in this Topic: {posts_count}")
-            # print(f"post.position(): {post.position()}")
-
-            post.topic.posts_count = posts_count
-            post.topic.save()
-
-            post.topic.forum.posts_count = posts_count
-            post.topic.forum.save()
-
-            post.save()
             
+            posts_count_in_db = Post.objects.filter(topic=post.topic, approved=True).count()
+            # total_posts_in_db = Post.objects.all().count()
+            # posts_this_topic_any_status = Post.objects.filter(topic=post.topic).count()
+
+            # print(f"Total Posts in DB: {total_posts_in_db}")
+            # print(f"Total Posts in this Topic (any status): {posts_this_topic_any_status}")
+            print(f"Approved Posts in this Topic in DB: {posts_count_in_db}")
+            print(f"Approved Posts in this Topic: {post.topic.posts_count}")
+            # # print(f"post.position(): {post.position()}")
+
             print(f"post.approved = {post.approved}")
             return True
             
