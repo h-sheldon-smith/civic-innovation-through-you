@@ -33,3 +33,4 @@ freezegun
 Pillow
 anthropic
 strip_markdown
+alt-profanity-check
