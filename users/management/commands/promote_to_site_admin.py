@@ -3,8 +3,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from machina.core.db.models import get_model
 
+from common.choices import ADMIN_GROUP_NAME
+
 class Command(BaseCommand):
-    help = "Add a user to the site_admin group"
+    help = f"Add a user to the {ADMIN_GROUP_NAME} group"
 
     def add_arguments(self, parser):
         parser.add_argument("username", type=str, help="The user's username")
@@ -18,7 +20,7 @@ class Command(BaseCommand):
         except User.DoesNotExist:
             raise CommandError(f'No user found with username="{username}"')
 
-        group_name = "site_admin"
+        group_name = ADMIN_GROUP_NAME
         
         group, created = Group.objects.get_or_create(name=group_name)
 
