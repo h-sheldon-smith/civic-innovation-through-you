@@ -112,6 +112,7 @@ MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
 # MACHINA_FORUM_NAME = "Civic Innovation Through You"
 MACHINA_FORUM_NAME = " "
 
+MACHINA_PROFILE_SIGNATURE_MAX_LENGTH = 0
 
 WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
 
