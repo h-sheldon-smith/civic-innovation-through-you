@@ -54,7 +54,6 @@ html, body {
 /* Top Navigation Bar */
 .navbar {
   display: block;
-  /*border: 2px solid #ccc; */
   
   padding: 22px 20px;
   width: 100%;
@@ -64,9 +63,6 @@ html, body {
   background: var(--color-dark);
   color: var(--font-color-dark);
   font-family: var(--font-family);
-  /*color: #000;*/
-  /*font-family: "Inter", sans-serif;*/
-  /*font-weight: bold;*/
   line-height: 1.2; 
 }
 
@@ -107,16 +103,6 @@ html, body {
   margin-right: 15px;
 }
 
-/*
-.navbar a {
-  text-decoration: none;
-  color: black;
-}
-
-.navbar a:hover {
-  text-decoration: underline;
-} */
-
 /* button styling (optional) */
 .nav-btn {
   font: inherit;
@@ -144,6 +130,9 @@ html, body {
 }
 
 .nav-icon-img {
+  /*display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;*/
   width: 1.5em;
   height: 1.5em;
   display: block;
@@ -154,6 +143,9 @@ html, body {
 /* SIDEBAR COMPONENTS */
 .sidebar-title {
   margin: 0 0 12px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-title);
 }
@@ -196,16 +188,6 @@ html, body {
 .sidebar-nav li {
   margin-bottom: 10px;
 }
-/*
-.sidebar-nav a {
-  text-decoration: none;
-  color: black;
-}
-
-.sidebar-nav a:hover {
-  text-decoration: underline;
-}
-  */
 
 .sidebar-user {
   font: inherit;
@@ -250,8 +232,7 @@ html, body {
 
 /* modal box */
 .modal {
-  /* Position on screen */
-  display: block;
+  display: block; /* Position on screen */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -277,7 +258,6 @@ html, body {
   align-items: center;
   padding: 0px 5px;
   justify-content: space-between;
-  border-bottom: 1px solid black;
   gap: 12px;
 }
 
@@ -323,18 +303,21 @@ html, body {
 
 
 /* BODY TABLES */
-.idea-pic {
-  display: block;
-  width: 100%;
-  max-width: 800px;
-}
-
+/* Table, basic */
 .idea-detail-table {
   width: 95%;
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-body);
 }
 
+.idea-pic {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+}
+
+
+/* Table with clickable rows */
 .idea-table {
   width: 95%;
   font-size: var(--font-size-body);
@@ -372,15 +355,3 @@ html, body {
 .logout {
   display: inline-block;
 }
-
-/*
-.logout-button {
-  font-size: 2.5rem;
-  background-color: rgb(0, 0, 0, 0);
-  border: none;
-}
-
-.logout-button:hover {
-  opacity: .85;
-}
-  */

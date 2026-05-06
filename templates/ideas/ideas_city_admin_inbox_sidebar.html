@@ -20,7 +20,10 @@
 
     <form class="sidebar-form" id='filter' action="{% url 'admin_idea_inbox' %}">
         <!-- SEARCH -->
-         <h3 class="sidebar-title">Search</h3>
+        <h3 class="sidebar-title">
+            <img class="nav-icon-img" src="{% static 'icons/search.svg' %}">
+            Search
+        </h3>
          <div class="sidebar-body">
             {% for field in search %}
                 {{ field.label_tag }}
@@ -30,7 +33,10 @@
          <br><br>
 
         <!-- FILTER -->
-        <h3 class="sidebar-title">Filters</h3>
+        <h3 class="sidebar-title">
+            <img class="nav-icon-img" src="{% static 'icons/filter.svg' %}">
+            Filter
+        </h3>
         <details class ="filter-dropdown">
             <summary>Topics</summary>
             {{ filter.topic_filter }}
@@ -42,7 +48,10 @@
         <br><br>
 
         <!-- SORT -->
-        <h3 class="sidebar-title">Sort</h3>
+        <h3 class="sidebar-title">
+            <img class="nav-icon-img" src="{% static 'icons/sort.svg' %}">
+            Sort
+        </h3>
         <details class ="filter-dropdown">
             <summary>Sort Options</summary> {{ sort.sort_options }}
         </details>
