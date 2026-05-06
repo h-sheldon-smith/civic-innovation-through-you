@@ -1,17 +1,40 @@
 {% extends 'base.html' %}
 
+
 {% block city_sidebar %}
-    {% include 'homeSidebar.html' %}
+    {% if user.is_authenticated %}
+        {% include 'homeSidebar.html' %}
+    {% endif %}
 {% endblock %}
+
 
 {% block title %}Home{% endblock %}
 
 {% block city_content %}
 <h1>
-    Template Homepage
     {% if user.is_authenticated %}
     <span>Welcome, {{ user.username }}</span>
+    {% else %}
+    Welcome to Civic Innovation Through You (CITY)
     {% endif %}
 </h1>
-Template Homepage
+<div class="body-content">
+    {% if user.is_authenticated %}
+        Let's build our community together!
+    {% else %}
+        Where your ideas can help shape our community.
+        <br>
+        Feel free to browse our discussions to see what's going on around your hometown at any time.
+        <br>
+        To join in, please sign up or login to your account.
+        <br>
+        We look forward to hearing from you!
+        <br>
+        <br>
+        Warm Regards,
+        <br>
+        Team CITY
+    {% endif %}
+</div>
+
 {% endblock %}
