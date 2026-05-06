@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'idea_suggestion.apps.IdeaSuggestionConfig',
     'users',
     'idea_forum',
-    'smart_functionality',
+    'smart_functionality.apps.SmartFunctionalityConfig',
 
     # 3rd-party apps
     'service_objects',

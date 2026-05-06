@@ -6,26 +6,34 @@ Param: data, the data objects to be converted into AI friendly strings
 Returns: data as string
 '''
 def Convert_Data(data):
+  
+    string = ""
 
+    # Handles primitives
+    if type(data) is str:
+        string = data
+    
+    elif isinstance(data, (bool, float, int)):
+        string = str(data)
+    
+    # Handles empty content
     # There's no data
-    if not data:
+    elif not data:
         return ""
     
-    # The data doesn't need processing
-    elif type(data) is str:
-        string_data = data
-    
-    # The data does need to be processed
-    else:
-        string_data = ""
+    # The data does need to be processed (django table instance)
+    elif hasattr(data, "_meta"):
         for field in data._meta.get_fields():
-            value = getattr(data, field.name, None)
-            value = str(value) if value is not None else ""
+            if field.name not in ["id", "read_status", "file_location"]: # TODO: remove hardcoded logic
+                value = getattr(data, field.name, None)
 
-            string_data += f"{field.name}: {value}. "
+                if value:
+                    value = str(value) if value is not None else ""
+                    string += f"{field.name}: {value}. "
+    
+    else:
+        return "Data conversion error has occured for type " + str(type(data)) #TODO: add tuple for failure: ,0
 
-    # Process markdown
 
-    string_data_no_markdown = strip_markdown.strip_markdown(string_data)
-
-    return string_data_no_markdown
+    # Remove markdown and return
+    return strip_markdown.strip_markdown(string) #TODO: add tuple for success: ,1

@@ -22,6 +22,12 @@ def Get_Smart_Inbox_Summary(ideas):
     if not ideas:
         return False, "There are no new messages to review"
     
+    # to_review = []
+    
+    # for field in ideas._meta.get_fields():
+    #     if field != read_status or file_location:
+    #         to_review.append(field)
+    
     summary = Ask_AI(INBOX_SUMMARY_TASK, INBOX_SUMMARY_FORMAT, ideas)
 
     if summary:

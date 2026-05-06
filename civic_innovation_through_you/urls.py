@@ -29,6 +29,7 @@ urlpatterns = [
     path('ideas/', include('idea_suggestion.urls')), #path for idea_suggestions app
     path('users/', include('users.urls')), #path for users app
     path('forum/', include(machina_urls)),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -28,6 +28,7 @@
 {% endif %}
 
 <table class="idea-table">
+    <thead>
     <tr>
         <th style="text-align: left">
             <a href="?sort={% if sort == 'username' %}-username{% else %}username{% endif %}{% if search %}&search={{ search }}{% endif %}" class="nav-btn">
@@ -44,7 +45,9 @@
         </th>
         <th style="text-align: left">Status</th>
     </tr>
+    </thead>
 
+    <tbody>
     {% for u in users %}
     <tr data-href="{% url 'users:account_detail' u.pk %}" style="cursor: pointer;">
         <td style="padding-right: 25px">{{ u.username }}</td>
@@ -67,6 +70,7 @@
     {% empty %}
     <tr><td colspan="4" style="padding: 16px 0; color: #666;">No accounts found.</td></tr>
     {% endfor %}
+    </tbody>
 </table>
 {% endblock %}
 

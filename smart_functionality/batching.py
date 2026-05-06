@@ -11,39 +11,35 @@ Returns: data_count, a list of data objects per batch for weighting batche outpu
 
 def Batch_Data(batch_size, data, task):
     all_batches = []
-    batch = []
-    batch_char_count = []
+    batch = ""
+    batch_weight = []
+    count = 0
 
     # If there is no data, return empty lists
-    if data.count() == 0:
-        return all_batches, batch_char_count
+    if not data:
+        return all_batches, batch_weight
 
     # Batch data
     else:
-        batch.append(task)
-        count = 0
+        batch = task + " "
 
         for d in data:
             data_string = Convert_Data(d)
                 
             # If there's room in the batch, add it to the current batch
-            if len(batch) < batch_size:
-                batch.append(data_string)
-                count += len(data_string)
+            if (len(batch) + len(data_string)) < batch_size:
+                batch = batch + data_string
+                count = count + 1
 
             # If the current batch is full, add it to the collection of batches and start a new batch
             else:
-                batch_char_count.append(count)
-                count = 0
+                batch_weight.append(count)
+                count = 1
                 all_batches.append(batch)
-                batch = []
-                batch.append(task, data_string)
+                batch = task + " " + data_string
 
-        # Process the final outstanding batch, if it exists
-        if len(batch) == len(task):
-            return all_batches, batch_char_count
-        else:
-            all_batches.append(batch)
-            batch_char_count.append(count)
+        # Process the final outstanding batch
+        all_batches.append(batch)
+        batch_weight.append(count)
 
-    return all_batches, batch_char_count
+    return all_batches, batch_weight
