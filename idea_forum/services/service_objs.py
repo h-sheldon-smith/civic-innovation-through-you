@@ -28,11 +28,12 @@ class CreateForumContainers(Service):
         return created_forums
 
 
-class CreateAutoModUser(Service):
+class GetOrCreateAutoModUser(Service):
     def process(self):
         username = 'AutoMod'
         email = 'civicinnovationthroughyou@gmail.com'
-        password = 'letmein!' # TODO: make a secure version of password storage
+        # TODO: make a secure version of password storage
+        password = 'letmein!'
 
         user, created, promoted = GetOrCreateModUser.execute({
             'username': username,
