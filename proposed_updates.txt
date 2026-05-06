@@ -1,0 +1,8 @@
+Idea Suggestion:
+1. Add smart image processing via AWS Rekognize
+2. Add "mark read/unread" to Admin Inbox Sidebar
+3. Add folders and ability to move ideas to Admin Inbox
+4. Review how long ideas should be kept / auto delete for storage management
+
+Users:
+1. Add smart functionality rate limits to admin

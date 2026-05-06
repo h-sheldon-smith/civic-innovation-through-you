@@ -11,7 +11,7 @@ class TestBatching(TestCase):
         self.batch_size = 500
         self.task = "test task: do something."
         self.format = "test format: some formatting."
-        self.hard_limit = 5
+        self.hard_limit = 5 #review this later
 
         User = get_user_model()
 
