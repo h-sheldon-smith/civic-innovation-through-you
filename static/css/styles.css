@@ -10,12 +10,14 @@ Determines styling for select aspects on the webpage
   --color-medium: rgb(149, 175, 161);
   --color-light: rgb(205, 219, 211);
   --color-extra-light: rgb(223, 237, 229);
+  --color-highlight: rgb(173, 236, 242);
   
   --font-color-dark: black;
   --font-color-light: rgb(186, 210, 197);
   --font-family: "avant garde", sans-serif;
   --font-weight-title: 700;
   --font-weight-body: 500;
+  --font-size-title-logo: 36px;
   --font-size-title-large: 32px;
   --font-size-title: 26px;
   --font-size-body: 20px;
@@ -53,12 +55,10 @@ html, body {
 
 /* Top Navigation Bar */
 .navbar {
-  display: block;
-  
-  padding: 22px 20px;
-  width: 100%;
-  box-sizing: border-box;  /* keeps padding inside the width */
-  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
 
   background: var(--color-dark);
   color: var(--font-color-dark);
@@ -92,11 +92,24 @@ html, body {
 
 /* NAVBAR COMPONENTS */
 .navbar-title {
-  /*font-size: 30px;
-  font-weight: 600;*/
-  font-size: var(--font-size-title-large);
+  margin: 0 0 12px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-title-logo);
   font-weight: var(--font-weight-title);
-  margin-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.nav-content{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+}
+
+.nav-logo{
+  height:100px;
+  width:auto;
 }
 
 .navbar span {
@@ -120,7 +133,7 @@ html, body {
 }
 
 .nav-btn:hover {
-  background: var(--color-light);
+  background: var(--color-highlight);
   box-shadow: var(--button-hover-shadow);
   text-decoration: underline;
 }
@@ -347,7 +360,7 @@ html, body {
 }
 
 .idea-table tbody tr:hover {
-  background: var(--color-extra-light);
+  background: var(--color-highlight);
 }
 
 
