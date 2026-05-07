@@ -3,6 +3,12 @@
 {% load i18n %}
 {% load static %}
 
+{% block city_sidebar %}
+    {% if user.is_authenticated %}
+        {% include 'idea_forum/forum_sidebar.html' %}
+    {% endif %}
+{% endblock %}
+
 {% comment %} replaces Machina's _base.html; is the base that's extended by Machina's board_base.html {% endcomment %}
 
 {% block extra_head %}
