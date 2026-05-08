@@ -47,9 +47,10 @@ class ScreeningService:
 
         return result
 
-    # zero-shot classification using a huggingface transformer
+    # zero-shot classification using a huggingface transformer fine-tuned on zero-shot classification
     def zero_shot_classification(self, post_text, candidate_labels, threshold):
-        pipe = apps.get_app_config('idea_forum').tranformer_pipe
+        pipe = apps.get_app_config('idea_forum').zero_shot_pipeline
+
         pipe_out = pipe(post_text, candidate_labels=candidate_labels)
 
         print(pipe_out['labels'])

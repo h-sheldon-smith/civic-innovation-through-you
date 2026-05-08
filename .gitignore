@@ -31,3 +31,6 @@ Thumbs.db
 
 # Local Files
 UI-Prototype/
+
+# HuggingFace
+huggingface_cache
