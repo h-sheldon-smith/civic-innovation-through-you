@@ -8,9 +8,9 @@ class SmartController:
         screening_tools = ScreeningService()
 
         post_text = forum_tools.get_post_text(post)
-        result = not screening_tools.screen_post_text(post_text)
+        flagged = screening_tools.screen_post_text(post_text)
 
-        if result:
+        if not flagged:
             forum_tools.approve_post(post)
         else:
             forum_tools.disapprove_post(post)

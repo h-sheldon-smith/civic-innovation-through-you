@@ -5,7 +5,6 @@ import profanity_check
 
 from transformers import pipeline
 
-# from idea_forum.services.ml.MLModels import transformer_pipe
 from django.apps import apps
 
 # smart_functionality's LLM
@@ -52,12 +51,16 @@ class ScreeningService:
         pipe = apps.get_app_config('idea_forum').zero_shot_pipeline
 
         pipe_out = pipe(post_text, candidate_labels=candidate_labels)
+        
+        max_score = max(pipe_out['scores'])
+        result = max_score >= threshold
 
         print(pipe_out['labels'])
         print(pipe_out['scores'])
+        print(f"max_score = {max_score}")
         print(f"threshold = {threshold}")
 
-        return max(pipe_out['scores']) >= threshold
+        return result
 
      
     # def screen_pass_smart_functionality_llm(self, post_text):
