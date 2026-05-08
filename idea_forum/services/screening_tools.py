@@ -5,6 +5,9 @@ import profanity_check
 
 from transformers import pipeline
 
+# from idea_forum.services.ml.MLModels import transformer_pipe
+from django.apps import apps
+
 # smart_functionality's LLM
 # from smart_functionality import pipeline
 # from idea_forum.services.prompts import SCREEN_POST
@@ -46,8 +49,9 @@ class ScreeningService:
 
     # zero-shot classification using a huggingface transformer
     def zero_shot_classification(self, post_text, candidate_labels, threshold):
-        pipe = pipeline(model="facebook/bart-large-mnli")
+        pipe = apps.get_app_config('idea_forum').tranformer_pipe
         pipe_out = pipe(post_text, candidate_labels=candidate_labels)
+
         print(pipe_out['labels'])
         print(pipe_out['scores'])
         print(f"threshold = {threshold}")
