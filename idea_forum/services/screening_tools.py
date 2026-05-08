@@ -24,11 +24,12 @@ class ScreeningService:
             model_name = "profanity_check"
         else:
             candidate_labels = ["profanity", "abuse", "NSFW", "political speech", "spam", "sales"]
-            zero_shot_threshold = 0.8
+            zero_shot_threshold = 0.65
             result = self.zero_shot_classification(post_text, candidate_labels, zero_shot_threshold)
             model_name = "zero-shot classification with transformer"
 
         print(f"model = {model_name}")
+        print(f"result = {result}")
 
         return result
     
@@ -49,6 +50,7 @@ class ScreeningService:
         pipe_out = pipe(post_text, candidate_labels=candidate_labels)
         print(pipe_out['labels'])
         print(pipe_out['scores'])
+        print(f"threshold = {threshold}")
 
         return max(pipe_out['scores']) >= threshold
 
