@@ -33,4 +33,4 @@ Thumbs.db
 UI-Prototype/
 
 # HuggingFace
-huggingface_cache
+huggingface_cache/
