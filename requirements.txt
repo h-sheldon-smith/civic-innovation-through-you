@@ -35,3 +35,5 @@ anthropic
 strip_markdown
 alt-profanity-check
 better-profanity
+torch --index-url https://download.pytorch.org/whl/cpu
+transformers
