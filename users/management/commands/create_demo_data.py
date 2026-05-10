@@ -294,10 +294,11 @@ class Command(BaseCommand):
             topic.posts_count = 1
             topic.save(update_fields=["first_post", "last_post", "posts_count"])
 
-            forum.posts_count = Forum.objects.get(pk=forum.pk).posts_count + 1
-            forum.topics_count = Forum.objects.get(pk=forum.pk).topics_count + 1
-            forum.last_post = post
-            forum.save(update_fields=["posts_count", "topics_count", "last_post"])
+            Forum.objects.filter(pk=forum.pk).update(
+                direct_posts_count=Forum.objects.get(pk=forum.pk).direct_posts_count + 1,
+                direct_topics_count=Forum.objects.get(pk=forum.pk).direct_topics_count + 1,
+                last_post=post,
+            )
 
             self.stdout.write(self.style.SUCCESS(f'  Created  "{subject[:60]}"'))
 
