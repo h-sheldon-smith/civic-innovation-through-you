@@ -1,0 +1,19 @@
+# manually created; pls do not delete
+
+from django.db import migrations
+
+def call_service(apps, schema_editor):
+    from idea_forum.services.service_objs import CreateForumContainers
+    CreateForumContainers.execute({})
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('idea_forum', '0001_initial'),
+        # make sure django has applied the last migration in machina's forum app before running this one
+        ('forum', '0011_auto_20190627_2132'),
+    ]
+
+    operations = [
+        migrations.RunPython(call_service, reverse_code=migrations.RunPython.noop), # note: reversing the migration isn't implemented (data seeding)
+    ]

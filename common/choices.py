@@ -14,7 +14,7 @@ class Topic_Options(models.TextChoices):
     SAFE = 'Safe', 'Public Safety'
     SENIOR = 'Senior', 'Senior Services'
     TRANSPORT = 'Transport', 'Transportation & Infrastructure'
-    VOLUNTEER = "Volunteer", "Volunteering Opportunities"
+    VOLUNTEER = 'Volunteer', 'Volunteering Opportunities'
 
 TOPIC_MAX_LENGTH = max(len(choice.value) for choice in Topic_Options)
 
@@ -29,3 +29,7 @@ class Account_Status(models.TextChoices):
     BANNED = 'Banned', 'Banned'
 
 ACCT_STATUS_MAX_LENGTH = max(len(choice.value) for choice in Account_Status)
+
+RES_GROUP_NAME = 'residents'
+MOD_GROUP_NAME = 'moderators'
+ADMIN_GROUP_NAME = 'site_admin'

@@ -1,35 +1,36 @@
+from idea_suggestion.models import Idea
+from smart_functionality.pipeline import Ask_AI
+from idea_suggestion.admin_inbox_services import Admin_Mark_Read
 
-from boto3 import client
+INBOX_SUMMARY_TASK = "Analyze the provided community feedback and produce the following:" \
+"A summary of the most common themes and ideas (e.g. suggestions for improving the community, concerns, or complaints)," \
+"Specific callouts for urgent issues that impacts safety or community/municipality finances," \
+"Identify any patterns or trends (e.g. time of events, locations, people involved or impacted)" \
 
-bedrock = client("bedrock-runtime")
-
-# bedrock.invoke_model(...) #send a request. like client.send(command)
-# in js, it would be: InvokeModelCommand
-# Params: modelId="anthropic.claude-3-sonnet" and body="...."
-# for model id: 
-# for body: { "prompt": "...", "ideas": [{"topic": <>, "message": "...",}, ... ], "max_tokens":... }
-
-#1. Query Django model
-# Iterate over instances in idea table for batch processing
-# Idea.objects.all().iterator(chunk_size=50)
-
-#2. Serialize instances into structured JSON list
-# {
-# "ideas":[
-# {"id": 1, "topic": "<topic", "location": "<location>", "message": "<message>"}, ...
-#],
-# "limited_choices": "topic"}
-
-#Prompt(chunk): "Identify topics that have a relatively high level of representation in the subdataset"
-#Prompt(chunk): "Identify recurring themes and overlapping ideas in message"
-#Prompt(chunk): "Flag any items that appear urgent or are important and time sensitive. Explain why"
-#Prompt(final): "Combine the fequency patterns for topic from all chunk summaries to identify global trends"
-#Prompt(final): "Combine the themes from all chunk summaries and identify the strongest cross-dataset patterns"
-#Prompt(final): "Summarize all urgent items across the dataset and highlight the most critical issues"
+INBOX_SUMMARY_FORMAT = "Make a written summary with key insights in bullet points and anything urgent seperate and at the top." \
+"Keep everything within 3000 characters. Avoid sounding like generic AI, using technical terms, or overly formal language."
 
 
-#3. Send JSON to AWS Bedrock in a single prompt
-#4. Store the summary in a JSON
-#5. Repeat until no more instances
-#6. send the summary JSON for final summary
+'''
+Method to get a smart summary for unread inbox contents
+If successful, marks the ideas as read
+Returns: a smart summary of inbox contents if successful
+         otherwise, a failure message
+'''
+def Get_Smart_Inbox_Summary(ideas):
+    
+    if not ideas:
+        return False, "There are no new messages to review"
+    
+    # to_review = []
+    
+    # for field in ideas._meta.get_fields():
+    #     if field != read_status or file_location:
+    #         to_review.append(field)
+    
+    summary = Ask_AI(INBOX_SUMMARY_TASK, INBOX_SUMMARY_FORMAT, ideas)
 
+    if summary:
+        return True, summary
+    
+    return False, "Smart summary is not available at this time"

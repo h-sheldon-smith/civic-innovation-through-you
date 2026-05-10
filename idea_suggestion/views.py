@@ -3,7 +3,9 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from . import forms
+from idea_suggestion.admin_inbox_services import Admin_Inbox_Data_Controls, Admin_Mark_Read
 from idea_suggestion.models import Idea
+from idea_suggestion.smart_summary import Get_Smart_Inbox_Summary
 
 # Create your views here (http request/response handling)
 # Don't forget to update urls.py
@@ -33,67 +35,40 @@ def Resident_Idea_Submission_View(request):
 
     idea_form = forms.SubmitIdeaForm()
 
-    # parameters: request, the template that will use this, the data for the template
-    # optional: content_type (type for resulting doc, default is text/html), 
-    # optional: status (default code 200), using (template engine name)
     return render(request, 'ideas/ideas_resident.html', {'idea_form': idea_form})
 
 
 # City Admin Inbox for viewing suggestions sent in by residents
 @permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Inbox_View(request):
+    ideas, filter, sort, search = Admin_Inbox_Data_Controls(request)    
 
-    ideas = Idea.objects.all() #query instruction to get all table instances
-
-    if "clear-options" in request.GET:
-        filter = forms.IdeaFilterForm()
-        sort = forms.IdeaSortForm()
-        search = forms.IdeaSearchForm()
-
-    else:
-        filter = forms.IdeaFilterForm(request.GET)
-        if filter.is_valid():
-            topics = filter.cleaned_data.get('topic_filter')
-            read = filter.cleaned_data.get('read_filter')
-
-            if topics:
-                ideas = ideas.filter(topic__in=topics)
-
-            if read:
-                ideas = ideas.filter(read_status=read)
-
-        sort = forms.IdeaSortForm(request.GET)
-        if sort.is_valid():
-            sorting = sort.cleaned_data.get('sort_options')
-            if sorting:
-                ideas = ideas.order_by(sorting)
-            else:
-                ideas = ideas.order_by("-time_stamp")
-
-        search = forms.IdeaSearchForm(request.GET)
-        if search.is_valid():
-            subject = search.cleaned_data.get('subject_search')
-            content = search.cleaned_data.get('content_search')
-            to_exclude = []
-
-            for idea in ideas:
-                if subject and subject not in idea.subject_line:
-                    to_exclude.append(idea.id)
-                if content and content not in idea.message:
-                    to_exclude.append(idea.id)
-
-            if to_exclude:
-                ideas = ideas.exclude(id__in=to_exclude)
-            
     return render(request, 'ideas/ideas_city_admin_inbox.html', {'ideas': ideas, 'sort': sort, 'filter': filter, 'search': search})
-
 
 
 # City Admin idea detail page
 # Updates an idea status to read and navigates to a detail page to display contents
 @permission_required("users.can_admin_site", raise_exception=True)
 def CityAdmin_Idea_Detail(request, pk):
-    idea = Idea.objects.get(pk=pk)
-    idea.read_status = True
-    idea.save()
+    idea = Admin_Mark_Read(Idea.objects.get(pk=pk))
+
     return render(request, 'ideas/ideas_admin_detail.html', {'idea': idea})
+
+
+# Popup for smart summary
+def CityAdmin_Inbox_Smart_Summary_View(request):
+    ideas, filter, sort, search = Admin_Inbox_Data_Controls(request) 
+    status, summary = Get_Smart_Inbox_Summary(ideas)
+
+    #TODO: Delete this later
+    #summary = "Temp summary while we test stuff"
+
+    data = {
+        "status": status,
+        "summary": summary
+    }
+
+    if status:
+        Admin_Mark_Read(ideas)
+
+    return JsonResponse(data)

@@ -27,3 +27,6 @@ python manage.py promote_to_site_admin username
 # Create user
 python manage.py shell
 from django.contrib.auth import get_user_model; get_user_model().objects.create_user(username='admin1',password='letmein!1!',email='foo@b.com')
+
+# To run unit tests
+python -m unittest app.tests.test_something

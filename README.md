@@ -1,4 +1,7 @@
 # Civic Innovation Through You!
+<div align="center">
+  <img width="350" height="350" alt="CITY_logo" src="static/logo/CITY_logo.png" />
+</div>
 
 ## Project Overview
 Civic Innovation Through You (CITY) is a cloud‑based civic engagement platform designed to strengthen communication between residents and local government. The platform empowers community members to submit ideas, participate in forum discussions, and vote in polls that shape local decision‑making. Engagement is rewarded through a points and badges system that encourages ongoing participation and friendly competition on a public leaderboard.
@@ -16,3 +19,4 @@ City administrators gain a streamlined workspace where they can review resident 
 - Fameworks: Django, Django-Machina
 - Languages: Python, JavaScript, HTML, CSS
 - Database: SQLite3
+- AI Services: Anthropic Claude API

@@ -49,6 +49,10 @@ INSTALLED_APPS = [
     'idea_suggestion.apps.IdeaSuggestionConfig',
     'users',
     'idea_forum',
+    'smart_functionality.apps.SmartFunctionalityConfig',
+
+    # 3rd-party apps
+    'service_objects',
 
     # Machina dependencies:
     'mptt',
@@ -108,6 +112,7 @@ MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
 # MACHINA_FORUM_NAME = "Civic Innovation Through You"
 MACHINA_FORUM_NAME = " "
 
+MACHINA_PROFILE_SIGNATURE_MAX_LENGTH = 0
 
 WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
 
@@ -194,7 +199,7 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     'can_reply_to_topics',
     'can_delete_own_posts',
     'can_edit_own_posts',
-    'can_post_without_approval', # if off, requires manual moderator permission before each post is displayed
+    # 'can_post_without_approval', # if off, requires manual moderator permission before each post is displayed
     'can_vote_in_polls',
     # for attachments (user can attach an image when posting):
     # 'can_attach_file',
