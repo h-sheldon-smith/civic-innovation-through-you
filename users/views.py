@@ -24,11 +24,48 @@ def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            login(request, form.get_user())
-            return redirect('index')  # Redirect to the home page after successful login
+            user = form.get_user()
+            try:
+                mod = user.moderation
+                if mod.is_banned():
+                    return render(request, 'users/login.html', {
+                        'form': form,
+                        'punishment': {
+                            'type': 'banned',
+                            'reason': mod.reason,
+                        },
+                    })
+                if mod.is_suspended():
+                    until = mod.suspended_until
+                    return render(request, 'users/login.html', {
+                        'form': form,
+                        'punishment': {
+                            'type': 'suspended',
+                            'reason': mod.reason,
+                            'until': until.strftime('%B %d, %Y at %I:%M %p') if until else None,
+                        },
+                    })
+                if mod.is_muted():
+                    login(request, user)
+                    until = mod.mute_until
+                    request.session['mute_popup'] = {
+                        'reason': mod.reason,
+                        'until': until.strftime('%B %d, %Y at %I:%M %p') if until else None,
+                    }
+                    return redirect('users:mute_notice')
+            except Exception:
+                pass
+            login(request, user)
+            return redirect('index')
     else:
         form = AuthenticationForm()
     return render(request, 'users/login.html', {'form': form})
+
+
+@login_required
+def mute_notice_view(request):
+    mute_popup = request.session.pop('mute_popup', None)
+    return render(request, 'users/mute_notice.html', {'mute_popup': mute_popup})
 
 def logout_view(request):
     if request.method == 'POST':

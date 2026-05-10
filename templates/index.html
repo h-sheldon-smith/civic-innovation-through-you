@@ -18,6 +18,45 @@
     Welcome to Civic Innovation Through You (CITY)
     {% endif %}
 </h1>
+Template Homepage
+
+{% if perms.users.can_admin_site and top_topics %}
+<section class="analytics-section">
+    <h2 class="analytics-title">Forum Engagement Analytics</h2>
+    <p class="analytics-subtitle">Top topics by replies and views</p>
+    <table class="analytics-table">
+        <thead>
+            <tr>
+                <th>Topic</th>
+                <th>Forum</th>
+                <th>Replies</th>
+                <th>Views</th>
+                <th>Last Activity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for topic in top_topics %}
+            <tr>
+                <td>
+                    <a href="{% url 'forum_conversation:topic' forum_slug=topic.forum.slug forum_pk=topic.forum.pk slug=topic.slug pk=topic.pk %}">
+                        {{ topic.subject }}
+                    </a>
+                </td>
+                <td>{{ topic.forum.name }}</td>
+                <td>{{ topic.posts_count }}</td>
+                <td>{{ topic.views_count }}</td>
+                <td>{{ topic.last_post_on|date:"M d, Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% elif perms.users.can_admin_site %}
+<section class="analytics-section">
+    <h2 class="analytics-title">Forum Engagement Analytics</h2>
+    <p class="analytics-subtitle">No forum topics yet.</p>
+</section>
+{% endif %}
 <div class="body-content">
     {% if user.is_authenticated %}
         Let's build our community together!

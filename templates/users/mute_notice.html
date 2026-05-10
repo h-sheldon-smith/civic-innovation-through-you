@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+Account Notice
+{% endblock %}
+
+{% block city_content %}
+    <div class="modal-backdrop is-open" id="mute-modal" aria-hidden="false">
+        <div class="modal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                <h2 style="color:#e67e22;">Account Muted</h2>
+                <button class="modal-close" id="mute-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Your account has been <strong>muted</strong>. You can browse the site but cannot post or submit content.</p>
+                {% if mute_popup and mute_popup.until %}
+                    <p>Your mute lifts on <strong>{{ mute_popup.until }}</strong>.</p>
+                {% endif %}
+                {% if mute_popup and mute_popup.reason %}
+                    <p><em>Reason: {{ mute_popup.reason }}</em></p>
+                {% endif %}
+                <a href="{% url 'index' %}" class="nav-btn" style="display:inline-block;margin-top:12px;">Continue to Site</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var modal = document.getElementById('mute-modal');
+            var closeBtn = document.getElementById('mute-close');
+            function closeModal() {
+                modal.classList.remove('is-open');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+        })();
+    </script>
+{% endblock %}

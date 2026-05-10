@@ -11,4 +11,45 @@ User Login
         {{ form }}
         <button class="nav-btn">Submit</button>
     </form>
+
+    {% if punishment %}
+    <div class="modal-backdrop is-open" id="punishment-modal" aria-hidden="false">
+        <div class="modal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                {% if punishment.type == 'banned' %}
+                    <h2 style="color:#c0392b;">Account Banned</h2>
+                {% elif punishment.type == 'suspended' %}
+                    <h2 style="color:#e67e22;">Account Suspended</h2>
+                {% endif %}
+                <button class="modal-close" id="punishment-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                {% if punishment.type == 'banned' %}
+                    <p>Your account has been <strong>permanently banned</strong> and you cannot log in.</p>
+                {% elif punishment.type == 'suspended' %}
+                    <p>Your account is <strong>suspended</strong> and you cannot log in at this time.</p>
+                    {% if punishment.until %}
+                        <p>Your suspension lifts on <strong>{{ punishment.until }}</strong>.</p>
+                    {% endif %}
+                {% endif %}
+                {% if punishment.reason %}
+                    <p><em>Reason: {{ punishment.reason }}</em></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var modal = document.getElementById('punishment-modal');
+            var closeBtn = document.getElementById('punishment-close');
+            function closeModal() {
+                modal.classList.remove('is-open');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+        })();
+    </script>
+    {% endif %}
 {% endblock %}
