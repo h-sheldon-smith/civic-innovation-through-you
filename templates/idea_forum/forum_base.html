@@ -3,7 +3,16 @@
 {% load i18n %}
 {% load static %}
 
+{% block city_sidebar %}
+    {% if user.is_authenticated %}
+        {% include 'idea_forum/forum_sidebar.html' %}
+    {% endif %}
+{% endblock %}
+
 {% comment %} replaces Machina's _base.html; is the base that's extended by Machina's board_base.html {% endcomment %}
+
+{% block subheader %}{% endblock %}
+
 
 {% block extra_head %}
     {% block css %}
@@ -13,6 +22,7 @@
     {% endblock extra_css %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 {% endblock %}
+
 
 {% block title %}CITY Forum{% endblock %}
 

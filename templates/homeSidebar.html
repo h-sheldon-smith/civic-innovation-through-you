@@ -2,13 +2,12 @@
 {% load static %}
 
 {% block city_sidebar_content %}
-  <h3 class="sidebar-title">About Me</h3>
+  <h3 class="sidebar-title">About Me</h3><br>
 
 
     {% if user.is_authenticated %}
 
-    <h3
-      class="sidebar-user">
+    <h3 class="sidebar-user">
       <img class="user-sidebar-icon-img" src="{% static 'icons/userIcon.svg' %}" alt="" aria-hidden="true">
       <span class="username">{{ user.username }}</span>
     </h3>

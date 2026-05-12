@@ -6,16 +6,18 @@ Determines styling for select aspects on the webpage
 
 /* ROOT VARIABLES */
 :root {
-  --color-dark: rgb(99, 114, 107);
-  --color-medium: rgb(157, 170, 163);
+  --color-dark: rgb(100, 123, 112);
+  --color-medium: rgb(149, 175, 161);
   --color-light: rgb(205, 219, 211);
   --color-extra-light: rgb(223, 237, 229);
+  --color-highlight: rgb(173, 236, 242);
   
   --font-color-dark: black;
   --font-color-light: rgb(186, 210, 197);
   --font-family: "avant garde", sans-serif;
   --font-weight-title: 700;
   --font-weight-body: 500;
+  --font-size-title-logo: 36px;
   --font-size-title-large: 32px;
   --font-size-title: 26px;
   --font-size-body: 20px;
@@ -53,12 +55,11 @@ html, body {
 
 /* Top Navigation Bar */
 .navbar {
-  display: block;
-  
-  padding: 22px 20px;
-  width: 100%;
-  box-sizing: border-box;  /* keeps padding inside the width */
-  margin: 0;
+  display: flex;
+  justify-content: flex-start !important;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
 
   background: var(--color-dark);
   color: var(--font-color-dark);
@@ -92,11 +93,24 @@ html, body {
 
 /* NAVBAR COMPONENTS */
 .navbar-title {
-  /*font-size: 30px;
-  font-weight: 600;*/
-  font-size: var(--font-size-title-large);
+  margin: 0 0 12px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-title-logo);
   font-weight: var(--font-weight-title);
-  margin-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.nav-content{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+}
+
+.nav-logo{
+  height:100px;
+  width:auto;
 }
 
 .navbar span {
@@ -113,6 +127,7 @@ html, body {
   border: var(--button-boarder);
   background: var(--color-medium);
   box-shadow: var(--button-shadow);
+  color: inherit !important;
   cursor: var(--button-cursor);
   align-items: center;
   justify-content: center;
@@ -120,7 +135,7 @@ html, body {
 }
 
 .nav-btn:hover {
-  background: var(--color-light);
+  background: var(--color-highlight);
   box-shadow: var(--button-hover-shadow);
   text-decoration: underline;
 }
@@ -232,7 +247,15 @@ html, body {
 
 /* modal box */
 .modal {
-  display: block; /* Position on screen */
+  /*display: block; /* Position on screen */
+  /* Display */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  font-family: var(--font-family);
+
+  /* Position on Screen */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -242,6 +265,7 @@ html, body {
   /* Size */
   width: 600px;
   max-width: 80%;
+  max-height: 600px;
   box-sizing: border-box;
 
   /* Shape */
@@ -251,12 +275,22 @@ html, body {
   /* Appearance */
   background: var(--color-light);
   padding: 10px 10px;
+  border: none;
 }
 
-.modal-header {
+.modal-header,
+.modal-header h1,
+.modal-header h2,
+.modal-header h3 {
   display: flex;
+  flex-shrink: 0;
+
+  font-size: var(--font-size-title) !important;
+  font-weight: var(--font-weight-title) !important;
+
   align-items: center;
-  padding: 0px 5px;
+  /*padding: 0px 5px;*/
+  padding-left: 5px;
   justify-content: space-between;
   gap: 12px;
 }
@@ -264,7 +298,6 @@ html, body {
 .modal-header .title {
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-title);
-
 }
 
 .modal-header .close-x-button {
@@ -278,9 +311,26 @@ html, body {
 
 .modal-body {
   padding: 10px 10px;
+  flex: 1 1 auto;
+  overflow-y: auto !important;
+  min-height: 0;
   font-size: var(--font-size-body);
   font-weight: var(--font-weight-body);
+  border-top: 1px solid var(--color-extra-light);
+}
 
+.modal-body input,
+.modal-body textarea,
+.modal-body select,
+.modal label {
+  margin-bottom: 4px;
+}
+
+.modal-footer {
+  flex-shrink: 0;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  border: none;
 }
 
 .modal-close {
@@ -299,6 +349,19 @@ html, body {
     display: flex;
     flex-flow: column;
     gap: 1rem;
+}
+
+input,
+textarea,
+select {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+}
+
+textarea {
+  height: 225px;
+  resize: vertical;
 }
 
 
@@ -370,7 +433,7 @@ html, body {
     border-collapse: collapse;
     border-spacing: 0;
 .idea-table tbody tr:hover {
-  background: var(--color-extra-light);
+  background: var(--color-highlight);
 }
 
 .analytics-table thead tr {

@@ -1,80 +1,85 @@
 {% load static %}
 
 <nav class="navbar">
-  <div class="navbar-title">Civic Innovation Through You - Bellevue</div>
+    <img class="nav-logo" src="{% static 'icons/city-logo-mock.svg' %}" alt="" aria-hidden="true">
 
-  <div class="navbar-links">
-    {% url 'index' as index_url %}    
-    <a href="{% url 'index' %}"
-      class="nav-btn {% if request.path == index_url %}active{% endif %}">
-      <img class="nav-icon-img" src="{% static 'icons/homeIcon.svg' %}" alt="" aria-hidden="true">
-      Home
-    </a>
 
-    <!-- Submit Idea Button -->
-    {% if user.is_authenticated %}
-    <button data-modal-target="#submit-idea-modal" class="nav-btn">
-      <img class="nav-icon-img" src="{% static 'icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
-      Submit Idea
-    </button>
-    {% endif %}
+  <div class="nav-content">
+    <div class="navbar-title">Civic Innovation Through You - Bellevue</div>
 
-    <!-- City Admin Idea Inbox-->
-    {% if perms.users.can_admin_site %}
-    {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
-    <a href="{{ admin_idea_inbox_url }}"
-      class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
-      <img class="nav-icon-img" src="{% static 'icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
-      View Ideas
-    </a>
-    {% endif %}
+    <div class="navbar-links">
+      {% url 'index' as index_url %}    
+      <a href="{% url 'index' %}"
+        class="nav-btn {% if request.path == index_url %}active{% endif %}">
+        <img class="nav-icon-img" src="{% static 'icons/homeIcon.svg' %}" alt="" aria-hidden="true">
+        Home
+      </a>
 
-    <!-- City Admin Account Management -->
-    {% if perms.users.can_admin_site %}
-    {% url 'users:account_list' as account_list_url %}
-    <a href="{{ account_list_url }}"
-      class="nav-btn {% if request.path == account_list_url %}active{% endif %}">
-      <img class="nav-icon-img" src="{% static 'icons/userIcon.svg' %}" alt="" aria-hidden="true">
-      Manage Accounts
-    </a>
-    {% endif %}
-
-    <!-- Forums -->
-    <a href="{% url 'forum:index' %}"
-      class="nav-btn {% if request.path == about_url %}active{% endif %}">
-      <img class="nav-icon-img" src="{% static 'icons/discussionIcon.svg' %}" alt="" aria-hidden="true">
-      Discussions
-    </a>
-
-    <!-- Login Button: Only Rendered If User Is Not Authenticated (Logged Out) -->
-    {% if not user.is_authenticated %}
-    {% url 'users:login' as login_url %}    
-    <a href="{% url 'users:login' %}"
-      class="nav-btn {% if request.path == login_url %}active{% endif %}">
-      <img class="nav-icon-img" src="{% static 'icons/loginIcon.svg' %}" alt="" aria-hidden="true">
-      Login
-    </a>
-    {% endif %}
-
-    <!-- Logout Button: Only Rendered If User Is Authenticated (Logged In) -->
-    {% if user.is_authenticated %} 
-    <form class = "logout" action="{% url 'users:logout' %}" method="post">
-      {% csrf_token %}
-      <button type="submit" class="nav-btn">
-        <img class="nav-icon-img" src="{% static 'icons/logoutIcon.svg' %}" alt="" aria-hidden="true">
-        Logout
+      <!-- Submit Idea Button -->
+      {% if user.is_authenticated %}
+      <button data-modal-target="#submit-idea-modal" class="nav-btn">
+        <img class="nav-icon-img" src="{% static 'icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
+        Submit Idea
       </button>
-    </form>
-    {% endif %}
+      {% endif %}
 
-  </div>
-</nav>
+      <!-- City Admin Idea Inbox-->
+      {% if perms.users.can_admin_site %}
+      {% url 'admin_idea_inbox' as admin_idea_inbox_url %}    
+      <a href="{{ admin_idea_inbox_url }}"
+        class="nav-btn {% if request.path == admin_idea_inbox_url %}active{% endif %}">
+        <img class="nav-icon-img" src="{% static 'icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
+        View Ideas
+      </a>
+      {% endif %}
 
-<!-- Idea Submission Popup -->
-<div class="modal-backdrop" id="submit-idea-modal" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-body">
+      <!-- City Admin Account Management -->
+      {% if perms.users.can_admin_site %}
+      {% url 'users:account_list' as account_list_url %}
+      <a href="{{ account_list_url }}"
+        class="nav-btn {% if request.path == account_list_url %}active{% endif %}">
+        <img class="nav-icon-img" src="{% static 'icons/userIcon.svg' %}" alt="" aria-hidden="true">
+        Manage Accounts
+      </a>
+      {% endif %}
+
+      <!-- Forums -->
+      <a href="{% url 'forum:index' %}"
+        class="nav-btn {% if request.path == about_url %}active{% endif %}">
+        <img class="nav-icon-img" src="{% static 'icons/discussionIcon.svg' %}" alt="" aria-hidden="true">
+        Discussions
+      </a>
+
+      <!-- Login Button: Only Rendered If User Is Not Authenticated (Logged Out) -->
+      {% if not user.is_authenticated %}
+      {% url 'users:login' as login_url %}    
+      <a href="{% url 'users:login' %}"
+        class="nav-btn {% if request.path == login_url %}active{% endif %}">
+        <img class="nav-icon-img" src="{% static 'icons/loginIcon.svg' %}" alt="" aria-hidden="true">
+        Login
+      </a>
+      {% endif %}
+
+      <!-- Logout Button: Only Rendered If User Is Authenticated (Logged In) -->
+      {% if user.is_authenticated %} 
+      <form class = "logout" action="{% url 'users:logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="nav-btn">
+          <img class="nav-icon-img" src="{% static 'icons/logoutIcon.svg' %}" alt="" aria-hidden="true">
+          Logout
+        </button>
+      </form>
+      {% endif %}
+
+    </div>
+  </nav>
+
+  <!-- Idea Submission Popup -->
+  <div class="modal-backdrop" id="submit-idea-modal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       {% include "ideas/ideas_resident.html" %}
+
     </div>
   </div>
-</div>
+
+  </div>
