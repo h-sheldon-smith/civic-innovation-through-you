@@ -1,20 +1,20 @@
 from django.db import models
 
 class Topic_Options(models.TextChoices):
-    ART = 'Art', 'Arts & Culture'
-    BUSINESS = 'Bus', 'Business'
-    CHILD = 'Child', 'Childcare & Youth Programs'
+    ART = 'Arts & Culture', 'Arts & Culture'
+    BUSINESS = 'Business', 'Business'
+    CHILD = 'Childcare & Youth Programs', 'Childcare & Youth Programs'
     CONSTRUCTION = 'Construction', 'Construction'
-    EVENTS = 'Events', 'Community Events'
-    GOV = 'Gov', 'Local Government'
-    HEALTH = 'Health', 'Health & Community Services'
-    HOUSE = 'House', 'Housing & Development'
-    PARKS = 'Parks', 'Parks & Green Spaces'
-    PLAN = 'Plan', 'Urban Planning'
-    SAFE = 'Safe', 'Public Safety'
-    SENIOR = 'Senior', 'Senior Services'
-    TRANSPORT = 'Transport', 'Transportation & Infrastructure'
-    VOLUNTEER = 'Volunteer', 'Volunteering Opportunities'
+    EVENTS = 'Community Events', 'Community Events'
+    GOV = 'Local Government', 'Local Government'
+    HEALTH = 'Health & Community Services', 'Health & Community Services'
+    HOUSE = 'Housing & Dev', 'Housing & Development'
+    PARKS = 'Parks & Green Spaces', 'Parks & Green Spaces'
+    PLAN = 'Urban Planning', 'Urban Planning'
+    SAFE = 'Public Safety', 'Public Safety'
+    SENIOR = 'Senior Services', 'Senior Services'
+    TRANSPORT = 'Transportation & Infrastructure', 'Transportation & Infrastructure'
+    VOLUNTEER = 'Volunteering', 'Volunteering Opportunities'
 
 TOPIC_MAX_LENGTH = max(len(choice.value) for choice in Topic_Options)
 
