@@ -113,7 +113,8 @@
             
             fetch(url)
                 .then(response => response.json()) //turns response into plain text
-                .then(data => { //injects into the model
+                .then(data => { //injects into the modal
+                    document.getElementById("loading").style.display = "none";
                     document.getElementById("output").innerHTML = data.summary;
                 })
                 .catch(() => {
