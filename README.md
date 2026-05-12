@@ -16,7 +16,7 @@ City administrators gain a streamlined workspace where they can review resident 
 
 
 ## Tech Stack
-- Fameworks: Django, Django-Machina
+- Frameworks: Django, Django-Machina
 - Languages: Python, JavaScript, HTML, CSS
 - Database: SQLite3
-- AI Services: Anthropic Claude API
+- AI Models: Anthropic Claude, Hugging Face Transformers, Alt-Profanity-Check

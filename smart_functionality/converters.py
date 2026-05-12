@@ -1,5 +1,3 @@
-import strip_markdown
-
 '''
 Method to convert data into AI friendly strings
 Param: data, the data objects to be converted into AI friendly strings
@@ -34,6 +32,4 @@ def Convert_Data(data):
     else:
         return "Data conversion error has occured for type " + str(type(data)) #TODO: add tuple for failure: ,0
 
-
-    # Remove markdown and return
-    return strip_markdown.strip_markdown(string) #TODO: add tuple for success: ,1
+    return string #TODO: add tuple for success: ,1
