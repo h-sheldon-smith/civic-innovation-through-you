@@ -38,7 +38,7 @@
             modal.setAttribute("aria-hidden", "false");
 
             if(modal.id === "summary-modal"){
-                getSummary(button);
+                getSummary(button, modal);
             }
 
             //handles submit idea form
@@ -108,13 +108,16 @@
         }
 
         //Function to retrieve a smart summary from the backend
-        async function getSummary(button){
+        async function getSummary(button, modal){
+            const loading = modal.querySelector("#summary-loading");
+            
+
             const url = button.dataset.url;
             
             fetch(url)
                 .then(response => response.json()) //turns response into plain text
                 .then(data => { //injects into the modal
-                    document.getElementById("loading").style.display = "none";
+                    loading.style.display = "none";
                     document.getElementById("output").innerHTML = data.summary;
                 })
                 .catch(() => {
