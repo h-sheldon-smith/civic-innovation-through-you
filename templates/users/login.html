@@ -11,6 +11,7 @@ User Login
         {{ form }}
         <button class="nav-btn">Submit</button>
     </form>
+    <a href="{% url 'users:register' %}" class="nav-btn">Create an Account</a>
 
     {% if punishment %}
     <div class="modal-backdrop is-open" id="punishment-modal" aria-hidden="false">
