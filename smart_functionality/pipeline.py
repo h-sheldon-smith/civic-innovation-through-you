@@ -15,8 +15,8 @@ Returns: final_response (list), the consolidated output message(s) from ai.
 '''
 
 # MAYBE ADD AN EXLUDE PARAM and update converter
-def Ask_AI(task, format, data):
-    batched_data, data_count = Get_Batches(task, format, data, BATCH_SIZE)
+def Ask_AI(task, format, data, exclude):
+    batched_data, data_count = Get_Batches(task, format, data, BATCH_SIZE, exclude)
     responses = Query_AI(batched_data, data_count)
     final_response, loops = Consolidate_Responses(responses, BATCH_SIZE)
     
@@ -31,9 +31,9 @@ Param: task (string), the instructions for the AI model
 Returns: batched_data (list of strings), the input split into batches
          data_weight (list of int), the number of inputs per batch (used for weighting during consolidation)
 '''
-def Get_Batches(task, format, data, batch_size):
-    task_string = Convert_Data(task) + Convert_Data(format)
-    batched_data, data_weight = batching.Batch_Data(batch_size, data, task_string)
+def Get_Batches(task, format, data, batch_size, exclude):
+    task_string = Convert_Data(task, "") + Convert_Data(format, "")
+    batched_data, data_weight = batching.Batch_Data(batch_size, data, task_string, exclude)
 
     return batched_data, data_weight
 
@@ -49,7 +49,7 @@ def Consolidate_Responses(data, batch_size):
     responses = data
 
     while len(responses) > 1 and loops < AI_HARD_LIMIT:
-        batches, weights = Get_Batches(CONSOLIDATE_TASK, CONSOLIDATE_FORMAT, responses, batch_size)
+        batches, weights = Get_Batches(CONSOLIDATE_TASK, CONSOLIDATE_FORMAT, responses, batch_size, "")
         responses = Query_AI(batches, weights)
         loops = loops + 1
 

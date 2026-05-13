@@ -30,8 +30,10 @@ def Get_Smart_Inbox_Summary(ideas):
     # for field in ideas._meta.get_fields():
     #     if field != read_status or file_location:
     #         to_review.append(field)
+
+    to_exclude = ["read_status", "file_location"]
     
-    summary = Ask_AI(INBOX_SUMMARY_TASK, INBOX_SUMMARY_FORMAT, ideas)
+    summary = Ask_AI(INBOX_SUMMARY_TASK, INBOX_SUMMARY_FORMAT, ideas, to_exclude)
 
     if summary:
         return True, summary

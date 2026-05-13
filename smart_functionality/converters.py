@@ -3,7 +3,7 @@ Method to convert data into AI friendly strings
 Param: data, the data objects to be converted into AI friendly strings
 Returns: data as string
 '''
-def Convert_Data(data):
+def Convert_Data(data, exclude):
   
     string = ""
 
@@ -22,7 +22,8 @@ def Convert_Data(data):
     # The data does need to be processed (django table instance)
     elif hasattr(data, "_meta"):
         for field in data._meta.get_fields():
-            if field.name not in ["id", "read_status", "file_location"]: # TODO: remove hardcoded logic
+            if field.name not in ["id", exclude]:
+            #if field.name not in ["id", "read_status", "file_location"]: # TODO: remove hardcoded logic
                 value = getattr(data, field.name, None)
 
                 if value:

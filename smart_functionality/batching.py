@@ -9,7 +9,7 @@ Returns: all_batches, a nested list with batched data strings
 Returns: data_count, a list of data objects per batch for weighting batche outputs when later combined
 '''
 
-def Batch_Data(batch_size, data, task):
+def Batch_Data(batch_size, data, task, exclude):
     all_batches = []
     batch = ""
     batch_weight = []
@@ -24,7 +24,7 @@ def Batch_Data(batch_size, data, task):
         batch = task + " "
 
         for d in data:
-            data_string = Convert_Data(d)
+            data_string = Convert_Data(d, exclude)
                 
             # If there's room in the batch, add it to the current batch
             if (len(batch) + len(data_string)) < batch_size:
