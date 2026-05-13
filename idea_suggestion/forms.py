@@ -41,5 +41,5 @@ class IdeaSortForm(forms.Form):
 
 #A form used to search for terms in the city admin inbox
 class IdeaSearchForm(forms.Form):
-    subject_search = forms.CharField(max_length = 50, required = False)
-    content_search = forms.CharField(max_length = 50, required = False)
+    subject_search = forms.CharField(max_length=50, label="Search subject...", required=False)
+    content_search = forms.CharField(max_length=50, label="Search content...", required=False)

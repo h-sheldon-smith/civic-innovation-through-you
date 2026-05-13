@@ -60,9 +60,6 @@ def CityAdmin_Inbox_Smart_Summary_View(request):
     ideas, filter, sort, search = Admin_Inbox_Data_Controls(request) 
     status, summary = Get_Smart_Inbox_Summary(ideas)
 
-    #TODO: Delete this later
-    #summary = "Temp summary while we test stuff"
-
     data = {
         "status": status,
         "summary": summary
