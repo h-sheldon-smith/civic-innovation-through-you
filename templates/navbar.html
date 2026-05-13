@@ -16,7 +16,7 @@
       </a>
 
       <!-- Submit Idea Button -->
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and not perms.users.can_admin_site %}
       <button data-modal-target="#submit-idea-modal" class="nav-btn">
         <img class="nav-icon-img" src="{% static 'icons/ideaIcon.svg' %}" alt="" aria-hidden="true">
         Submit Idea
@@ -78,7 +78,6 @@
   <div class="modal-backdrop" id="submit-idea-modal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       {% include "ideas/ideas_resident.html" %}
-
     </div>
   </div>
 

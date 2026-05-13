@@ -13,14 +13,19 @@ Determines styling for select aspects on the webpage
   --color-highlight: rgb(173, 236, 242);
   
   --font-color-dark: black;
+  --font-color-bold: #1a5276;
   --font-color-light: rgb(186, 210, 197);
+
   --font-family: "avant garde", sans-serif;
+
   --font-weight-title: 700;
   --font-weight-body: 500;
+
   --font-size-title-logo: 36px;
   --font-size-title-large: 32px;
   --font-size-title: 26px;
   --font-size-body: 20px;
+  --font-size-note: 16px;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -93,7 +98,7 @@ html, body {
 
 /* NAVBAR COMPONENTS */
 .navbar-title {
-  margin: 0 0 12px 0;
+  margin: 0;/* 0 12px 0;*/
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -132,6 +137,7 @@ html, body {
   align-items: center;
   justify-content: center;
   display:inline-flex;
+  width: fit-content;
 }
 
 .nav-btn:hover {
@@ -152,6 +158,13 @@ html, body {
   height: 1.5em;
   display: block;
   flex: 0 0 auto;
+}
+
+/* login/logout button specifically called out since it is technically a form */
+.logout {
+  display: inline-flex;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -247,7 +260,6 @@ html, body {
 
 /* modal box */
 .modal {
-  /*display: block; /* Position on screen */
   /* Display */
   display: flex;
   flex-direction: column;
@@ -412,36 +424,39 @@ textarea {
 /* Forum engagement analytics */
 .analytics-section {
     margin-top: 32px;
+    font-family: var(--font-family);
 }
 
 .analytics-title {
-    font-size: 1.6rem;
-    font-weight: 600;
+    font-size: var(--font-size-title-large); /*1.6rem;*/
+    font-weight: var(--font-weight-title); /*600;*/
     margin: 0 0 4px 0;
 }
 
 .analytics-subtitle {
-    color: #555;
+    color: var(--font-color-dark); /*#555;*/
     margin: 0 0 16px 0;
-    font-size: 0.95rem;
+    font-size: var(--font-size-body); /*0.95rem;*/
 }
 
 .analytics-table {
     width: 95%;
-    font-size: 1rem;
+    /*font-size: 1rem;*/
     text-align: left;
     border-collapse: collapse;
     border-spacing: 0;
+}
+
 .idea-table tbody tr:hover {
   background: var(--color-highlight);
 }
 
 .analytics-table thead tr {
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: var(--font-weight-title); /*bold;*/
+    font-size: var(--font-size-title); /*1.1rem;*/
     position: sticky;
     top: 0;
-    background: #b0c4de;
+    background: var(--color-medium); /*#b0c4de;*/
 }
 
 .analytics-table th,
@@ -451,19 +466,23 @@ textarea {
 }
 
 .analytics-table tbody tr:nth-child(odd) {
-    background: #f0f8ff;
+    background: var(--color-light); /* #f0f8ff;*/
+    font-weight: var(--font-weight-body);
+    font-size: var(--font-size-body);
 }
 
 .analytics-table tbody tr:nth-child(even) {
-    background: #e6f0fa;
+    background: var(--color-medium); /*#e6f0fa;*/
+      font-weight: var(--font-weight-body);
+    font-size: var(--font-size-body);
 }
 
 .analytics-table tbody tr:hover {
-    background: #d0e8f5;
+    background: var(--color-highlight); /*#d0e8f5;*/
 }
 
 .analytics-table a {
-    color: #1a5276;
+    color: var(--font-color-bold);
     text-decoration: none;
 }
 
