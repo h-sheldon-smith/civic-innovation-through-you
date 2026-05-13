@@ -1,21 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block city_sidebar %}
+    {% include 'users/admin_account_list_sidebar.html' %}
+{% endblock %}
+
 {% block title %}Account Management{% endblock %}
 
 {% block city_content %}
 <div class="modal-header">
     <h2>Account Management</h2>
 </div>
-
-<form method="get" style="margin-bottom: 16px; display: flex; gap: 8px;">
-    <input type="text" name="search" value="{{ search }}" placeholder="Search by username..."
-        style="padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
-    <button type="submit" class="nav-btn">Search</button>
-    {% if search %}
-        <a href="{% url 'users:account_list' %}" class="nav-btn">Clear</a>
-    {% endif %}
-</form>
 
 {% if messages %}
     {% for message in messages %}
@@ -30,19 +25,25 @@
 <table class="idea-table">
     <thead>
     <tr>
+        <!--
         <th style="text-align: left">
             <a href="?sort={% if sort == 'username' %}-username{% else %}username{% endif %}{% if search %}&search={{ search }}{% endif %}" class="nav-btn">
                 <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
             </a>
             Username
         </th>
+    -->
+        <th style="text-align: left">Username</th>
         <th style="text-align: left">Email</th>
+        <th style="text-align: left">Joined</th>
+        <!--
         <th style="text-align: left">
             <a href="?sort={% if sort == 'date_joined' %}-date_joined{% else %}date_joined{% endif %}{% if search %}&search={{ search }}{% endif %}" class="nav-btn">
                 <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
             </a>
             Joined
         </th>
+    -->
         <th style="text-align: left">Status</th>
     </tr>
     </thead>

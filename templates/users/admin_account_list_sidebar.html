@@ -1,0 +1,43 @@
+{% extends 'sidebar.html' %}
+{% load static %}
+
+{% block city_sidebar_content %}
+
+    <!-- Search -->
+    <h3 class="sidebar-title">
+        <img class="nav-icon-img" src="{% static 'icons/search.svg' %}">
+        Search
+    </h3>
+    <br>
+
+    <form method="get" style="margin-bottom: 16px; display: flex; flex-direction:column; gap: 8px;">
+        <input type="text" name="search" value="{{ search }}" placeholder="Search by username..." style="width:100%">
+        <button type="submit" class="nav-btn" style="width:fit-content">Search</button>
+        {% if search %}
+            <a href="{% url 'users:account_list' %}" class="nav-btn" style="width:fit-content">Clear</a>
+        {% endif %}
+    </form>
+
+    <br>
+    <br>
+    <br>
+
+    <!-- Sort -->
+    <h3 class="sidebar-title">
+        <img class="nav-icon-img" src="{% static 'icons/sort.svg' %}">
+        Sort
+    </h3>
+    <br>
+    <br>
+    <a href="?sort={% if sort == 'username' %}-username{% else %}username{% endif %}{% if search %}&search={{ search }}{% endif %}" class="nav-btn">
+        <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
+        Username
+    </a>
+    <br><br>
+    <a href="?sort={% if sort == 'date_joined' %}-date_joined{% else %}date_joined{% endif %}{% if search %}&search={{ search }}{% endif %}" class="nav-btn">
+        <img class="nav-icon-img" src="{% static 'icons/sortDirectionIcon.svg' %}" alt="" aria-hidden="true">
+        Joined
+    </a>
+            
+
+{% endblock %}
