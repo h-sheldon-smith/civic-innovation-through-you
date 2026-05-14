@@ -14,6 +14,16 @@
         <img class="nav-icon-img" src="{% static 'icons/homeIcon.svg' %}" alt="" aria-hidden="true">
         Home
       </a>
+      
+      <!-- Superuser Admin Panel Button: Only Rendered If User Is a Superuser -->
+      {% if user.is_superuser %}
+      {% url 'admin:index' as admin_index_url %}
+      <a href="{{admin_index_url}}"
+        class="nav-btn {% if request.path == admin_index_url %}active{% endif %}">
+        <img class="nav-icon-img" src="{% static 'icons/sortIcon.svg' %}" alt="" aria-hidden="true">
+        Superuser Admin Panel
+      </a>
+      {% endif %}
 
       <!-- Submit Idea Button -->
       {% if user.is_authenticated and not perms.users.can_admin_site %}
