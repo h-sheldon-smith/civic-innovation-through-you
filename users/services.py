@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from machina.core.db.models import get_model
 
-from common.choices import RES_GROUP_NAME, MOD_GROUP_NAME
+from common.choices import RES_GROUP_NAME, MOD_GROUP_NAME, ADMIN_GROUP_NAME
 
 class GetOrCreateUser(Service):
     username = forms.CharField(max_length=255)
@@ -48,9 +48,10 @@ class GetOrCreateResidentUser(Service):
             'password': password,
         })
 
-        # residents have no special permissions, so if group doesn't exist just create it
-        group, b = Group.objects.get_or_create(name=RES_GROUP_NAME)
-        user.groups.add(group)
+        user, promoted = PromoteUserToGroup.execute({
+            'username': username,
+            'group_name': RES_GROUP_NAME,
+        })
 
         return user, created
 
@@ -70,26 +71,39 @@ class GetOrCreateModUser(Service):
             'password': password,
         })
 
-        user, promoted = PromoteUserToMod.execute({
+        user, promoted_a = PromoteUserToGroup.execute({
             'username': username,
+            'group_name': MOD_GROUP_NAME,
         })
 
-        return user, created, promoted
+        user, promoted_b = PromoteUserToGroup.execute({
+            'username': username,
+            'group_name': ADMIN_GROUP_NAME,
+        })
 
-class PromoteUserToMod(Service):
+        return user, created, promoted_a or promoted_b
+
+class PromoteUserToGroup(Service):
     username = forms.CharField(max_length=255)
+    group_name = forms.CharField(max_length=255)
 
     def process(self):
         username = self.cleaned_data['username']
+        group_name = self.cleaned_data['group_name']
 
         User = get_user_model()
         user = User.objects.get(username=username)
 
-        if not user.groups.filter(name=MOD_GROUP_NAME).exists():
-            if not Group.objects.filter(name=MOD_GROUP_NAME).exists():
-                CreateModGroupWithPermissions.execute({})
+        if not user.groups.filter(name=group_name).exists():
+            if not Group.objects.filter(name=group_name).exists():
+                if group_name == MOD_GROUP_NAME:
+                    CreateModGroupWithPermissions.execute({})
+                elif group_name == ADMIN_GROUP_NAME:
+                    CreateAdminGroup.execute({})
+                elif group_name == RES_GROUP_NAME:
+                    CreateResidentGroup.execute({})
 
-            group = Group.objects.get(name=MOD_GROUP_NAME)
+            group = Group.objects.get(name=group_name)
             user.groups.add(group)
 
             promoted = True
@@ -97,6 +111,16 @@ class PromoteUserToMod(Service):
             promoted = False
 
         return user, promoted
+    
+class CreateResidentGroup(Service):
+    def process(self):
+        group, _ = Group.objects.get_or_create(name=RES_GROUP_NAME)
+        return group
+    
+class CreateAdminGroup(Service):
+    def process(self):
+        group, _ = Group.objects.get_or_create(name=ADMIN_GROUP_NAME)
+        return group
 
 class CreateModGroupWithPermissions(Service):
     def process(self):
