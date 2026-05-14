@@ -118,7 +118,7 @@ class CreateModGroupWithPermissions(Service):
         # poll creation
         perm_names += ["can_create_polls"]
         # forum moderation
-        perm_names += ["can_lock_topics", "can_move_topics", "can_edit_posts", "can_delete_posts", "can_approve_posts", "can_reply_to_locked_topics"]
+        perm_names += ["can_lock_topics", "can_move_topics", "can_edit_posts", "can_delete_posts", "can_reply_to_locked_topics"]
         # can post without AutoMod screening
         perm_names += ["can_post_without_approval"]
         
