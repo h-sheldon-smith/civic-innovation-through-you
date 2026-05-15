@@ -1,7 +1,7 @@
 from django import forms
 from service_objects.services import Service
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from machina.core.db.models import get_model
 
 from common.choices import RES_GROUP_NAME, MOD_GROUP_NAME, ADMIN_GROUP_NAME
@@ -119,7 +119,12 @@ class CreateResidentGroup(Service):
     
 class CreateAdminGroup(Service):
     def process(self):
-        group, _ = Group.objects.get_or_create(name=ADMIN_GROUP_NAME)
+        group, created = Group.objects.get_or_create(name=ADMIN_GROUP_NAME)
+
+        if created:
+            perm = Permission.objects.get(codename='can_admin_site')
+            group.permissions.add(perm)
+
         return group
 
 class CreateModGroupWithPermissions(Service):
