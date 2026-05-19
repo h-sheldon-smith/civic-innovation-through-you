@@ -30,3 +30,9 @@ from django.contrib.auth import get_user_model; get_user_model().objects.create_
 
 # To run unit tests
 python -m unittest app.tests.test_something
+
+# Docker
+# build the image
+docker build -t city-image .
+# runs the image locally
+docker run --env-file .env -p 8000:8000 city-image
