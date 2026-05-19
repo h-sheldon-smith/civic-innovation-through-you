@@ -1,8 +1,13 @@
+import logging
+
 from django.contrib.auth import logout
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.utils import timezone
 
+from users.models import UserModeration
+
+logger = logging.getLogger(__name__)
 
 EXEMPT_URLS = {'/users/login/', '/users/logout/', '/users/register/'}
 
@@ -18,7 +23,13 @@ class ModerationMiddleware:
         if request.user.is_authenticated and request.path not in EXEMPT_URLS:
             try:
                 mod = request.user.moderation
+            except UserModeration.DoesNotExist:
+                return self.get_response(request)
+            except Exception:
+                logger.exception("ModerationMiddleware: unexpected error fetching moderation for user %s", request.user.pk)
+                return self.get_response(request)
 
+            try:
                 if mod.is_banned():
                     logout(request)
                     messages.error(request, "Your account has been permanently banned.")
@@ -45,6 +56,6 @@ class ModerationMiddleware:
                         return redirect(request.META.get('HTTP_REFERER', '/'))
 
             except Exception:
-                pass
+                logger.exception("ModerationMiddleware: unexpected error during moderation check for user %s", request.user.pk)
 
         return self.get_response(request)
