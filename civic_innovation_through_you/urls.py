@@ -26,10 +26,10 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),
-    path('ideas/', include('idea_suggestion.urls')), #path for idea_suggestions app
-    path('users/', include('users.urls')), #path for users app
-    path('forum/', include(machina_urls)),
-
+    path('ideas/', include('idea_suggestion.urls')), # path for idea_suggestions app
+    path('users/', include('users.urls')), # path for users app
+    path('forum/', include(machina_urls)), # path for machina package
+    path('avatar/', include('avatar.urls')), # path for avatar package
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
