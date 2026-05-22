@@ -1,16 +1,16 @@
 {% extends 'sidebar.html' %}
 {% load static %}
+{% load avatar_tags %}
 
 {% block city_sidebar_content %}
   <h3 class="sidebar-title">About Me</h3><br>
-
-
     {% if user.is_authenticated %}
 
     <h3 class="sidebar-user">
-      <img class="user-sidebar-icon-img" src="{% static 'icons/userIcon.svg' %}" alt="" aria-hidden="true">
+      {% avatar user class="user-sidebar-icon-img" %}
       <span class="username">{{ user.username }}</span>
     </h3>
+    <span class="sidebar-user"><a href="{% url 'avatar:change' %}">Change your avatar</a></span>
 
     {% endif %}
 
