@@ -108,13 +108,6 @@ TEMPLATES = [
     },
 ]
 
-MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
-
-# MACHINA_FORUM_NAME = "Civic Innovation Through You"
-MACHINA_FORUM_NAME = " "
-
-MACHINA_PROFILE_SIGNATURE_MAX_LENGTH = 0
-
 WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
 
 # Database
@@ -193,7 +186,17 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-# resident account permissions
+## machina
+
+MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
+
+# MACHINA_FORUM_NAME = "Civic Innovation Through You"
+MACHINA_FORUM_NAME = " "
+
+# disable signatures
+MACHINA_PROFILE_SIGNATURE_MAX_LENGTH = 0
+
+# global/resident account permissions
 MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     'can_see_forum',
     'can_read_forum',
@@ -206,3 +209,7 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     # 'can_attach_file',
     # 'can_download_file',
 ]
+
+## avatar
+
+AVATAR_MAX_SIZE = 1024 * 1024 * 4 # 4 MB
