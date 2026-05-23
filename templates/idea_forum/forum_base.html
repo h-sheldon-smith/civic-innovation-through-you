@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
-{% load static %}
 
 {% block city_sidebar %}
     {% if user.is_authenticated and not perms.users.can_admin_site %}
@@ -19,7 +18,6 @@
     {% endblock extra_css %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 {% endblock %}
-
 
 {% block title %}CITY Forum{% endblock %}
 
