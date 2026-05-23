@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'users',
     'idea_forum',
     'smart_functionality.apps.SmartFunctionalityConfig',
+    'forum_conversation',
 
     # 3rd-party apps
     'service_objects',
@@ -64,7 +65,7 @@ INSTALLED_APPS = [
     # Machina apps:
     'machina',
     'machina.apps.forum',
-    'machina.apps.forum_conversation',
+    # 'machina.apps.forum_conversation', # use overridden app instead
     'machina.apps.forum_conversation.forum_attachments',
     'machina.apps.forum_conversation.forum_polls',
     'machina.apps.forum_feeds',
