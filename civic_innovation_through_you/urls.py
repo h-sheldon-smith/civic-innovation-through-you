@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from machina import urls as machina_urls
 from . import views
-from forum_conversation.views import vote_post
+from forum_conversation.views import toggle_upvote_post, toggle_downvote_post
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,8 +28,8 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),
     # path('forum_sug/', include('forum_conversation.urls')), # path for overridden forum_conversation app
-    path('post/<int:post_id>/vote/', vote_post, name="vote_post"),
-    path('post/<int:post_id>/vote/', vote_post, name="vote_post"),
+    path('post/<int:post_id>/upvote/', toggle_upvote_post, name="post_upvote_toggle"),
+    path('post/<int:post_id>/downvote/', toggle_downvote_post, name="post_downvote_toggle"),
     path('ideas/', include('idea_suggestion.urls')), # path for idea_suggestions app
     path('users/', include('users.urls')), # path for users app
     path('forum/', include(machina_urls)), # path for machina package
