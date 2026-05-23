@@ -9,13 +9,13 @@
 {% endblock %}
 
 {% block city_content %}
-    <p>{% trans "Your current avatar: " %}</p>
+    <h2>{% trans "Your Current Avatar: " %}</h2>
     {% avatar user %}
     {% if not avatars %}
         <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
     {% endif %}
     <form enctype="multipart/form-data" method="POST" action="{% url 'avatar:add' %}">
         {{ upload_avatar_form.as_p }}
-        <p>{% csrf_token %}<input type="submit" value="{% trans "Upload New Image" %}" /></p>
+        <p>{% csrf_token %}<input type="submit" value="{% trans "Upload New Avatar" %}" /></p>
     </form>
 {% endblock %}

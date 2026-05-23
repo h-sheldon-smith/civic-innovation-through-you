@@ -11,14 +11,14 @@
 {% block city_content %}
     {% if not avatars %}
         {% url 'avatar:change' as avatar_change_url %}
-        <p>{% blocktrans %}You have no avatars to delete. Please <a href="{{ avatar_change_url }}">upload one</a> now.{% endblocktrans %}</p>
+        <h2>{% blocktrans %}You have no avatars to delete. Please <a href="{{ avatar_change_url }}">upload one</a> now.{% endblocktrans %}</h2>
     {% else %}
-        <p>{% trans "Please select the avatars that you would like to delete." %}</p>
+        <h2>{% trans "Please select the avatars that you would like to delete." %}</h2>
         <form method="POST" action="{% url 'avatar:delete' %}">
             <ul>
                 {{ delete_avatar_form.as_ul }}
             </ul>
-            <p>{% csrf_token %}<input type="submit" value="{% trans "Delete These" %}" /></p>
+            <h2>{% csrf_token %}<input type="submit" value="{% trans "Delete These" %}" /></h2>
         </form>
     {% endif %}
 {% endblock %}
