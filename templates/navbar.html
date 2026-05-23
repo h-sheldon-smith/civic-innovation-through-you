@@ -1,15 +1,16 @@
 {% load static %}
 
 <nav class="navbar">
-    <img class="nav-logo" src="{% static 'icons/city-logo-mock.svg' %}" alt="" aria-hidden="true">
-
+    <a href="{% url 'index' %}" class="nav-logo">
+      <img class="nav-logo" src="{% static 'icons/city-logo-mock.svg' %}" alt="" aria-hidden="true">
+    </a>
 
   <div class="nav-content">
     <div class="navbar-title">Civic Innovation Through You - Bellevue</div>
 
     <div class="navbar-links">
       {% url 'index' as index_url %}    
-      <a href="{% url 'index' %}"
+      <a href="{{ index_url }}"
         class="nav-btn {% if request.path == index_url %}active{% endif %}">
         <img class="nav-icon-img" src="{% static 'icons/homeIcon.svg' %}" alt="" aria-hidden="true">
         Home
@@ -18,7 +19,7 @@
       <!-- Superuser Admin Panel Button: Only Rendered If User Is a Superuser -->
       {% if user.is_superuser %}
       {% url 'admin:index' as admin_index_url %}
-      <a href="{{admin_index_url}}"
+      <a href="{{ admin_index_url }}"
         class="nav-btn {% if request.path == admin_index_url %}active{% endif %}">
         <img class="nav-icon-img" src="{% static 'icons/sortIcon.svg' %}" alt="" aria-hidden="true">
         Superuser Admin Panel
