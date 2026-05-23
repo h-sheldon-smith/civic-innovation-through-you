@@ -2,6 +2,12 @@
 
 {% load i18n avatar_tags %}
 
+{% block city_sidebar %}
+    {% if user.is_authenticated %}
+        {% include 'homeSidebar.html' %}
+    {% endif %}
+{% endblock %}
+
 {% block city_content %}
     <p>{% trans "Your current avatar: " %}</p>
     {% avatar user %}
