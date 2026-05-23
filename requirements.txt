@@ -37,3 +37,4 @@ alt-profanity-check
 torch --index-url https://download.pytorch.org/whl/cpu
 transformers
 django-avatar
+django-vote

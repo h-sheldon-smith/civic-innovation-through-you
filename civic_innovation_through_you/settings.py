@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # 3rd-party apps
     'service_objects',
     'avatar',
+    'vote',
 
     # Machina dependencies:
     'mptt',
