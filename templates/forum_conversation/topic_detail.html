@@ -1,0 +1,68 @@
+{% extends "forum_conversation/topic_detail.html" %}
+{% load i18n %}
+{% load static %}
+
+{# We target the specific block where posts are rendered #}
+{% block topic_posts %}
+  {% for post in posts %}
+    <div class="card post-container mb-3" id="post-{{ post.id }}">
+      <div class="card-body">
+        <div class="row">
+          
+          {# 1. Custom Voting Column #}
+          <div class="col-md-1 text-center border-right">
+            <div class="voting-wrapper py-2">
+              {% if user.is_authenticated %}
+                <button 
+                  class="btn btn-link p-0 vote-btn {% if user_voted %}voted{% endif %}" 
+                  data-post-id="{{ post.id }}"
+                  data-vote-url="{% url 'vote_post' post.id %}"
+                  aria-label="Vote up"
+                >
+                  <span class="h3 mb-0">▲</span>
+                </button>
+              {% else %}
+                <a href="{% url 'auth_login' %}?next={{ request.path }}" class="btn btn-link p-0 text-muted">
+                  <span class="h3 mb-0">▲</span>
+                </a>
+              {% endif %}
+              
+              {# Accessing django-vote's cached field #}
+              <div class="vote-count font-weight-bold tracking-wide" id="score-{{ post.id }}">
+                {{ post.vote_count }}
+              </div>
+            </div>
+          </div>
+
+          {# 2. Original Machina Post Content Layout #}
+          <div class="col-md-11">
+            {# You can let Machina render the standard post header/body here, #}
+            {# or completely re-write it using the 'post' object attributes #}
+            <div class="post-meta text-muted small mb-2">
+              <strong>{{ post.poster.username }}</strong> &bull; {{ post.created|timesince }} ago
+            </div>
+            <div class="post-content">
+              {{ post.text.rendered }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>{% trans "No posts found." %}</p>
+  {% endfor %}
+{% endblock topic_posts %}
+
+{% block extra_js %}
+    {{ block.super }}
+    
+    <script src="{% static 'js/ForumVote.js' %}"></script>
+
+    <style>
+        .vote-btn { color: #6c757d; transition: color 0.2s; }
+        .vote-btn:hover { color: #007bff; text-decoration: none; }
+        .vote-btn.voted { color: #28a745; font-weight: bold; }
+        .voting-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    </style>
+{% endblock %}
