@@ -196,6 +196,9 @@ MACHINA_FORUM_NAME = " "
 # disable signatures
 MACHINA_PROFILE_SIGNATURE_MAX_LENGTH = 0
 
+# disable Machina's internal avatar backend
+MACHINA_PROFILE_AVATARS_ENABLED = False
+
 # global/resident account permissions
 MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     'can_see_forum',
