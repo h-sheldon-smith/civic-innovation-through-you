@@ -1,68 +1,119 @@
-{% extends "forum_conversation/topic_detail.html" %}
+{% extends 'board_base.html' %}
 {% load i18n %}
-{% load static %}
+{% load forum_conversation_tags %}
+{% load forum_member_tags %}
+{% load forum_permission_tags %}
 
-{# We target the specific block where posts are rendered #}
-{% block topic_posts %}
+{% block sub_title %}{{ topic.subject }}{% endblock sub_title %}
+
+{% block content %}
+<div class="row"><div class="col-12"><h1>{{ topic.subject }}</h1></div></div>
+<div class="row">
+  <div class="col-12 col-md-4 topic-actions-block">
+  {% include "forum_conversation/partials/topic_detail_actions.html" %}
+  </div>
+  <div class="col-12 col-md-8 pagination-block">
+  {% with "pagination-sm justify-content-end" as pagination_size %}
+  {% include "partials/pagination.html" %}
+  {% endwith %}
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
   {% for post in posts %}
-    <div class="card post-container mb-3" id="post-{{ post.id }}">
+    {% if forloop.first and post.is_topic_head and poll %}
+    {% include "forum_conversation/forum_polls/poll_detail.html" %}
+    {% endif %}
+    <div id="{{ post.id }}" class="my-3 card post">
       <div class="card-body">
         <div class="row">
-          
-          {# 1. Custom Voting Column #}
-          <div class="col-md-1 text-center border-right">
-            <div class="voting-wrapper py-2">
-              {% if user.is_authenticated %}
-                <button 
-                  class="btn btn-link p-0 vote-btn {% if user_voted %}voted{% endif %}" 
-                  data-post-id="{{ post.id }}"
-                  data-vote-url="{% url 'vote_post' post.id %}"
-                  aria-label="Vote up"
-                >
-                  <span class="h3 mb-0">▲</span>
-                </button>
-              {% else %}
-                <a href="{% url 'auth_login' %}?next={{ request.path }}" class="btn btn-link p-0 text-muted">
-                  <span class="h3 mb-0">▲</span>
-                </a>
+          <div class="col-md-10 post-content-wrapper">
+            <div class="float-right post-controls">
+              {% get_permission 'can_edit_post' post request.user as user_can_edit_post %}
+              {% if user_can_edit_post %}
+              <a href="{% if post.is_topic_head %}{% url 'forum_conversation:topic_update' forum.slug forum.pk topic.slug topic.pk %}{% else %}{% url 'forum_conversation:post_update' forum.slug forum.pk topic.slug topic.pk post.pk %}{% endif %}" class="btn btn-warning btn-sm" title="{% trans "Edit" %}"><i class="fas fa-edit"></i>&nbsp;{% trans "Edit" %}</a>
               {% endif %}
-              
-              {# Accessing django-vote's cached field #}
-              <div class="vote-count font-weight-bold tracking-wide" id="score-{{ post.id }}">
-                {{ post.vote_count }}
+              {% get_permission 'can_delete_post' post request.user as user_can_delete_post %}
+              {% if user_can_delete_post %}
+              <a href="{% url 'forum_conversation:post_delete' forum.slug forum.pk topic.slug topic.pk post.pk %}" class="btn btn-danger btn-sm" title="{% trans "Delete" %}"><i class="fas fa-times"></i></a>
+              {% endif %}
+            </div>
+              {% spaceless %}
+              <h4 class="m-0 subject">
+                {{ post.subject }}
+                &nbsp;<a href="{% url 'forum_conversation:topic' forum.slug forum.pk topic.slug topic.pk %}?post={{ post.pk }}#{{ post.pk }}">&#182;</a>
+              </h4>
+              {% endspaceless %}
+              <p>
+                <small class="text-muted">
+                {% spaceless %}
+                <i class="fas fa-clock"></i>&nbsp;
+                {% if post.poster %}
+                {% url 'forum_member:profile' post.poster_id as poster_url %}
+                {% blocktrans trimmed with poster_url=poster_url username=post.poster|forum_member_display_name creation_date=post.created %}
+                  By: <a href="{{ poster_url }}">{{ username }}</a> on {{ creation_date }}
+                {% endblocktrans %}
+                {% else %}
+                {% blocktrans trimmed with poster_username=post.username creation_date=post.created %}
+                  By: {{ poster_username }} on {{ creation_date }}
+                {% endblocktrans %}
+                {% endif %}
+                {% endspaceless %}
+                </small>
+              </p>
+              <div class="post-content">
+                {{ post.content.rendered }}
               </div>
-            </div>
-          </div>
+              {% include "forum_conversation/forum_attachments/attachments_detail.html" %}
+              {% if post.enable_signature and post.poster.forum_profile.signature %}
+              <div class="post-signature">
+                {{ post.poster.forum_profile.signature.rendered }}
+              </div>
+              {% endif %}
+              {% if post.updates_count %}
+              <div class="mt-4 edit-info">
+                <small class="text-muted">
+                  <i class="fas fa-edit"></i>&nbsp;{% if post.updated_by %}{% trans "Last edited by:" %}&nbsp;<a href="{% url 'forum_member:profile' post.updated_by_id %}">{{ post.updated_by|forum_member_display_name }}</a>&nbsp;{% else %}{% trans "Updated" %}&nbsp;{% endif %}{% trans "on" %}&nbsp;{{ post.updated }}, {% blocktrans count counter=post.updates_count %}edited {{counter }} time in total.{% plural %}edited {{counter }} times in total.{% endblocktrans %}
+                </small>
+                {% if post.update_reason %}
+                <br />
+                <small class="text-muted">
+                  <b>{% trans "Reason:" %}</b>&nbsp;{{ post.update_reason }}
+                </small>
+                {% endif %}
+              </div>
+              {% endif %}
 
-          {# 2. Original Machina Post Content Layout #}
-          <div class="col-md-11">
-            {# You can let Machina render the standard post header/body here, #}
-            {# or completely re-write it using the 'post' object attributes #}
-            <div class="post-meta text-muted small mb-2">
-              <strong>{{ post.poster.username }}</strong> &bull; {{ post.created|timesince }} ago
-            </div>
-            <div class="post-content">
-              {{ post.text.rendered }}
-            </div>
+              <p>test injection</p>
           </div>
-
+          <div class="col-md-2 d-none d-md-block post-sidebar">
+            {% if post.poster %}
+            <div class="avatar">
+              <a href="{% url 'forum_member:profile' post.poster_id %}">
+                {% include "partials/avatar.html" with profile=post.poster.forum_profile show_placeholder=True %}
+              </a>
+            </div>
+            <div class="username"><a href="{% url 'forum_member:profile' post.poster_id %}"><b>{{ post.poster|forum_member_display_name }}</b></a></div>
+            <div class="posts-count text-muted"><b>{% trans "Posts:" %}</b>&nbsp;{{ post.poster.forum_profile.posts_count }}</div>
+            {% else %}
+            <div class="username"><b>{{ post.username }}</b></div>
+            <div class="username text-muted">{% trans "Anonymous user" %}</div>
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
-  {% empty %}
-    <p>{% trans "No posts found." %}</p>
   {% endfor %}
-{% endblock topic_posts %}
-
-{% block extra_js %}
-    {{ block.super }}
-    
-    <script src="{% static 'js/ForumVote.js' %}"></script>
-
-    <style>
-        .vote-btn { color: #6c757d; transition: color 0.2s; }
-        .vote-btn:hover { color: #007bff; text-decoration: none; }
-        .vote-btn.voted { color: #28a745; font-weight: bold; }
-        .voting-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    </style>
-{% endblock %}
+  </div>
+</div>
+<div class="row">
+  <div class="col-6 col-md-4 topic-actions-block">
+    {% include "forum_conversation/partials/topic_detail_actions.html" %}
+  </div>
+  <div class="col-12 col-md-8">
+    {% with "pagination-sm justify-content-end" as pagination_size %}
+    {% include "partials/pagination.html" %}
+    {% endwith %}
+  </div>
+</div>
+{% endblock content %}
