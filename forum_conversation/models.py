@@ -2,7 +2,7 @@ from django.db import models
 from vote.models import VoteModel
 from machina.apps.forum_conversation.abstract_models import AbstractPost
 
-# import the VoteModel mixin when creating the concrete Post from AbstracPost
+# add the VoteModel mixin when creating the concrete Post model from the AbstracPost abstract model
 class Post(VoteModel, AbstractPost):
     pass
 
