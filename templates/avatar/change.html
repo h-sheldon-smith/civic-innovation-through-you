@@ -9,20 +9,23 @@
 {% endblock %}
 
 {% block city_content %}
-    <p>{% trans "Your current avatar: " %}</p>
+    <h2>{% trans "Your Current Avatar: " %}</h2>
     {% avatar user %}
     {% if not avatars %}
         <p>{% trans "You haven't uploaded an avatar yet. Please upload one now." %}</p>
     {% else %}
+        <h2>{% trans "Current Avatar Options:" %}</h2>
         <form method="POST" action="{% url 'avatar:change' %}">
             <ul>
                 {{ primary_avatar_form.as_ul }}
             </ul>
-            <p>{% csrf_token %}<input type="submit" value="{% trans "Choose new Default" %}" /></p>
+            <p>{% csrf_token %}<input type="submit" value="{% trans "Use This Avatar" %}" /></p>
         </form>
     {% endif %}
+
+    <h2>{% trans "Upload a New Avatar:" %}</h2>
     <form enctype="multipart/form-data" method="POST" action="{% url 'avatar:add' %}">
         {{ upload_avatar_form.as_p }}
-        <p>{% csrf_token %}<input type="submit" value="{% trans "Upload New Image" %}" /></p>
+        <p>{% csrf_token %}<input type="submit" value="{% trans "Upload New Avatar" %}" /></p>
     </form>
 {% endblock %}
