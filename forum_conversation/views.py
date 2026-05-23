@@ -35,8 +35,9 @@ def _vote_post(request, post_id, is_upvote):
         post.votes.delete(user_id)
         voted = False
     else:
-        # delete existing vote first? to handle cases of both prexisting and not opposite vote
-        # post.votes.delete(user_id)
+        # delete user's existing vote first, to handle cases of both prexisting and not opposite vote
+        post.votes.delete(user_id)
+
         if is_upvote:
             post.votes.up(user_id)
         else:
