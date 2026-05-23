@@ -15,7 +15,7 @@
       <span class="username">{{ user.username }}</span>
     </h3>
 
-    <span class="sidebar-user"><a href="{% url 'avatar:change' %}" target="_blank" rel="noopener noreferrer">Change your avatar</a></span>
+    <span class="sidebar-user"><a href="{% url 'avatar:change' %}" aria-hidden="true">Change your avatar</a></span>
 
     {% endif %}
 
