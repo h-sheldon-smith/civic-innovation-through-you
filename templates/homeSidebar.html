@@ -1,5 +1,4 @@
 {% extends 'sidebar.html' %}
-{% load static %}
 {% load avatar_tags %}
 
 {% block city_sidebar_content %}
@@ -15,7 +14,7 @@
 
       <span class="username">{{ user.username }}</span>
     </h3>
-    
+
     <span class="sidebar-user"><a href="{% url 'avatar:change' %}" target="_blank" rel="noopener noreferrer">Change your avatar</a></span>
 
     {% endif %}
