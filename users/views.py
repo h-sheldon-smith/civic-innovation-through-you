@@ -4,6 +4,9 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.http import JsonResponse
 from django.utils import timezone
 from datetime import timedelta
 from .models import UserModeration
@@ -60,6 +63,26 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'users/login.html', {'form': form})
+
+
+@login_required
+def account_settings_view(request):
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Invalid request.'}, status=405)
+
+    email = request.POST.get('email', '').strip()
+
+    try:
+        validate_email(email)
+    except ValidationError:
+        return JsonResponse({'success': False, 'error': 'Enter a valid email address.'})
+
+    if User.objects.exclude(pk=request.user.pk).filter(email=email).exists():
+        return JsonResponse({'success': False, 'error': 'That email is already in use.'})
+
+    request.user.email = email
+    request.user.save(update_fields=['email'])
+    return JsonResponse({'success': True})
 
 
 @login_required
