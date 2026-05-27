@@ -26,7 +26,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),
-    path('forum_more/', include('forum_conversation.urls')), # path for overridden forum_conversation app
+    path('forum_more/', include('idea_forum.urls')), # path for idea_forum app
     path('ideas/', include('idea_suggestion.urls')), # path for idea_suggestions app
     path('users/', include('users.urls')), # path for users app
     path('forum/', include(machina_urls)), # path for machina package
