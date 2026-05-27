@@ -18,7 +18,7 @@
   {% endwith %}
   </div>
 </div>
-<div class="row">
+<div class="row" id="thread-posts-container">
   <div class="col-12">
   {% for post in posts %}
     {% if forloop.first and post.is_topic_head and poll %}

@@ -2,15 +2,14 @@
 {% load static %}
 
 <div class="mt-3 pt-2 border-top d-flex align-items-center">
-
   {% if user.is_authenticated %}
     {# Check if the user has an active upvote on this specific post instance #}
-    {% vote_exists post user "up" as user_voted %}
+    {% vote_exists post user "up" as user_upvoted %}
     
     <button 
-      class="btn btn-sm btn-outline-secondary vote-btn {% if user_voted == 'True' %}voted{% endif %}" 
-      data-vote-url="{% url 'vote_post' post.id %}"
+      class="btn btn-sm btn-outline-secondary vote-btn {% if user_upvoted == 'True' %}upvoted{% endif %}"
       data-post-id="{{ post.id }}"
+      data-vote-url="{% url 'toggle_post_upvote' post.id %}"
       style="cursor: pointer;"
     >
       ▲ Upvote
@@ -22,10 +21,11 @@
     </a>
   {% endif %}
 
-  {# Render the live upvote tally directly via the tag #}
+  {# Render the upvote tally on page load via the template tag, #}
+  {# and when the button is clicked via the JS script via the span id #}
   <span class="ml-3 font-weight-bold text-muted">
     Score: <span id="score-{{ post.id }}">{% vote_count post "up" %}</span>
   </span>
 </div>
 
-<script src="{% static 'js/ForumVote.js' %}"></script>
+<script src="{% static 'js/ForumVoteButtons.js' %}"></script>
