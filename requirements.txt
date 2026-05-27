@@ -36,3 +36,4 @@ strip_markdown
 alt-profanity-check
 torch --index-url https://download.pytorch.org/whl/cpu
 transformers
+django-redis

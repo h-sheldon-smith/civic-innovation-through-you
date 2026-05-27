@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Set to * for development, TODO: update for production
 ALLOWED_HOSTS = ['*']
 
 
@@ -172,7 +173,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        #'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+        }
     },
     'machina_attachments': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
