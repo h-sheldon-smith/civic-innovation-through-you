@@ -92,7 +92,8 @@
                 const reply = await response.json();
 
                 //If successful, hide the form and show the success message
-                if (reply.success){
+                //if (reply.success){
+                if (reply.success === true){
                     submitted_header.style.display = "inline";
                     not_submitted_header.style.display = "none";
                     idea_form.style.display = "none";

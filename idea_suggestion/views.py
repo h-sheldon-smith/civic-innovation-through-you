@@ -6,33 +6,42 @@ from . import forms
 from idea_suggestion.admin_inbox_services import Admin_Inbox_Data_Controls, Admin_Mark_Read
 from idea_suggestion.models import Idea
 from idea_suggestion.smart_summary import Get_Smart_Inbox_Summary
+from idea_suggestion.redis_utils import enforce_rate_limit
 
 # Create your views here (http request/response handling)
 # Don't forget to update urls.py
 
 # Popup form for residents to fill out
 def Resident_Idea_Submission_View(request):
-    #processing goes here: can look things up in DB, render HTML template
+    # Cases where the user submits the form
     if request.method == 'POST':
+        # Do not process the form if the user is muted
         try:
             if request.user.is_authenticated and request.user.moderation.is_restricted():
                 return JsonResponse({"success": False, "error": "muted"})
         except Exception:
-            pass
+            #pass
+            return JsonResponse({"success": False})
 
-        idea_form = forms.SubmitIdeaForm(request.POST, request.FILES) # make an idea submission using the request.POST contents
+        idea_form = forms.SubmitIdeaForm(request.POST, request.FILES) # make an idea submission using the request.POST content
 
         # django checks that required fields are present, data type is correct, check against constraints specified in the model
+        #if idea_form.is_valid():
         if idea_form.is_valid():
+            at_limit = enforce_rate_limit(request.user.id, "suggestion")
+            if at_limit:
+                return JsonResponse({"success": False})
+            
             idea_instance = idea_form.save(commit = False) # django makes an instance of the form
             idea_instance.resident = request.user # add the logged in user
             idea_instance.save()
-           
+
             return JsonResponse({"success": True})
         
         else:
             return JsonResponse({"success": False})
 
+    # Cases that are not POST requests
     idea_form = forms.SubmitIdeaForm()
 
     return render(request, 'ideas/ideas_resident.html', {'idea_form': idea_form})
