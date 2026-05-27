@@ -5,26 +5,32 @@
   {% if user.is_authenticated %}
     {# Check if the user has an active upvote on this specific post instance #}
     {% vote_exists post user "up" as user_upvoted %}
+
+    {% firstof "Liked" as LikedText %}
+    {% firstof "Like" as NotLikedText %}
     
     <button 
-      class="btn btn-sm btn-outline-secondary vote-btn {% if user_upvoted == 'True' %}upvoted{% endif %}"
+      class="btn btn-sm btn-outline-secondary vote-btn {% if user_upvoted %}active{% endif %}"
       data-post-id="{{ post.id }}"
       data-vote-url="{% url 'toggle_post_upvote' post.id %}"
+      data-liked-text="{{ LikedText }}"
+      data-not-liked-text="{{ NotLikedText }}"
       style="cursor: pointer;"
+      data-bs-toggle="button"
     >
-      ▲ Upvote
+      ▲ <span id="vote-button-text-{{ post.id }}">{% if user_upvoted %}{{ LikedText }}{% else %}{{ NotLikedText }}{% endif %}</span>
     </button>
   {% else %}
     {# Redirect unauthenticated guests to login if they try to interact #}
     <a href="{% url 'auth_login' %}?next={{ request.path }}" class="btn btn-sm btn-outline-secondary text-decoration-none">
-      ▲ Upvote
+      ▲ {{ NotLikedText }}
     </a>
   {% endif %}
 
   {# Render the upvote tally on page load via the template tag, #}
   {# and when the button is clicked via the JS script via the span id #}
   <span class="ml-3 font-weight-bold text-muted">
-    Score: <span id="score-{{ post.id }}">{% vote_count post "up" %}</span>
+    Likes: <span id="score-{{ post.id }}">{% vote_count post "up" %}</span>
   </span>
 </div>
 

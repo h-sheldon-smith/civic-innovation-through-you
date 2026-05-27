@@ -1,11 +1,10 @@
-// ForumVote.js
-
 (function() {
     if (window.ForumVoteInitialized) {
         return;
     }
 
     window.ForumVoteInitialized = true;
+
     document.addEventListener('DOMContentLoaded', function() {
         const postsContainer = document.getElementById('thread-posts-container');
 
@@ -29,9 +28,12 @@
             // Extract the clicked button's data from its data attributes
             const postId = voteButton.getAttribute('data-post-id');
             const voteUrl = voteButton.getAttribute('data-vote-url');
+            const likedText = voteButton.getAttribute('data-liked-text');
+            const notLikedText = voteButton.getAttribute('data-not-liked-text');
 
             // Get the clicked button's corresponding score <span>
             const scoreSpan = document.getElementById(`score-${postId}`);
+            const buttonTextSpan = document.getElementById(`vote-button-text-${postId}`);
 
             // Disable button temporarily to prevent multi-clicks messing with button update logic
             voteButton.disabled = true;
@@ -61,9 +63,17 @@
                 
                 // Toggle visual classes for it the user upvoted or not in the frontend
                 if (data.user_upvoted) {
-                    voteButton.classList.add('upvoted');
+                    voteButton.classList.add('active');
+
+                    if (buttonTextSpan) {
+                        buttonTextSpan.textContent = likedText;
+                    }
                 } else {
-                    voteButton.classList.remove('upvoted');
+                    voteButton.classList.remove('active');
+
+                    if (buttonTextSpan) {
+                        buttonTextSpan.textContent = notLikedText;
+                    }
                 }
             })
             .catch(error => {
