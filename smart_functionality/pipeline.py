@@ -1,7 +1,5 @@
 from .converters import Convert_Data
-#from .batching import Batch_Data
-from . import batching
-from . import client
+from . import batching, client
 from smart_functionality.constants import BATCH_SIZE, CONSOLIDATE_TASK, CONSOLIDATE_FORMAT, AI_HARD_LIMIT
 
 '''
@@ -13,14 +11,13 @@ Param: task, the instructions for the AI model
 Returns: final_response (list), the consolidated output message(s) from ai. 
          May contain multiple messages depending on size of input.
 '''
-
-# MAYBE ADD AN EXLUDE PARAM and update converter
 def Ask_AI(task, format, data, exclude):
     batched_data, data_count = Get_Batches(task, format, data, BATCH_SIZE, exclude)
     responses = Query_AI(batched_data, data_count)
     final_response, loops = Consolidate_Responses(responses, BATCH_SIZE)
     
     return final_response
+
 
 '''
 Method to split input into batches for ai processing
@@ -36,6 +33,7 @@ def Get_Batches(task, format, data, batch_size, exclude):
     batched_data, data_weight = batching.Batch_Data(batch_size, data, task_string, exclude)
 
     return batched_data, data_weight
+
 
 '''
 Method to consolidate ai responses to data batches
@@ -55,6 +53,7 @@ def Consolidate_Responses(data, batch_size):
 
     return responses, loops
 
+
 '''
 Method to for the prompts and send for ai query
 Param: batches (list of strings), the contents to be queried
@@ -69,8 +68,10 @@ def Query_AI(batches, weights):
     for index, batch in enumerate(batches):
         prompt = "[METADATA] count: " + str(weights[index]) + " [CONTENT] " + batches[index]
         responses.append(client.Send_Message(prompt))
+        loops = loops + 1
         if loops >= AI_HARD_LIMIT:
-            #TODO: add the remaining, unprocessed batches to responses... or just drop them.
+            #TODO: Test adding remaining responses
+            responses.append(batches)
             break
 
     return responses

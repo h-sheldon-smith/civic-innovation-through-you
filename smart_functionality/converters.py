@@ -15,7 +15,6 @@ def Convert_Data(data, exclude):
         string = str(data)
     
     # Handles empty content
-    # There's no data
     elif not data:
         return ""
     
@@ -23,7 +22,6 @@ def Convert_Data(data, exclude):
     elif hasattr(data, "_meta"):
         for field in data._meta.get_fields():
             if field.name not in ["id", exclude]:
-            #if field.name not in ["id", "read_status", "file_location"]: # TODO: remove hardcoded logic
                 value = getattr(data, field.name, None)
 
                 if value:
