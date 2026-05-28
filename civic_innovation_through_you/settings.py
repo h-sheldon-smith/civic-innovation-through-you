@@ -186,6 +186,13 @@ CACHES = {
     },
 }
 
+RATE_LIMIT_POLICIES = {
+    'resident_suggestion': {
+        'rate': 3,
+        'limit_time': 86400 # 86400 = 1 day
+    }
+}
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
