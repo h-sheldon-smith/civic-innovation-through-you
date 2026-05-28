@@ -1,33 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from django.contrib.auth import login_required
-from machina.apps.forum.models import Forum
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from vote.models import UP
+from machina.core.db.models import get_model
 
-from django.contrib import messages
-from machina.apps.forum_conversation.views import PostCreateView as BasePostCreateView
+Post = get_model('forum_conversation', 'Post')
 
-class PostCreateView(BasePostCreateView):
-    def get_success_url(self):
-        print("get_success_url")
+# toggle post's upvote status for the signed-in user
+@login_required
+@require_POST
+def toggle_post_upvote(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    user_id = request.user.id
 
-        # if post has been deleted by the auto-screening
-        if not self.model.objects.filter(pk=self.object.pk).exists():
-            print("overriding messages for deletion message")
+    previously_upvoted = post.votes.exists(user_id, action=UP)
 
-            storage = messages.get_messages(self.request)
-            # this consumes all existing messages
-            for message in storage:
-                pass
-            
-            # add the deletion message
-            messages.warning(self.request, "Your post was flagged by our automated moderation and removed. Reason: profanity.")
-            
-            # redirect to the topic instead of the (now deleted) post
-            return self.object.topic.get_absolute_url()
-            
-        return super().get_success_url()
-        
-    # def get_success_message(self, cleaned_data):
-    #     if not self.model.objects.filter(pk=self.object.pk).exists():
-    #         return None
-    #     return super().get_success_message(cleaned_data)
+    if previously_upvoted:
+        post.votes.delete(user_id)
+    else:
+        post.votes.up(user_id)
+
+    upvoted_now = not previously_upvoted
+
+    return JsonResponse({
+        'user_upvoted': upvoted_now,
+        'post_score': post.votes.count(action=UP),
+    })
