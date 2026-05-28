@@ -24,12 +24,6 @@ def Get_Smart_Inbox_Summary(ideas):
     
     if not ideas:
         return False, "There are no new messages to review"
-    
-    # to_review = []
-    
-    # for field in ideas._meta.get_fields():
-    #     if field != read_status or file_location:
-    #         to_review.append(field)
 
     to_exclude = ["read_status", "file_location"]
     

@@ -2,13 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from common.choices import Topic_Options, TOPIC_MAX_LENGTH, IDEA_FOLDERS, IDEA_FOLDERS_MAX_LENGTH
 
-# Create your models here (db)
-# Classes/models represent tables in a DB
-# Attributes = fields
-
-# class Name(models.Model):
 class Idea(models.Model):
-    #using another model (User) as an attribute in this model (Idea)
+    # Add User as a foreign key
     resident = models.ForeignKey(
        User,
        default = None,
@@ -17,12 +12,10 @@ class Idea(models.Model):
        related_name = 'ideas' # lets you look up all ideas by the given resident
     )
 
-     # field_name = models.TypeOfField(optional_constraints = some_value)
     subject_line = models.CharField(max_length = 50, 
                                     blank = False)
     location = models.CharField(max_length = 50)
 
-    #for our defined options, put in common.options and import it to the model
     topic = models.CharField(max_length = TOPIC_MAX_LENGTH, 
                              choices = Topic_Options.choices)
 
