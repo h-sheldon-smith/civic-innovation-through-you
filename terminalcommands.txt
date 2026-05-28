@@ -15,7 +15,7 @@ pip install -r requirements.txt
 # Install app models
 python manage.py migrate
 
-# Run server
+# Run server (without docker)
 python manage.py runserver
 
 # Create Super User (SuperUser Account):
@@ -30,3 +30,70 @@ from django.contrib.auth import get_user_model; get_user_model().objects.create_
 
 # To run unit tests
 python -m unittest app.tests.test_something
+
+# DOCKER FOR LOCAL DEVELOPMENT
+# Builds django image, starts django and redis containers
+docker compose up --build
+# Check that django and redis are running (optional)
+docker compose ps
+# In browser, open http://localhost:8000
+
+
+
+# DOCKER + EC2 DEPLOYMENT
+# DOCKER
+# build the docker image
+docker build -t city-image .
+
+# runs the image locally (optional)
+docker run --env-file .env -p 8000:8000 city-image
+
+# log docker into AWS
+aws ecr get-login-password --region <your region. i.e. us-east-1> \
+| docker login --username AWS --password-stdin <your AWS acct #>.dkr.ecr.<your region>.amazonaws.com
+
+# tag docker image
+docker tag <image name i.e. city-image>:latest <your ecr URI>:latest
+
+# push docker image to ecr
+docker push <your ecr URI>:latest
+
+
+# EC2
+# Run EC2 instance (note: you have to remove inheritence from the key's security properties)
+ssh -i "path-to-vockey\your-vockey-name.pem" ubuntu@<your ec2 public ipv4 address>
+
+# Set up and start docker in EC2 (for first time access)
+sudo apt update
+sudo apt install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+
+# Install AWS CLI (install for first time access, configure as needed)
+sudo apt update
+sudo apt install -y awscli
+aws configure <enter keys, session token, region>
+
+# Logout then log back in
+exit
+aws ecr get-login-password --region <your region> \
+| docker login --username AWS --password-stdin <your AWS acct #>.dkr.ecr.<your region>.amazonaws.com
+
+
+
+# If EC2 has small memory (optional)
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# Launch ecr and pull the docker image
+aws ecr get-login-password --region <your region> | docker login --username AWS --password-stdin <your ecr uri>
+docker pull <your ecr uri>:latest
+
+# Run docker, inject secret keys at runtime
+docker run -d -p 8000:8000 \
+-e SECRET_KEY='<your secret key>' \
+-e ANTHROPIC_KEY='<your secret anthropic key>' \
+<your ecr URI>:latest

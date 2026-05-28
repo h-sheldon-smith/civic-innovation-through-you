@@ -6,7 +6,7 @@ Determines styling for select aspects on the webpage
 
 /* ROOT VARIABLES */
 :root {
-  --color-dark: rgb(100, 123, 112);
+  --color-dark: rgb(105, 137, 122);
   --color-medium: rgb(149, 175, 161);
   --color-light: rgb(205, 219, 211);
   --color-extra-light: rgb(223, 237, 229);
