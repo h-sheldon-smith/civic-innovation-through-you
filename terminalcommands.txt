@@ -34,6 +34,8 @@ python -m unittest app.tests.test_something
 # DOCKER FOR LOCAL DEVELOPMENT
 # Builds django image, starts django and redis containers
 docker compose up --build
+# Check that django and redis are running (optional)
+docker compose ps
 # In browser, open http://localhost:8000
 
 
