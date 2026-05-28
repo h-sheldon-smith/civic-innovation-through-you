@@ -1,15 +1,11 @@
 import strip_markdown
 
-# ML-based checker (linear SVM)
+# ML-based screening (profanity only, linear SVM)
 import profanity_check
 
+# huggingface zero-shot classifier based screening
 from transformers import pipeline
-
 from django.apps import apps
-
-# smart_functionality's LLM
-# from smart_functionality import pipeline
-# from idea_forum.services.prompts import SCREEN_POST
 
 class ScreeningService:
     # returns True if it's flagged, False if it's ok to post
@@ -61,9 +57,3 @@ class ScreeningService:
         print(f"threshold = {threshold}")
 
         return result
-
-     
-    # def screen_pass_smart_functionality_llm(self, post_text):
-    #     response = pipeline.Ask_AI(SCREEN_POST['task'], SCREEN_POST['format'], post_text)
-    #     llm_result = (response == SCREEN_POST['true'])
-    #     return llm_result

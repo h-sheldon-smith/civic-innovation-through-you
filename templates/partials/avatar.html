@@ -1,0 +1,8 @@
+{% load avatar_tags %}
+{% if profile.user %}
+    <img class="avatar" src="{% avatar_url profile.user 260 %}" alt="{{ profile.user.username }}" />
+{% elif show_placeholder %}
+    <span class="avatar empty">
+      <i class="far fa-user fa-4x" ></i>
+    </span>
+{% endif %}

@@ -1,18 +1,22 @@
 {% extends 'sidebar.html' %}
 {% load static %}
+{% load avatar_tags %}
 
 {% block city_sidebar_content %}
   <h3 class="sidebar-title">About Me</h3><br>
 
     {% if user.is_authenticated %}
-
     <h3 class="sidebar-user">
-      <img class="user-sidebar-icon-img" src="{% static 'icons/userIcon.svg' %}" alt="" aria-hidden="true">
+      <span class="user-sidebar-icon-img">
+        <a href="{% url 'avatar:change' %}" aria-hidden="true">
+          {% avatar user class="user-sidebar-icon-img" %}
+        </a>
+      </span>
       <span class="username">{{ user.username }}</span>
     </h3>
+    <span class="sidebar-user"><a href="{% url 'avatar:change' %}" aria-hidden="true">Change your avatar</a></span>
 
     <button class="nav-btn" data-modal-target="#account-settings-modal">Account Settings</button>
-
     {% endif %}
 
   <div class="modal-backdrop" id="account-settings-modal" aria-hidden="true">

@@ -50,9 +50,12 @@ INSTALLED_APPS = [
     'users',
     'idea_forum',
     'smart_functionality.apps.SmartFunctionalityConfig',
+    'forum_conversation',
 
     # 3rd-party apps
     'service_objects',
+    'avatar',
+    'vote',
 
     # Machina dependencies:
     'mptt',
@@ -62,7 +65,7 @@ INSTALLED_APPS = [
     # Machina apps:
     'machina',
     'machina.apps.forum',
-    'machina.apps.forum_conversation',
+    # 'machina.apps.forum_conversation', # use overridden app instead
     'machina.apps.forum_conversation.forum_attachments',
     'machina.apps.forum_conversation.forum_polls',
     'machina.apps.forum_feeds',
@@ -106,13 +109,6 @@ TEMPLATES = [
         },
     },
 ]
-
-MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
-
-# MACHINA_FORUM_NAME = "Civic Innovation Through You"
-MACHINA_FORUM_NAME = " "
-
-MACHINA_PROFILE_SIGNATURE_MAX_LENGTH = 0
 
 WSGI_APPLICATION = 'civic_innovation_through_you.wsgi.application'
 
@@ -192,7 +188,20 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-# resident account permissions
+## machina
+
+MACHINA_BASE_TEMPLATE_NAME = "idea_forum/forum_base.html"
+
+# MACHINA_FORUM_NAME = "Civic Innovation Through You"
+MACHINA_FORUM_NAME = " "
+
+# disable signatures
+MACHINA_PROFILE_SIGNATURE_MAX_LENGTH = 0
+
+# disable Machina's internal avatar backend
+MACHINA_PROFILE_AVATARS_ENABLED = False
+
+# global/resident account permissions
 MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     'can_see_forum',
     'can_read_forum',
@@ -205,3 +214,7 @@ MACHINA_DEFAULT_AUTHENTICATED_USER_FORUM_PERMISSIONS  = [
     # 'can_attach_file',
     # 'can_download_file',
 ]
+
+## avatar
+
+AVATAR_MAX_SIZE = 1024 * 1024 * 4 # 4 MB
