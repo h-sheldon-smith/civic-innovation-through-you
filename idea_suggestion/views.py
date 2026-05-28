@@ -1,35 +1,32 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import login_required, permission_required
 from . import forms
 from idea_suggestion.admin_inbox_services import Admin_Inbox_Data_Controls, Admin_Mark_Read
 from idea_suggestion.models import Idea
 from idea_suggestion.smart_summary import Get_Smart_Inbox_Summary
-from idea_suggestion.redis_utils import enforce_rate_limit
+from services.rate_limiter import RateLimiter
 
-# Create your views here (http request/response handling)
-# Don't forget to update urls.py
+resident_suggestion_limiter = RateLimiter("resident_suggestion")
 
 # Popup form for residents to fill out
 def Resident_Idea_Submission_View(request):
     # Cases where the user submits the form
     if request.method == 'POST':
-        # Do not process the form if the user is muted
+        # Do not process the form if the user is muted or an error occurs
         try:
             if request.user.is_authenticated and request.user.moderation.is_restricted():
                 return JsonResponse({"success": False, "error": "muted"})
         except Exception:
-            #pass
             return JsonResponse({"success": False})
 
-        idea_form = forms.SubmitIdeaForm(request.POST, request.FILES) # make an idea submission using the request.POST content
+        idea_form = forms.SubmitIdeaForm(request.POST, request.FILES)
 
-        # django checks that required fields are present, data type is correct, check against constraints specified in the model
-        #if idea_form.is_valid():
+        # django checks against constraints specified in the model
         if idea_form.is_valid():
-            at_limit = enforce_rate_limit(request.user.id, "suggestion")
-            if at_limit:
+
+            # Block new suggestions if user has hit their rate limit
+            if resident_suggestion_limiter.enforce_rate_limit(request.user.id):
                 return JsonResponse({"success": False})
             
             idea_instance = idea_form.save(commit = False) # django makes an instance of the form
@@ -37,7 +34,6 @@ def Resident_Idea_Submission_View(request):
             idea_instance.save()
 
             return JsonResponse({"success": True})
-        
         else:
             return JsonResponse({"success": False})
 
