@@ -1,10 +1,10 @@
 '''
 Method to convert data into AI friendly strings
 Param: data, the data objects to be converted into AI friendly strings
+Param: exclude, a list of strings to not include in the conversion
 Returns: data as string
 '''
 def Convert_Data(data, exclude):
-  
     string = ""
 
     # Handles primitives
