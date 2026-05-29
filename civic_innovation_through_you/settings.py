@@ -185,8 +185,12 @@ CACHES = {
 RATE_LIMIT_POLICIES = {
     'resident_suggestion': {
         'rate': 3,
-        'limit_time': 86400 # 86400 = 1 day
-    }
+        'limit_time': 86400, # 86400 = 1 day
+    },
+    'resident_forum_posting': {
+        'rate': 10,
+        'limit_time': 86400, # 86400 = 1 day
+    },
 }
 
 # Default primary key field type
