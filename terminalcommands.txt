@@ -37,7 +37,12 @@ docker compose up --build
 # Check that django and redis are running (optional)
 docker compose ps
 # In browser, open http://localhost:8000
-
+# Run a django manage command inside the docker container
+docker compose exec web django manage.py command_name_here
+# eg 
+docker compose exec web django manage.py createsuperuser
+docker compose exec web django manage.py create_mod_user mod_smith
+docker compose exec web django manage.py create_resident_user resident_sally
 
 
 # DOCKER + EC2 DEPLOYMENT
