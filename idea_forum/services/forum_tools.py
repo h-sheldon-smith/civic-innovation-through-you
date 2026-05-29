@@ -13,7 +13,7 @@ class ForumInteractionService:
         else:
             text = str(post.content)
 
-        raw_text = converters.Convert_Data(text)
+        raw_text = converters.Convert_Data(text, [])
         return raw_text
     
     def approve_post(self, post):
