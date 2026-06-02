@@ -10,7 +10,8 @@ class RateLimiter:
             port=6379,
             db=0,
             decode_responses=True,
-            socket_connect_timeout=5,
+            socket_connect_timeout=2,
+            socket_timeout=2,
         )
 
         default_policy = {'rate': 1, 'time_frame': 60}

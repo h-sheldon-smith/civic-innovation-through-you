@@ -47,11 +47,12 @@ INSTALLED_APPS = [
 
     # apps
     'common',
-    'forum_conversation',
     'idea_suggestion.apps.IdeaSuggestionConfig',
     'users',
     'idea_forum',
     'smart_functionality.apps.SmartFunctionalityConfig',
+    'forum_conversation',
+    'rate_limiter',
 
     # 3rd-party apps
     'service_objects',
