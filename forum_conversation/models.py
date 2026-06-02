@@ -2,16 +2,14 @@ from django.db import models
 from vote.models import VoteModel
 from machina.apps.forum_conversation.abstract_models import AbstractPost
 
-from services.rate_limiter import RateLimiter
 from common.choices import MOD_GROUP_NAME
-# from idea_forum.services.smart_controller import SmartController
+from services.rate_limiter import RateLimiter
 from idea_forum.services.screening_tools import ScreeningService
 
 # add the VoteModel mixin when creating the concrete Post model from the AbstracPost abstract model
 class Post(VoteModel, AbstractPost):
     def save(self, *args, **kwargs):
         rate_limiter = RateLimiter("resident_forum_posting")
-        # smart_controller = SmartController()
 
         if not self.approved:
             # Muted users should not be able to post — don't save post to the db
@@ -22,10 +20,18 @@ class Post(VoteModel, AbstractPost):
                     if self.pk:
                         # delete post from the db if it's there
                         self.delete()
-
+                    # don't do super().save()
                     return
             except Exception:
                 pass
+
+            # if user is a resident and hasn't hit their posting rate limit yet
+            if not self.poster.groups.filter(name=MOD_GROUP_NAME).exists() and rate_limiter.enforce_rate_limit(self.poster.id):
+                if self.pk:
+                    # delete post from the db if it's there
+                    self.delete()
+                # don't do super().save()
+                return
             
             # post smart screening
             screening_service = ScreeningService()
@@ -35,15 +41,10 @@ class Post(VoteModel, AbstractPost):
                 if self.pk:
                     # delete post from the db if it's there
                     self.delete()
-
+                # don't do super().save()
                 return
-            
-            # screen_flagged = smart_controller.run_smart_post_moderation(self)
 
         super().save(*args, **kwargs)
-
-
-
 
 # Custom models should be declared above before importing django-machina's models
 from machina.apps.forum_conversation.models import * # noqa
