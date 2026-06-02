@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'idea_forum',
     'smart_functionality.apps.SmartFunctionalityConfig',
     'forum_conversation',
+    'gamification.apps.GamificationConfig'
 
     # 3rd-party apps
     'service_objects',
