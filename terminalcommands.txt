@@ -1,35 +1,6 @@
-Commands on new computer to run the server:
-
-# Create virtual environment
-python -m venv .venv
-
-# Windows:
-.venv\Scripts\activate
-
-# WSL/Linux:
-source .venv/bin/activate
-
-# Install python packages
-pip install -r requirements.txt
-
-# Install app models
-python manage.py migrate
-
-# Run server (without docker)
-python manage.py runserver
-
-# Create Super User (SuperUser Account):
-python manage.py createsuperuser
-
-# Promote Existing Account to Site Admin (City Administrator Account):
-python manage.py promote_to_site_admin username
-
-# Create user
-python manage.py shell
-from django.contrib.auth import get_user_model; get_user_model().objects.create_user(username='admin1',password='letmein!1!',email='foo@b.com')
-
 # To run unit tests
 python -m unittest app.tests.test_something
+
 
 # DOCKER FOR LOCAL DEVELOPMENT
 # Builds django image, starts django and redis containers
@@ -37,7 +8,12 @@ docker compose up --build
 # Check that django and redis are running (optional)
 docker compose ps
 # In browser, open http://localhost:8000
-
+# Run a django manage command inside the docker container
+docker compose exec web python manage.py command_name_here
+# eg 
+docker compose exec web python manage.py createsuperuser
+docker compose exec web python manage.py create_mod_user mod_smith
+docker compose exec web python manage.py create_resident_user resident_sally
 
 
 # DOCKER + EC2 DEPLOYMENT
@@ -80,8 +56,6 @@ exit
 aws ecr get-login-password --region <your region> \
 | docker login --username AWS --password-stdin <your AWS acct #>.dkr.ecr.<your region>.amazonaws.com
 
-
-
 # If EC2 has small memory (optional)
 sudo fallocate -l 2G /swapfile
 sudo chmod 600 /swapfile
@@ -97,3 +71,34 @@ docker run -d -p 8000:8000 \
 -e SECRET_KEY='<your secret key>' \
 -e ANTHROPIC_KEY='<your secret anthropic key>' \
 <your ecr URI>:latest
+
+
+
+# DOCKER-LESS LOCAL DEVELOPMENT SERVER (doesn't work without redis):
+# Create virtual environment
+python -m venv .venv
+
+# Windows:
+.venv\Scripts\activate
+
+# WSL/Linux:
+source .venv/bin/activate
+
+# Install python packages
+pip install -r requirements.txt
+
+# Install app models
+python manage.py migrate
+
+# Run server (without docker)
+python manage.py runserver
+
+# Create Super User (SuperUser Account):
+python manage.py createsuperuser
+
+# Promote Existing Account to Site Admin (City Administrator Account):
+python manage.py promote_to_site_admin username
+
+# Create user
+python manage.py shell
+from django.contrib.auth import get_user_model; get_user_model().objects.create_user(username='admin1',password='letmein!1!',email='foo@b.com')
