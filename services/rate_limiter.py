@@ -9,7 +9,8 @@ class RateLimiter:
             host="redis", 
             port=6379,
             db=0,
-            decode_responses=True
+            decode_responses=True,
+            socket_connect_timeout=5,
         )
 
         default_policy = {'rate': 1, 'time_frame': 60}
@@ -18,6 +19,13 @@ class RateLimiter:
         self.rate =  self.policy['rate']
         self.limit_time = self.policy['limit_time']
         self.limit_name = limit_name
+
+        try:
+            self.limit_tracker.ping()
+            self.redis_server_available = True
+        except (redis.exceptions.ConnectionError, redis.exceptions.TimeoutError) as e:
+            self.redis_server_available = False
+            print(f"exception: {e}")
 
     '''
     Method to enforce rate limits.
@@ -30,6 +38,10 @@ class RateLimiter:
     '''
     #def enforce_rate_limit(self, key_id, limit_name, limit_time, limit):
     def enforce_rate_limit(self, key_id):
+        # if the redis server isn't available, skip checking the rate limit
+        if not self.redis_server_available:
+            return False
+
         key = self.get_key(key_id, self.limit_name)
         current_time = int(time.time())
 

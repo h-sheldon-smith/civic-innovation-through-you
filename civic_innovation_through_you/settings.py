@@ -47,11 +47,11 @@ INSTALLED_APPS = [
 
     # apps
     'common',
+    'forum_conversation',
     'idea_suggestion.apps.IdeaSuggestionConfig',
     'users',
     'idea_forum',
     'smart_functionality.apps.SmartFunctionalityConfig',
-    'forum_conversation',
 
     # 3rd-party apps
     'service_objects',
@@ -173,7 +173,10 @@ CACHES = {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://redis:6379/1',
         'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'IGNORE_EXCEPTIONS': True, # Redis ignores connection exceptions, and logs them instead
+            'SOCKET_CONNECTION_TIMEOUT': 2, # timeout in seconds to connect
+            'SOCKET_TIMEOUT': 2, # timeout in seconds for operations
         }
     },
     'machina_attachments': {
