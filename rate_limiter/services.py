@@ -1,32 +1,33 @@
 import redis
 import time
 from django.conf import settings
+from django.apps import apps
 
 class RateLimiter:
     def __init__(self, limit_name):
         # See docker-compose.yml
-        self.limit_tracker = redis.Redis(
-            host="redis", 
-            port=6379,
-            db=0,
-            decode_responses=True,
-            socket_connect_timeout=2,
-            socket_timeout=2,
-        )
 
-        default_policy = {'rate': 1, 'time_frame': 60}
+        app_config = apps.get_app_config('rate_limiter')
+        self.redis_server_available = app_config.redis_server_available
 
-        self.policy = settings.RATE_LIMIT_POLICIES.get(limit_name, default_policy)
-        self.rate =  self.policy['rate']
-        self.limit_time = self.policy['limit_time']
-        self.limit_name = limit_name
+        # create the redis client if the redis server exists
+        if not self.redis_server_available:
+            self.limit_tracker = None
+        else:
+            self.limit_tracker = redis.Redis(
+                host="redis", 
+                port=6379,
+                db=0,
+                decode_responses=True,
+                socket_connect_timeout=2,
+            )
 
-        try:
-            self.limit_tracker.ping()
-            self.redis_server_available = True
-        except (redis.exceptions.ConnectionError, redis.exceptions.TimeoutError) as e:
-            self.redis_server_available = False
-            print(f"exception: {e}")
+            default_policy = {'rate': 1, 'time_frame': 60}
+
+            self.policy = settings.RATE_LIMIT_POLICIES.get(limit_name, default_policy)
+            self.rate =  self.policy['rate']
+            self.limit_time = self.policy['limit_time']
+            self.limit_name = limit_name
 
     '''
     Method to enforce rate limits.
@@ -43,6 +44,14 @@ class RateLimiter:
         if not self.redis_server_available:
             return False
 
+        # if the redis server drops mid-deployment, fail safely, ie return False here too
+        try:
+            self.enforce_rate_limit_helper(key_id)
+        except (redis.exceptions.ConnectionError, redis.exceptions.TimeoutError) as e:
+            print(f"Redis server exception: {e}")
+            return False
+
+    def enforce_rate_limit_helper(self, key_id):
         key = self.get_key(key_id, self.limit_name)
         current_time = int(time.time())
 
