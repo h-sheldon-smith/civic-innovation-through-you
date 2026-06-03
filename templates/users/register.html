@@ -6,27 +6,28 @@ Register
 
 {% block city_content %}
     <h1>Register a New User</h1>
-    <form class="form-with-validation" action="/users/register/" method="post">
+
+    <div id="location-status" style="
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: var(--font-size-note);
+        background: var(--color-light);
+        border: 1px solid var(--color-medium);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 600px;
+        margin-bottom: 16px;
+    ">
+        <span id="location-icon">&#8987;</span>
+        <span id="location-text">Detecting your location&hellip;</span>
+    </div>
+
+    <form id="register-form" class="form-with-validation" action="/users/register/" method="post" style="display:none;">
         {% csrf_token %}
         {{ form }}
-
-        <div id="location-status" style="
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: var(--font-size-note);
-            background: var(--color-light);
-            border: 1px solid var(--color-medium);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        ">
-            <span id="location-icon">&#8987;</span>
-            <span id="location-text">Detecting your location&hellip;</span>
-        </div>
-
         <input type="hidden" name="latitude" id="latitude">
         <input type="hidden" name="longitude" id="longitude">
-
         <button class="nav-btn">Submit</button>
     </form>
 {% endblock %}
@@ -61,9 +62,6 @@ Register
         const lng = position.coords.longitude.toFixed(5);
         const acc = Math.round(position.coords.accuracy);
 
-        document.getElementById('latitude').value  = lat;
-        document.getElementById('longitude').value = lng;
-
         const distKm    = haversineDistanceKm(parseFloat(lat), parseFloat(lng), CITY_CENTER_LAT, CITY_CENTER_LNG);
         const distMiles = (distKm / 1.60934).toFixed(1);
         const inRange   = distKm <= CITY_RADIUS_KM;
@@ -76,8 +74,15 @@ Register
                 : `<span style="color:#c0392b;font-weight:600;">Out of range &mdash; ${distMiles} mi from Bellevue, WA (limit: ${CITY_RADIUS_MILES} mi)</span>`
             );
 
-        statusBox.style.background   = 'var(--color-extra-light)';
-        statusBox.style.borderColor  = inRange ? 'var(--color-dark)' : '#c0392b';
+        statusBox.style.background  = 'var(--color-extra-light)';
+        statusBox.style.borderColor = inRange ? 'var(--color-dark)' : '#c0392b';
+
+        if (inRange) {
+            const form = document.getElementById('register-form');
+            document.getElementById('latitude').value  = lat;
+            document.getElementById('longitude').value = lng;
+            form.style.display = 'flex';
+        }
     }
 
     function onError(err) {
