@@ -7,7 +7,15 @@ import profanity_check
 from transformers import pipeline
 from django.apps import apps
 
+from idea_forum.services.forum_tools import ForumInteractionService
+
 class ScreeningService:
+    # returns True if it's flagged, False if it's ok to post
+    def screen_post(self, post):
+        forum_tools = ForumInteractionService()
+        post_text = forum_tools.get_post_text(post)
+        return self.screen_post_text(post_text)
+
     # returns True if it's flagged, False if it's ok to post
     def screen_post_text(self, post_text):
         print(f"post_text = {post_text}")

@@ -5,7 +5,7 @@ from django.shortcuts import render
 def index(request):
     context = {}
     if request.user.has_perm('users.can_admin_site'):
-        from machina.apps.forum_conversation.models import Topic
+        from forum_conversation.models import Topic
         top_topics = (
             Topic.objects
             .select_related('forum', 'last_post')

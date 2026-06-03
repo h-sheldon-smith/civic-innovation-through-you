@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'idea_forum',
     'smart_functionality.apps.SmartFunctionalityConfig',
     'forum_conversation',
+    'rate_limiter',
 
     # 3rd-party apps
     'service_objects',
@@ -173,7 +174,10 @@ CACHES = {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://redis:6379/1',
         'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'IGNORE_EXCEPTIONS': True, # Redis ignores connection exceptions, and logs them instead
+            'SOCKET_CONNECTION_TIMEOUT': 2, # timeout in seconds to connect
+            'SOCKET_TIMEOUT': 2, # timeout in seconds for operations
         }
     },
     'machina_attachments': {
@@ -185,8 +189,12 @@ CACHES = {
 RATE_LIMIT_POLICIES = {
     'resident_suggestion': {
         'rate': 3,
-        'limit_time': 86400 # 86400 = 1 day
-    }
+        'limit_time': 86400, # 86400 = 1 day
+    },
+    'resident_forum_posting': {
+        'rate': 10,
+        'limit_time': 86400, # 86400 = 1 day
+    },
 }
 
 # Default primary key field type
