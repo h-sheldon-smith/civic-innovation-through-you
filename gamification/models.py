@@ -2,6 +2,21 @@ from django.db import models
 from django.contrib.auth.models import User
 from . import choices
 
+# Stores total points for users
+class UserPoints(models.Model):
+    # Add User as a foreign key
+    resident = models.ForeignKey(
+       User,
+       default = None,
+       on_delete = models.CASCADE, # keep the idea even if the user is deleted
+       null = True,
+       related_name = 'user_points' # lets you look up all earned points by the given resident
+    )
+
+    point_type = models.CharField(max_length = choices.POINT_TYPE_MAX_LENGTH,
+                                  choices = choices.PointType.choices)
+    total_points = models.IntegerField(default = 0)
+    
 # Log for each time a resident earns points
 class PointsLog(models.Model):
     # Add User as a foreign key
