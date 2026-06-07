@@ -39,7 +39,7 @@ class BadgeLog(models.Model):
     resident = models.ForeignKey(
        User,
        default = None,
-       on_delete = models.CASCADE, # keep the idea even if the user is deleted
+       on_delete = models.CASCADE, # keep the record even if user is deleted
        null = True,
        related_name = 'badges' # lets you look up all user rewards by the given resident
     )
@@ -54,7 +54,7 @@ class BadgeLog(models.Model):
     
 # The badges that residents can earn
 class Badge(models.Model):
-    name = models.CharField(max_length = 50, unique = True) #TODO: make a collection of badges
+    name = models.CharField(max_length = 50, unique = True) #TODO: make better images for badges
     icon = models.ImageField(
         upload_to='gamification/',
         blank = False,
