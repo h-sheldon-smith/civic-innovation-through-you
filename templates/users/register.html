@@ -6,9 +6,110 @@ Register
 
 {% block city_content %}
     <h1>Register a New User</h1>
-    <form class="form-with-validation" action="/users/register/" method="post">
+
+    <div id="location-status" style="
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: var(--font-size-note);
+        background: var(--color-light);
+        border: 1px solid var(--color-medium);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 600px;
+        margin-bottom: 16px;
+    ">
+        <span id="location-icon">&#8987;</span>
+        <span id="location-text">Detecting your location&hellip;</span>
+    </div>
+
+    <form id="register-form" class="form-with-validation" action="/users/register/" method="post" style="display:none;">
         {% csrf_token %}
         {{ form }}
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
         <button class="nav-btn">Submit</button>
     </form>
+{% endblock %}
+
+{% block city_scripts %}
+<script>
+    // -------------------------------------------------------
+    // CITY LOCATION SETTINGS — adjust these values as needed
+    const CITY_CENTER_LAT  = 47.6101;   // Bellevue, WA (City Hall area)
+    const CITY_CENTER_LNG  = -122.2015;
+    const CITY_RADIUS_MILES = 15;       // acceptable radius from city center
+    // -------------------------------------------------------
+
+    const CITY_RADIUS_KM = CITY_RADIUS_MILES * 1.60934;
+
+    const statusBox    = document.getElementById('location-status');
+    const locationText = document.getElementById('location-text');
+    const locationIcon = document.getElementById('location-icon');
+
+    function haversineDistanceKm(lat1, lng1, lat2, lng2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLng = (lng2 - lng1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) ** 2
+                + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
+                * Math.sin(dLng / 2) ** 2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    function onSuccess(position) {
+        const lat = position.coords.latitude.toFixed(5);
+        const lng = position.coords.longitude.toFixed(5);
+        const acc = Math.round(position.coords.accuracy);
+
+        const distKm    = haversineDistanceKm(parseFloat(lat), parseFloat(lng), CITY_CENTER_LAT, CITY_CENTER_LNG);
+        const distMiles = (distKm / 1.60934).toFixed(1);
+        const inRange   = distKm <= CITY_RADIUS_KM;
+
+        locationIcon.textContent = '📍';
+        locationText.innerHTML =
+            `Location detected &mdash; Lat: ${lat}, Lng: ${lng} (&plusmn;${acc}m) &nbsp;|&nbsp; ` +
+            (inRange
+                ? `<span style="color:#1a6b2e;font-weight:600;">Within range of Bellevue, WA (${distMiles} mi away)</span>`
+                : `<span style="color:#c0392b;font-weight:600;">Out of range &mdash; ${distMiles} mi from Bellevue, WA (limit: ${CITY_RADIUS_MILES} mi)</span>`
+            );
+
+        statusBox.style.background  = 'var(--color-extra-light)';
+        statusBox.style.borderColor = inRange ? 'var(--color-dark)' : '#c0392b';
+
+        if (inRange) {
+            const form = document.getElementById('register-form');
+            document.getElementById('latitude').value  = lat;
+            document.getElementById('longitude').value = lng;
+            form.style.display = 'flex';
+        }
+    }
+
+    function onError(err) {
+        locationIcon.textContent    = '⚠';
+        statusBox.style.borderColor = '#c0392b';
+        statusBox.style.background  = '#fdecea';
+
+        if (err.code === err.PERMISSION_DENIED) {
+            locationText.textContent = 'Location access denied. Please allow location access and reload to continue.';
+        } else if (err.code === err.POSITION_UNAVAILABLE) {
+            locationText.textContent = 'Location unavailable on this device.';
+        } else {
+            locationText.textContent = 'Location request timed out. Please reload and try again.';
+        }
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+            enableHighAccuracy: false,
+            timeout: 10000,
+            maximumAge: 60000
+        });
+    } else {
+        locationIcon.textContent    = '⚠';
+        locationText.textContent    = 'Geolocation is not supported by your browser.';
+        statusBox.style.borderColor = '#c0392b';
+        statusBox.style.background  = '#fdecea';
+    }
+</script>
 {% endblock %}
