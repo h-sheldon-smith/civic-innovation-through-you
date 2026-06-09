@@ -16,9 +16,8 @@ class IdeaForumConfig(AppConfig):
     zero_shot_pipeline = None
 
     def ready(self):
-        # set up signals.py
         import idea_forum.signals
-
+        
         # set up transformer
         if self.zero_shot_pipeline is None and os.environ.get("RUN_MAIN") == 'true':
             if not self.ZERO_SHOT_PATH.exists():

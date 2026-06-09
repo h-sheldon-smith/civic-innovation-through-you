@@ -6,8 +6,7 @@ from idea_suggestion.admin_inbox_services import Admin_Inbox_Data_Controls, Admi
 from idea_suggestion.resident_suggestion_services import Save_Resident_Idea, Process_Rewards
 from idea_suggestion.models import Idea
 from idea_suggestion.smart_summary import Get_Smart_Inbox_Summary
-from services.rate_limiter import RateLimiter
-#from gamification import game_services, game_choices
+from rate_limiter.services import RateLimiter
 
 resident_suggestion_limiter = RateLimiter("resident_suggestion")
 

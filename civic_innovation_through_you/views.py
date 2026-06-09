@@ -15,7 +15,7 @@ def index(request):
         )
         context['user_badges'] = gamification_services.get_user_badges(request.user)
     if request.user.has_perm('users.can_admin_site'):
-        from machina.apps.forum_conversation.models import Topic
+        from forum_conversation.models import Topic
         top_topics = (
             Topic.objects
             .select_related('forum', 'last_post')
