@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block city_sidebar %}
@@ -56,6 +57,40 @@
     <p class="analytics-subtitle">No forum topics yet.</p>
 </section>
 {% endif %}
+
+<!-- User Points and Badges Section -->
+{% if user.is_authenticated and not perms.users.can_admin_site %}
+<section class="analytics-section">
+    {% if point_breakdown %}
+    <table style="margin-bottom: 8px; border-collapse: collapse;">
+        {% for record in point_breakdown %}
+        <tr>
+            <td style="padding: 2px 16px 2px 0; color: #000;">{{ record.point_type }}</td>
+            <td style="padding: 2px 0; color: #000;"><strong>{{ record.total_points }}</strong></td>
+        </tr>
+        {% endfor %}
+        <tr style="border-top: 1px solid #000;">
+            <td style="padding: 6px 16px 2px 0; color: #000; font-size: 18px;">Total</td>
+            <td style="padding: 6px 0 2px; color: #000; font-size: 18px;"><strong>{{ user_points|default:"0" }}</strong></td>
+        </tr>
+    </table>
+    {% else %}
+    <p style="font-size: 18px; color: #000;">Points: <strong>0</strong></p>
+    {% endif %}
+    {% if user_badges %}
+    <h3 style="margin: 12px 0 8px;">Your Badges</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+        {% for badge in user_badges %}
+        <div style="text-align: center; width: 80px;">
+            <img src="{% static 'icons/temp_badge.svg' %}" alt="{{ badge.name }}" style="width: 60px; height: 60px; object-fit: contain;">
+            <p style="font-size: 13px; margin: 4px 0 0; color: #000;">{{ badge.name }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+{% endif %}
+
 <div class="body-content">
     {% if user.is_authenticated and not perms.users.can_admin_site %}
         Let's build our community together!

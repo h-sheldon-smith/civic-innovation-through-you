@@ -20,6 +20,7 @@ def award_points(user, action):
     if points > 0:
         create_points_record(user, action, points)
         update_user_points(user, action, points)
+        process_badge_awards(user, action)
 
         return True
     
@@ -108,7 +109,7 @@ def process_badge_awards(user, action):
     if not badge:
         return False
 
-    create_badge_record(user, action)
+    create_badge_record(user, badge)
 
     return True
 
