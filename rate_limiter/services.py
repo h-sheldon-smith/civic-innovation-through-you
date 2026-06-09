@@ -47,7 +47,7 @@ class RateLimiter:
 
         # if the redis server drops mid-deployment, fail safely, ie return False here too
         try:
-            self.enforce_rate_limit_helper(key_id)
+            return self.enforce_rate_limit_helper(key_id)
         except (redis.exceptions.ConnectionError, redis.exceptions.TimeoutError) as e:
             print(f"Redis server exception: {e}")
             return False
@@ -59,7 +59,6 @@ class RateLimiter:
         self.remove_expired_count(key, current_time, self.limit_time)
 
         if self.limit_tracker.zcard(key) >= self.rate:
-            print("===> IN IF ", flush=True)
             return True
         
         self.increment_count(key, current_time, self.rate)
