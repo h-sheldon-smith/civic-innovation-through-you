@@ -6,7 +6,7 @@ class PointType(models.TextChoices):
     COMMENT = 'Comment', 'Comment'
     LIKE = 'Like', 'Like'
     RECEIVE_LIKE = 'Receive Like', 'Receive Like'
-    VOTE = 'Vote', 'Vote'
+    VOTE_POLL = 'Vote Poll', 'Vote Poll'
     GRAND_TOTAL = 'Grand Total', 'Grand Total'
 
 POINT_TYPE_MAX_LENGTH = max(len(choice.value) for choice in PointType)

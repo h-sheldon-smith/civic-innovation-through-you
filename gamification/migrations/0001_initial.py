@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
             name='PointRule',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('point_type', models.CharField(choices=[('Login', 'Login'), ('Suggestion', 'Suggestion'), ('Comment', 'Comment'), ('Like', 'Like'), ('Receive Like', 'Receive Like'), ('Vote', 'Vote'), ('Grand Total', 'Grand Total')], max_length=12, unique=True)),
+                ('point_type', models.CharField(choices=[('Login', 'Login'), ('Suggestion', 'Suggestion'), ('Comment', 'Comment'), ('Like', 'Like'), ('Receive Like', 'Receive Like'), ('Vote Poll', 'Vote Poll'), ('Grand Total', 'Grand Total')], max_length=12, unique=True)),
                 ('value', models.IntegerField()),
             ],
         ),
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
             name='BadgeRule',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('point_type', models.CharField(choices=[('Login', 'Login'), ('Suggestion', 'Suggestion'), ('Comment', 'Comment'), ('Like', 'Like'), ('Receive Like', 'Receive Like'), ('Vote', 'Vote'), ('Grand Total', 'Grand Total')], max_length=12, null=True)),
+                ('point_type', models.CharField(choices=[('Login', 'Login'), ('Suggestion', 'Suggestion'), ('Comment', 'Comment'), ('Like', 'Like'), ('Receive Like', 'Receive Like'), ('Vote Poll', 'Vote Poll'), ('Grand Total', 'Grand Total')], max_length=12, null=True)),
                 ('point_threshold', models.IntegerField()),
                 ('badge', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='gamification.badge')),
             ],
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
             name='PointsLog',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('point_type', models.CharField(choices=[('Login', 'Login'), ('Suggestion', 'Suggestion'), ('Comment', 'Comment'), ('Like', 'Like'), ('Receive Like', 'Receive Like'), ('Vote', 'Vote'), ('Grand Total', 'Grand Total')], max_length=12)),
+                ('point_type', models.CharField(choices=[('Login', 'Login'), ('Suggestion', 'Suggestion'), ('Comment', 'Comment'), ('Like', 'Like'), ('Receive Like', 'Receive Like'), ('Vote Poll', 'Vote Poll'), ('Grand Total', 'Grand Total')], max_length=12)),
                 ('points_earned', models.IntegerField()),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
                 ('resident', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='points_logs', to=settings.AUTH_USER_MODEL)),
@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
             name='UserPoints',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('point_type', models.CharField(choices=[('Login', 'Login'), ('Suggestion', 'Suggestion'), ('Comment', 'Comment'), ('Like', 'Like'), ('Receive Like', 'Receive Like'), ('Vote', 'Vote'), ('Grand Total', 'Grand Total')], max_length=12)),
+                ('point_type', models.CharField(choices=[('Login', 'Login'), ('Suggestion', 'Suggestion'), ('Comment', 'Comment'), ('Like', 'Like'), ('Receive Like', 'Receive Like'), ('Vote Poll', 'Vote Poll'), ('Grand Total', 'Grand Total')], max_length=12)),
                 ('total_points', models.IntegerField(default=0)),
                 ('resident', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='user_points', to=settings.AUTH_USER_MODEL)),
             ],

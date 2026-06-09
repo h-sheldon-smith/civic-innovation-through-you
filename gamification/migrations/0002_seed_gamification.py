@@ -28,7 +28,7 @@ def seed_gamification(apps, schema_editor):
         defaults={"value": 3}
     )
     PointRule.objects.get_or_create(
-        point_type="Vote",
+        point_type="Vote Poll",
         defaults={"value": 3}
     )
 
