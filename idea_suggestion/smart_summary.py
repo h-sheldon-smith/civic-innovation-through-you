@@ -7,8 +7,8 @@ INBOX_SUMMARY_TASK = "Analyze the provided community feedback and produce the fo
 "Specific callouts for urgent issues that impacts safety or community/municipality finances," \
 "Identify any patterns or trends (e.g. time of events, locations, people involved or impacted)" \
 
-INBOX_SUMMARY_FORMAT = "Make a written summary with key insights in bullet points and anything urgent seperate and at the top."\
-"Please add line breaks between sections (Urgent, Summary, Takeaway)" \
+INBOX_SUMMARY_FORMAT = "Make a written summary paragraph with anything urgent if it exists in all caps at the top."\
+"Please add sections with theses titles in caps (Urgent, Summary, Takeaway)" \
 "Keep everything under 3000 characters and be as concise as possible, limit commentary on off topic content."\
 "Do not mention batches or add batching details to the summary but use them to help weight individual ideas."\
 "Avoid sounding like generic AI, using technical terms, or overly formal language."
