@@ -30,3 +30,6 @@ def about(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+def health_check(request):
+    return HttpResponse("healthy")

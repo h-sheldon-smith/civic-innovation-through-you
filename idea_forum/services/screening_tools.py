@@ -43,8 +43,6 @@ class ScreeningService:
     def profanity_check_classification(self, post_text):
         cleaned_text = strip_markdown.strip_markdown(post_text)
 
-        # print(f"cleaned_text = {cleaned_text}")
-
         # ML-based pofanity detection, doesn't handle leetspeek-style 'obfuscated profanity'
         result = bool(profanity_check.predict([cleaned_text])[0])
 
@@ -53,6 +51,11 @@ class ScreeningService:
     # zero-shot classification using a huggingface transformer fine-tuned on zero-shot classification
     def zero_shot_classification(self, post_text, candidate_labels, threshold):
         pipe = apps.get_app_config('idea_forum').zero_shot_pipeline
+
+        # if hf pipeline doesn't load properly (eg if a docker container can't access the hf model during init)
+        if pipe is None:
+            print("Error loading Hugging Face model. Screening for profanity only")
+            return False
 
         pipe_out = pipe(post_text, candidate_labels=candidate_labels)
         

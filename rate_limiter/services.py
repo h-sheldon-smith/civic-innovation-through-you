@@ -20,6 +20,7 @@ class RateLimiter:
                 db=0,
                 decode_responses=True,
                 socket_connect_timeout=2,
+                # socket_timeout=2, # for read/write operations (defaults to 10 seconds)
             )
 
             default_policy = {'rate': 1, 'time_frame': 60}
