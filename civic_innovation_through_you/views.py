@@ -1,9 +1,14 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render
+from gamification import services as gamification_services, choices as gamification_choices
 
 def index(request):
     context = {}
+    if request.user.is_authenticated:
+        context['user_points'] = gamification_services.get_points_by_user(
+            request.user, gamification_choices.PointType.GRAND_TOTAL
+        )
     if request.user.has_perm('users.can_admin_site'):
         from machina.apps.forum_conversation.models import Topic
         top_topics = (

@@ -29,6 +29,7 @@
         <th style="text-align: left">Email</th>
         <th style="text-align: left">Joined</th>
         <th style="text-align: left">Status</th>
+        <th style="text-align: left">Points</th>
     </tr>
     </thead>
 
@@ -51,9 +52,10 @@
                 {% endif %}
             {% endwith %}
         </td>
+        <td style="padding-right: 25px">{{ u.total_points|default:"0" }}</td>
     </tr>
     {% empty %}
-    <tr><td colspan="4" style="padding: 16px 0; color: #666;">No accounts found.</td></tr>
+    <tr><td colspan="5" style="padding: 16px 0; color: #666;">No accounts found.</td></tr>
     {% endfor %}
     </tbody>
 </table>

@@ -172,7 +172,8 @@ CACHES = {
     'default': {
         #'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://redis:6379/1',
+        'LOCATION': 'redis://redis:6379/1',  # Docker service name (use in production/full Docker setup)
+        # 'LOCATION': 'redis://localhost:6379/1',  # localhost for local dev outside Docker
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient'
         }

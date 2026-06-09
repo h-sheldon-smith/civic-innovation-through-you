@@ -8,8 +8,11 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.utils import timezone
+from django.db.models import OuterRef, Subquery, IntegerField
 from datetime import timedelta
 from .models import UserModeration
+from gamification.models import UserPoints
+from gamification import services as gamification_services, choices as gamification_choices
 
 
 # Create your views here.
@@ -55,10 +58,13 @@ def login_view(request):
                         'reason': mod.reason,
                         'until': until.strftime('%B %d, %Y at %I:%M %p') if until else None,
                     }
+                    login(request, user)
+                    gamification_services.award_points(user, gamification_choices.PointType.LOGIN)
                     return redirect('users:mute_notice')
             except Exception:
                 pass
             login(request, user)
+            gamification_services.award_points(user, gamification_choices.PointType.LOGIN)
             return redirect('index')
     else:
         form = AuthenticationForm()
@@ -102,7 +108,12 @@ def account_list_view(request):
     sort = request.GET.get('sort', 'username')
     search = request.GET.get('search', '').strip()
 
-    users = User.objects.select_related('moderation').exclude(is_superuser=True)
+    points_subquery = Subquery(
+        UserPoints.objects.filter(resident=OuterRef('pk'), point_type='Grand Total').values('total_points')[:1],
+        output_field=IntegerField()
+    )
+
+    users = User.objects.select_related('moderation').exclude(is_superuser=True).annotate(total_points=points_subquery)
 
     if search:
         users = users.filter(username__icontains=search)
