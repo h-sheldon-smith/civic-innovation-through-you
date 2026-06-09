@@ -5,6 +5,9 @@ from machina.core.db.models import get_model
 
 from idea_forum.services.smart_controller import SmartController
 
+from common.choices import ADMIN_GROUP_NAME
+from gamification import game_services, game_choices
+
 Post = get_model('forum_conversation', 'Post')
 
 @receiver(post_save, sender=Post)
@@ -23,3 +26,11 @@ def trigger_smart_controller(sender, instance, created, **kwargs):
             pass
 
         transaction.on_commit(lambda: smart_controller.run_smart_post_moderation(instance))
+
+
+@receiver(post_save, sender=Post)
+def forum_post_save_gamification(sender, instance, created, **kwargs):
+    is_resident = not instance.poster.groups.filter(name=ADMIN_GROUP_NAME).exists()
+    
+    if created and is_resident:
+        points_result = game_services.award_points(instance.poster, game_choices.PointType.COMMENT)
