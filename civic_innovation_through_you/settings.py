@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'idea_forum',
     'smart_functionality.apps.SmartFunctionalityConfig',
     'forum_conversation',
+    'gamification.apps.GamificationConfig',
     'rate_limiter',
 
     # 3rd-party apps
@@ -172,7 +173,8 @@ CACHES = {
     'default': {
         #'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://redis:6379/1',
+        'LOCATION': 'redis://redis:6379/1',  # Docker service name (use in production/full Docker setup)
+        #'LOCATION': 'redis://localhost:6379/1',  # localhost for local dev outside Docker
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'IGNORE_EXCEPTIONS': True, # Redis ignores connection exceptions, and logs them instead
