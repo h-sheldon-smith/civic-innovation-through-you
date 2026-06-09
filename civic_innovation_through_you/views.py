@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render
-from gamification import services as gamification_services, choices as gamification_choices
+from gamification import game_services as gamification_services, game_choices as gamification_choices
 
 def index(request):
     context = {}

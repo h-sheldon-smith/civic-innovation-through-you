@@ -12,7 +12,7 @@ from django.db.models import OuterRef, Subquery, IntegerField
 from datetime import timedelta
 from .models import UserModeration
 from gamification.models import UserPoints
-from gamification import services as gamification_services, choices as gamification_choices
+from gamification import game_services as gamification_services, game_choices as gamification_choices
 
 
 # Create your views here.

@@ -1,4 +1,4 @@
-from . import models, choices
+from . import models, game_choices as choices
 from django.db.models import F
 from django.contrib.auth.models import User
     

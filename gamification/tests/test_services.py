@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from freezegun import freeze_time
-from gamification import models, choices, services
+from gamification import models, game_choices as choices, game_services as services
 
 # Test Methods Relating to Points
 class TestPoints(TestCase):
