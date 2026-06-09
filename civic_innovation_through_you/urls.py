@@ -22,6 +22,7 @@ from machina import urls as machina_urls
 from . import views
 
 urlpatterns = [
+    path('health_check', views.health_check, name="health_check"),
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('about', views.about, name='about'),
