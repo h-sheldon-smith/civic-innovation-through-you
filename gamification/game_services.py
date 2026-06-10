@@ -57,7 +57,7 @@ def create_points_record(user, action, points):
     if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return
     
-    if not isinstance(points, int) or points < 0:
+    if not isinstance(points, int):
         return 
 
     record = models.PointsLog(resident=user, point_type=action, points_earned=points)
@@ -75,7 +75,7 @@ def update_user_points(user, action, points):
     if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return 
     
-    if not isinstance(points, int) or points < 0:
+    if not isinstance(points, int):
         return
 
     # Update Category Points
@@ -87,6 +87,34 @@ def update_user_points(user, action, points):
     user_grand_total, created = models.UserPoints.objects.get_or_create(resident=user, point_type=game_choices.PointType.GRAND_TOTAL)
     user_grand_total.total_points = F("total_points") + points # F prevents race conditions
     user_grand_total.save()
+
+
+'''
+Method to remove points
+@param user, the user who lost points
+@param action, the action that lost points
+@return True if points were removed, otherwise False
+If successful, adds a record to the PointsLog and updates UserPoints
+'''
+def remove_points(user, action):
+
+    if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
+        return False
+
+    user_points = get_points_by_user(user, action)
+    action_points = get_points_for_action(action)
+
+    if user_points >= action_points:
+        create_points_record(user, action, action_points * -1)
+        update_user_points(user, action, action_points * -1)
+        return True
+
+    elif user_points > 0 and user_points < action_points:
+        create_points_record(user, action, user_points * -1)
+        update_user_points(user, action, user_points * -1)
+        return True
+
+    return False
 
 
 '''
