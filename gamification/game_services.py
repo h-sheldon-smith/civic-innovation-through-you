@@ -1,4 +1,4 @@
-from . import models, game_choices as choices
+from . import game_choices, models
 from django.db.models import F
 from django.contrib.auth.models import User
     
@@ -12,7 +12,7 @@ If successful, adds a record to the PointsLog and updates UserPoints
 '''
 def award_points(user, action):
 
-    if not isinstance(user, models.User) or not isinstance(action, choices.PointType):
+    if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return False
 
     points = get_points_for_action(action)
@@ -35,7 +35,7 @@ If successful, it returns the points for the given action, otherwise it returns 
 '''
 def get_points_for_action(action):
 
-    if not isinstance(action, choices.PointType):
+    if not isinstance(action, game_choices.PointType):
         return 0
 
     point_rule = models.PointRule.objects.filter(point_type=action).first()
@@ -54,7 +54,7 @@ Method to create a record for points earned
 '''
 def create_points_record(user, action, points):
     
-    if not isinstance(user, models.User) or not isinstance(action, choices.PointType):
+    if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return
     
     if not isinstance(points, int) or points < 0:
@@ -72,7 +72,7 @@ Method to update a user's running point total
 '''
 def update_user_points(user, action, points):
 
-    if not isinstance(user, models.User) or not isinstance(action, choices.PointType):
+    if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return 
     
     if not isinstance(points, int) or points < 0:
@@ -84,7 +84,7 @@ def update_user_points(user, action, points):
     user_points.save()
 
     # Update Grand Total Points (all categories)
-    user_grand_total, created = models.UserPoints.objects.get_or_create(resident=user, point_type=choices.PointType.GRAND_TOTAL)
+    user_grand_total, created = models.UserPoints.objects.get_or_create(resident=user, point_type=game_choices.PointType.GRAND_TOTAL)
     user_grand_total.total_points = F("total_points") + points # F prevents race conditions
     user_grand_total.save()
 
@@ -98,7 +98,7 @@ If successful, adds a record to the BadgesLog and updates UserBadges
 '''
 def process_badge_awards(user, action):
 
-    if not isinstance(user, models.User) or not isinstance(action, choices.PointType):
+    if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return False
 
     points = get_points_by_user(user, action)
@@ -108,8 +108,11 @@ def process_badge_awards(user, action):
     badge = get_badge_by_points(action, points)
     if not badge:
         return False
-
-    create_badge_record(user, badge)
+    
+    if models.BadgeLog.objects.filter(resident=user, badge=badge).exists():
+        return False
+    
+    create_badge_record(user, action)
 
     return True
 
@@ -122,7 +125,7 @@ Method to get a badge based on an action and set of points
 '''
 def get_points_by_user(user, action):
 
-    if not isinstance(user, models.User) or not isinstance(action, choices.PointType):
+    if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return 0
 
     user_points = models.UserPoints.objects.filter(resident=user, point_type=action).first()
@@ -137,7 +140,7 @@ Method to get a badge based on an action and set of points
 '''
 def get_badge_by_points(action, points):
 
-    if not isinstance(action, choices.PointType) or not isinstance(points, int):
+    if not isinstance(action, game_choices.PointType) or not isinstance(points, int):
         return None
     
     badge_rule = models.BadgeRule.objects.filter(point_type=action, point_threshold=points).first()
