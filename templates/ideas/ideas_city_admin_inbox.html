@@ -21,6 +21,7 @@
         </tr>
     </thead>
     <tbody>
+        {% if ideas %}
         {% for suggestion in ideas %}
             <tr data-href="{% url 'admin_idea_detail' suggestion.id %}">
                 <td>{{ suggestion.topic }}</td>
@@ -29,6 +30,7 @@
                 <td>{{ suggestion.read_status }}</td>
             </tr> 
         {% endfor %}
+        {% endif %}
     </tbody>
 </table>
 {% endblock %}

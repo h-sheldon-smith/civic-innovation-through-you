@@ -27,4 +27,4 @@ class RateLimiterConfig(AppConfig):
             self.redis_server_available = True
         except (redis.exceptions.ConnectionError, redis.exceptions.TimeoutError):
             self.redis_server_available = False
-            print("Redis not detected at startup. Rate limiting bypassed globally.")
+            print("Redis not detected at startup. Rate limiting bypassed globally.", flush=True)

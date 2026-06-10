@@ -7,7 +7,4 @@ def Save_Resident_Idea(resident, idea_form):
 
 
 def Process_Rewards(resident):
-    points_result = game_services.award_points(resident, game_choices.PointType.SUGGESTION)
-
-    if points_result:
-        game_services.process_badge_awards(resident, game_choices.PointType.SUGGESTION)
+    game_services.award_points(resident, game_choices.PointType.SUGGESTION)

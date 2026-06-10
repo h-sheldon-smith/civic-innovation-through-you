@@ -30,18 +30,9 @@ def Resident_Idea_Submission_View(request):
             if resident_suggestion_limiter.enforce_rate_limit(request.user.id):
                 return JsonResponse({"success": False})
             
-            Save_Resident_Idea(request.resident, idea_form)
-            
-            #idea_instance = idea_form.save(commit = False) # django makes an instance of the form
-            #idea_instance.resident = request.user # add the logged in user
-            #idea_instance.save()
+            Save_Resident_Idea(request.user, idea_form)
 
-            Process_Rewards(request.resident, idea_form)
-
-            # points_result = game_services.award_points(request.user, game_choices.PointType.SUGGESTION)
-
-            # if points_result:
-            #     game_services.process_badge_awards(request.user, game_choices.PointType.SUGGESTION)
+            Process_Rewards(request.user)
 
             return JsonResponse({"success": True})
         else:
