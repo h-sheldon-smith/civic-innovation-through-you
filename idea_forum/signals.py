@@ -18,9 +18,8 @@ def post_create_gamification(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Post)
 def post_create_gamification(sender, instance, **kwargs):
-    pass
-    # if is_resident(instance.poster):
-    #     game_services.deduct_points(instance.poster, game_choices.PointType.COMMENT)
+    if is_resident(instance.poster):
+        game_services.remove_points(instance.poster, game_choices.PointType.COMMENT)
 
 
 @receiver(post_save, sender=Vote)
@@ -42,11 +41,11 @@ def vote_delete_gamification(sender, instance, **kwargs):
         unliking_user = User.objects.get(id=instance.user_id)
         post = Post.objects.get(pk=instance.object_id)
 
-        # if is_resident(unliking_user):
-        #     game_services.deduct_points(unliking_user, game_choices.PointType.LIKE)
+        if is_resident(unliking_user):
+            game_services.remove_points(unliking_user, game_choices.PointType.LIKE)
 
-        # if is_resident(post.poster):
-        #     game_services.deduct_points(post.poster, game_choices.PointType.RECEIVE_LIKE)
+        if is_resident(post.poster):
+            game_services.remove_points(post.poster, game_choices.PointType.RECEIVE_LIKE)
 
 
 def is_resident(user):

@@ -38,7 +38,7 @@ def get_points_for_action(action):
     if not isinstance(action, game_choices.PointType):
         return 0
 
-    point_rule = models.PointRule.objects.filter(point_type=action).first()
+    point_rule = models.PointRule.objects.filter(point_type=action.value).first()
 
     if not point_rule:
          return 0
@@ -57,10 +57,10 @@ def create_points_record(user, action, points):
     if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return
     
-    if not isinstance(points, int) or points < 0:
+    if not isinstance(points, int):
         return 
 
-    record = models.PointsLog(resident=user, point_type=action, points_earned=points)
+    record = models.PointsLog(resident=user, point_type=action.value, points_earned=points)
     record.save()
 
 
@@ -75,18 +75,46 @@ def update_user_points(user, action, points):
     if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return 
     
-    if not isinstance(points, int) or points < 0:
+    if not isinstance(points, int):
         return
 
     # Update Category Points
-    user_points, created = models.UserPoints.objects.get_or_create(resident=user, point_type=action)
+    user_points, created = models.UserPoints.objects.get_or_create(resident=user, point_type=action.value)
     user_points.total_points = F("total_points") + points # F prevents race conditions
     user_points.save()
 
     # Update Grand Total Points (all categories)
-    user_grand_total, created = models.UserPoints.objects.get_or_create(resident=user, point_type=game_choices.PointType.GRAND_TOTAL)
+    user_grand_total, created = models.UserPoints.objects.get_or_create(resident=user, point_type=game_choices.PointType.GRAND_TOTAL.value)
     user_grand_total.total_points = F("total_points") + points # F prevents race conditions
     user_grand_total.save()
+
+
+'''
+Method to remove points
+@param user, the user who lost points
+@param action, the action that lost points
+@return True if points were removed, otherwise False
+If successful, adds a record to the PointsLog and updates UserPoints
+'''
+def remove_points(user, action):
+
+    if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
+        return False
+
+    user_points = get_points_by_user(user, action)
+    action_points = get_points_for_action(action)
+
+    if user_points >= action_points:
+        create_points_record(user, action, action_points * -1)
+        update_user_points(user, action, action_points * -1)
+        return True
+
+    elif user_points > 0 and user_points < action_points:
+        create_points_record(user, action, user_points * -1)
+        update_user_points(user, action, user_points * -1)
+        return True
+
+    return False
 
 
 '''
@@ -112,7 +140,7 @@ def process_badge_awards(user, action):
     if models.BadgeLog.objects.filter(resident=user, badge=badge).exists():
         return False
     
-    create_badge_record(user, action)
+    create_badge_record(user, badge)
 
     return True
 
@@ -128,7 +156,7 @@ def get_points_by_user(user, action):
     if not isinstance(user, models.User) or not isinstance(action, game_choices.PointType):
         return 0
 
-    user_points = models.UserPoints.objects.filter(resident=user, point_type=action).first()
+    user_points = models.UserPoints.objects.filter(resident=user, point_type=action.value).first()
     return user_points.total_points if user_points else 0
 
 
@@ -143,7 +171,7 @@ def get_badge_by_points(action, points):
     if not isinstance(action, game_choices.PointType) or not isinstance(points, int):
         return None
     
-    badge_rule = models.BadgeRule.objects.filter(point_type=action, point_threshold=points).first()
+    badge_rule = models.BadgeRule.objects.filter(point_type=action.value, point_threshold=points).first()
     return badge_rule.badge if badge_rule else None
 
 

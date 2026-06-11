@@ -40,4 +40,6 @@
 |T-33 | gamification services | used no for badge for get_badge_record() | Returns None | Return=None | Pass | Value matches expected |
 |T-34 | gamification services | used one for badge for get_badge_record() | Returns a list with one badge | Returned a list with one badge | Pass | Value matches expected |
 |T-35 | gamification services | used multipe for badge for get_badge_record() | Returns a list with multiple badges | Returned a list with multipe badges | Pass | Values match expected |
-|T-36 | gamification services | used invalid user input for get_badge_record() | ReturnsNone | Return=None | Pass | Value matches expected |
+|T-36 | gamification services | used invalid user input for get_badge_record() | Returns None | Return=None | Pass | Value matches expected |
+|T-37 | gamification services | used valid input for remove_points() | Returns True and removes specified points | Return=True, Points=0 | Pass | Value matches expected |
+|T-37 | gamification services | used greater number of points than user has for remove_points() | Returns False and points = 0 | Return=False, Points=0 | Pass | Value matches expected |

@@ -61,7 +61,8 @@ def login_view(request):
                     login(request, user)
                     gamification_services.award_points(user, gamification_choices.PointType.LOGIN)
                     return redirect('users:mute_notice')
-            except Exception:
+            except Exception as e:
+                print("LOGIN MODERATION ERROR: ", e, flush=True)
                 pass
             login(request, user)
             gamification_services.award_points(user, gamification_choices.PointType.LOGIN)
