@@ -18,7 +18,6 @@ def post_create_gamification(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Post)
 def post_create_gamification(sender, instance, **kwargs):
-    pass
     if is_resident(instance.poster):
         game_services.remove_points(instance.poster, game_choices.PointType.COMMENT)
 
