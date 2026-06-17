@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 import os
+import sys
 from pathlib import Path
 from transformers import pipeline
 
@@ -19,7 +20,7 @@ class IdeaForumConfig(AppConfig):
         import idea_forum.signals
         
         # set up transformer
-        if self.zero_shot_pipeline is None and os.environ.get("RUN_MAIN") == 'true':
+        if self.zero_shot_pipeline is None:
             if not self.ZERO_SHOT_PATH.exists():
                 self.ZERO_SHOT_PATH.mkdir(parents=True, exist_ok=True)
 
