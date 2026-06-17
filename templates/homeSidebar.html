@@ -14,7 +14,7 @@
       </span>
       <span class="username">{{ user.username }}</span>
     </h3>
-    <button class="nav-btn" href="{% url 'avatar:change' %}" aria-hidden="true">Change Your Avatar</button>
+    <a class="nav-btn" href="{% url 'avatar:change' %}" aria-hidden="true">Change Your Avatar</a>
 
     <button class="nav-btn" data-modal-target="#account-settings-modal">Account Settings</button>
     {% endif %}
